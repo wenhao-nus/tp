@@ -37,15 +37,15 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: Data
 
-### Jean Doe
+### Chen Guanhua 
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/e-hua.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[homepage](https://chenguanhua.com)]
+[[github](https://github.com/e-hua)]
 
-* Role: Developer
-* Responsibilities: Dev Ops + Threading
+* Role: Integration & Testing
+* Responsibilities: DevOps + Data Model & Logic
 
 ### Josiah Low 
 
