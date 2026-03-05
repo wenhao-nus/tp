@@ -262,9 +262,14 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
+* is a NUS computer science teaching assistant managing multiple tutorial classes
+* needs to organize and track contacts across distinct academic roles (students, professors, fellow TAs, course admins)
+* requires the ability to categorize and quickly retrieve contacts using specific tags (e.g., by tutorial group)
+* frequently handles incomplete contact profiles that need to be updated iteratively (e.g., adding Telegram handles later)
+* needs a reliable way to archive and export contact data at the end of the academic semester
+* prefers a streamlined, role-specific tool over a general-purpose address book
 * can type fast
+* prefers desktop apps over other types
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
@@ -445,8 +450,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 11. GUI should provide visual feedback, but input is primarily text-based.
 12. The software should be able to handle corrupted and missing files.
 13. The software should be single-user based only.
-
-*{More to be added}*
 
 ### Glossary
 
