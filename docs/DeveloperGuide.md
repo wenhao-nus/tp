@@ -289,6 +289,159 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
+(For all use cases below, the System is `TAConnect` unless specified otherwise)
+
+<ins> **Use case: UC01 - View All Contacts** </ins>
+
+**Preconditions:** TA has at least one contact in their list
+
+**Guarantees:** All of the contacts in the address book are displayed
+
+**Actor:** TA
+
+**MSS**
+
+1. TA requests to view their list of all contacts.
+2. TAConnect displays the TA’s list of all contacts.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. TA chooses to undo.
+
+    * 2a1. TAConnect undo the change and displays the updated list.
+
+* 2b. No contacts exist.
+
+    * 2b1. TAConnect displays an empty state message.
+
+      Use case ends.
+
+
+<ins> **Use case: UC02 - Add A Contact** </ins>
+
+**Guarantees:** A new contact is stored in the address book
+
+**Actor:** TA
+
+**MSS**
+
+1. TA requests to add a contact with the accompanying details.
+2. TAConnect validates the input.
+3. TAConnect adds the contact, displays a success message and the updated list.
+   
+   Use case ends.
+
+**Extensions**
+
+* 2a. TAConnect detects invalid input.
+
+    * 2a1. TAConnect informs TA of invalid input and displays a template and example.
+
+* 3a. TA chooses to undo
+
+    * 3a1. TAConnect undo the change and displays the updated list.
+
+<ins> **Use case: UC03 - Delete A Contact** </ins>
+
+**Preconditions:** TA has at least one contact in their list
+
+**Guarantees:** The chosen contact is removed from the address book
+
+**Actor:** TA
+
+**MSS**
+
+1. TA requests to delete a specific contact.
+2. TAConnect deletes the contact, displays a success message and the updated list.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. TAConnect detects invalid contact index and informs TA.
+
+* 2a. TA chooses to undo
+
+    * 2a1. TAConnect undo the change and displays the updated list.
+
+<ins> **Use case: UC04 - Edit A Contact** </ins>
+
+**Preconditions:** TA has at least one contact in their list
+
+**Guarantees:** The contact’s detail(s) is/are updated with the new information
+
+**Actor:** TA
+
+**MSS**
+
+1. TA requests to edit specific fields of a specific contact.
+2. TAConnect validates the updated input.
+3. TAConnect updates the contact, displays a success message and the updated list.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. TAConnect detects invalid contact index and informs TA.
+
+* 2a. TAConnect detects invalid input.
+
+    * 2a1. TAConnect informs TA of invalid input and displays a template and example.
+
+* 3a. TA chooses to undo
+
+    * 3a1. TAConnect undo the change and displays the updated list.
+
+<ins> **Use case: UC05 - Search/Filter Contacts** </ins>
+
+**Preconditions:** TA has at least one contact in their list
+
+**Guarantees:** Contacts matching the search criteria are displayed
+
+**Actor:** TA
+
+**MSS**
+
+1. TA enters a search query by a specific field (e.g. by name or tag).
+2. TAConnect retrieves and displays matching contacts.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. No contacts match the query.
+
+    * 2a1. TAConnect informs TA that no matching contacts were found.
+    * Use case ends.
+
+* 3a. TA chooses to undo
+
+    * 3a1. TAConnect undo the change and displays the updated list.
+
+<ins> **Use case: UC06 - Organise Contacts Into New Groups** </ins>
+
+**Preconditions:** TA has at least one contact in their list
+
+**Guarantees:** Contacts matching the search criteria are displayed
+
+**Actor:** TA
+
+**MSS**
+
+1. TA selects multiple entries in the contact list and groups them into a new group.
+2. TAConnect organises the contacts into the new group.
+3. TAConnect shows the updated contact list with new group tags added to entries.
+    
+    Use case ends.
+
+**Extensions**
+
+* 1a. The number of selected contacts is less than 1.
+
+    * TAConnect informs TA that not enough contacts are selected.
+    * Use case ends.
 
 ### Non-Functional Requirements
 
