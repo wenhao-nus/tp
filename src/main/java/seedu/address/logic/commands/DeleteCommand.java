@@ -20,10 +20,11 @@ public class DeleteCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the person identified by the index number used in the displayed person list.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Parameters: INDEX (must be a positive integer)\n" + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Successfully deleted the following contact:\n"
+            + "Deleted Person: %1$s";
+
 
     public static final String MESSAGE_DELETE_INDEX_ERROR = "Error deleting contact: ";
 
@@ -39,7 +40,9 @@ public class DeleteCommand extends Command {
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(String.format(
+                    MESSAGE_DELETE_INDEX_ERROR + Messages.MESSAGE_INDEX_OUT_OF_BOUNDS + "\n%s",
+                    DeleteCommand.MESSAGE_USAGE));
         }
 
         Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
@@ -64,8 +67,6 @@ public class DeleteCommand extends Command {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .add("targetIndex", targetIndex)
-                .toString();
+        return new ToStringBuilder(this).add("targetIndex", targetIndex).toString();
     }
 }
