@@ -203,5 +203,8 @@ public class ParserUtilTest {
 
         assertEquals(expectedName, ParserUtil.parseName(VALID_NAME_WITH_EXTRA_INTERNAL_WHITESPACES));
         assertEquals(expectedName, ParserUtil.parseName(VALID_NAME_WITH_INTERNAL_TAB));
+        assertEquals(expectedName.hashCode(),
+                ParserUtil.parseName(VALID_NAME_WITH_EXTRA_INTERNAL_WHITESPACES).hashCode());
+        assertEquals(expectedName.hashCode(), ParserUtil.parseName(VALID_NAME_WITH_INTERNAL_TAB).hashCode());
     }
 }
