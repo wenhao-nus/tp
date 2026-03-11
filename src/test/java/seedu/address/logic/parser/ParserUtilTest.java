@@ -12,6 +12,7 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.InvalidIndexMessages;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -39,13 +40,55 @@ public class ParserUtilTest {
     private static final String VALID_NAME_WITH_INTERNAL_TAB = "Rachel\tWalker";
 
     @Test
-    public void parseIndex_invalidInput_throwsParseException() {
-        assertThrows(ParseException.class, () -> ParserUtil.parseIndex("10 a"));
+    public void parseIndex_missingIndex_throwsParseException() {
+        String expectedMessage = InvalidIndexMessages.MESSAGE_MISSING_INDEX;
+
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex(""));
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("   "));
     }
 
     @Test
-    public void parseIndex_outOfRangeInput_throwsParseException() {
-        assertThrows(ParseException.class, () -> ParserUtil.parseIndex(Long.toString(Integer.MAX_VALUE + 1)));
+    public void parseIndex_multipleIndices_throwsParseException() {
+        String expectedMessage = InvalidIndexMessages.MESSAGE_MULTIPLE_INDICES;
+
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("1 3"));
+    }
+
+    @Test
+    public void parseIndex_nonIntegerIndex_throwsParseException() {
+        String expectedMessage = InvalidIndexMessages.MESSAGE_INDEX_NON_INTEGER;
+
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("2.5"));
+    }
+
+    @Test
+    public void parseIndex_nonNumericIndex_throwsParseException() {
+        String expectedMessage = InvalidIndexMessages.MESSAGE_INDEX_NON_NUMERIC;
+
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("abc"));
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("1a"));
+    }
+
+    @Test
+    public void parseIndex_overflowIndex_throwsParseException() {
+        String expectedMessage = InvalidIndexMessages.MESSAGE_INDEX_OVERFLOW;
+
+        String overflowInput = Long.toString((long) Integer.MAX_VALUE + 1);
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex(overflowInput));
+    }
+
+    @Test
+    public void parseIndex_zeroIndex_throwsParseException() {
+        String expectedMessage = InvalidIndexMessages.MESSAGE_INDEX_ZERO;
+
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("0"));
+    }
+
+    @Test
+    public void parseIndex_negativeIndex_throwsParseException() {
+        String expectedMessage = InvalidIndexMessages.MESSAGE_INDEX_NEGATIVE;
+
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("-2"));
     }
 
     @Test
@@ -55,6 +98,9 @@ public class ParserUtilTest {
 
         // Leading and trailing whitespaces
         assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("  1  "));
+
+        // Leading zero
+        assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("01"));
     }
 
     @Test
@@ -194,6 +240,7 @@ public class ParserUtilTest {
 
         assertEquals(expectedTagSet, actualTagSet);
     }
+
     @Test
     public void parseAddress_extraWhitespaces_returnsSanitizedAddress() throws Exception {
         String addressWithSpaces = "  123,  Jurong   West  ";

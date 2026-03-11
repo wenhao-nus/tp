@@ -11,5 +11,5 @@ public class InvalidIndexMessages {
     public static final String MESSAGE_INDEX_NON_INTEGER = "Index cannot be non-integer";
     public static final String MESSAGE_INDEX_ZERO = "Index cannot be zero";
     public static final String MESSAGE_INDEX_NEGATIVE = "Index cannot be negative";
-
+    public static final String MESSAGE_INDEX_OVERFLOW = "Index exceeds the range of valid integers";
 }

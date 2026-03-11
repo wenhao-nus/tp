@@ -36,7 +36,13 @@ public class ParserUtil {
         checkNonInteger(trimmedIndexString);
         checkNonNumeric(trimmedIndexString);
 
-        int indexValue = Integer.parseInt(trimmedIndexString);
+        int indexValue;
+
+        try {
+            indexValue = Integer.parseInt(trimmedIndexString);
+        } catch (NumberFormatException e) {
+            throw new ParseException(InvalidIndexMessages.MESSAGE_INDEX_OVERFLOW);
+        }
 
         checkZeroIndex(indexValue);
         checkNegativeIndex(indexValue);
