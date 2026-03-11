@@ -12,6 +12,7 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.InvalidIndexMessages;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -40,39 +41,54 @@ public class ParserUtilTest {
 
     @Test
     public void parseIndex_missingIndex_throwsParseException() {
-        assertThrows(ParseException.class, () -> ParserUtil.parseIndex("")); // empty string
-        assertThrows(ParseException.class, () -> ParserUtil.parseIndex("   ")); // whitespaces only
+        String expectedMessage = InvalidIndexMessages.MESSAGE_MISSING_INDEX;
+
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex(""));
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("   "));
     }
 
     @Test
     public void parseIndex_multipleIndices_throwsParseException() {
-        assertThrows(ParseException.class, () -> ParserUtil.parseIndex("1 3"));
+        String expectedMessage = InvalidIndexMessages.MESSAGE_MULTIPLE_INDICES;
+
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("1 3"));
     }
 
     @Test
     public void parseIndex_nonIntegerIndex_throwsParseException() {
-        assertThrows(ParseException.class, () -> ParserUtil.parseIndex("2.5"));
+        String expectedMessage = InvalidIndexMessages.MESSAGE_INDEX_NON_INTEGER;
+
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("2.5"));
     }
 
     @Test
     public void parseIndex_nonNumericIndex_throwsParseException() {
-        assertThrows(ParseException.class, () -> ParserUtil.parseIndex("abc"));
-        assertThrows(ParseException.class, () -> ParserUtil.parseIndex("1a"));
+        String expectedMessage = InvalidIndexMessages.MESSAGE_INDEX_NON_NUMERIC;
+
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("abc"));
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("1a"));
     }
 
     @Test
     public void parseIndex_overflowIndex_throwsParseException() {
-        assertThrows(ParseException.class, () -> ParserUtil.parseIndex(Long.toString(Integer.MAX_VALUE + 1)));
+        String expectedMessage = InvalidIndexMessages.MESSAGE_INDEX_OVERFLOW;
+
+        String overflowInput = Long.toString((long) Integer.MAX_VALUE + 1);
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex(overflowInput));
     }
 
     @Test
     public void parseIndex_zeroIndex_throwsParseException() {
-        assertThrows(ParseException.class, () -> ParserUtil.parseIndex("0"));
+        String expectedMessage = InvalidIndexMessages.MESSAGE_INDEX_ZERO;
+
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("0"));
     }
 
     @Test
     public void parseIndex_negativeIndex_throwsParseException() {
-        assertThrows(ParseException.class, () -> ParserUtil.parseIndex("-2"));
+        String expectedMessage = InvalidIndexMessages.MESSAGE_INDEX_NEGATIVE;
+
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("-2"));
     }
 
     @Test
@@ -240,7 +256,7 @@ public class ParserUtilTest {
         assertEquals(expectedName, ParserUtil.parseName(VALID_NAME_WITH_EXTRA_INTERNAL_WHITESPACES));
         assertEquals(expectedName, ParserUtil.parseName(VALID_NAME_WITH_INTERNAL_TAB));
         assertEquals(expectedName.hashCode(),
-                                        ParserUtil.parseName(VALID_NAME_WITH_EXTRA_INTERNAL_WHITESPACES).hashCode());
+                ParserUtil.parseName(VALID_NAME_WITH_EXTRA_INTERNAL_WHITESPACES).hashCode());
         assertEquals(expectedName.hashCode(), ParserUtil.parseName(VALID_NAME_WITH_INTERNAL_TAB).hashCode());
     }
 }
