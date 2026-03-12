@@ -109,4 +109,14 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(LOWERCASE_LIST_COMMAND) instanceof ListCommand);
         assertTrue(parser.parseCommand(ALTERNATING_CASE_LIST_COMMAND) instanceof ListCommand);
     }
+
+    @Test
+    public void parseCommand_whitespaceHandling() throws Exception {
+        // Leading whitespaces
+        assertTrue(parser.parseCommand("   " + ListCommand.COMMAND_WORD) instanceof ListCommand);
+        // Trailing whitespaces
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + "   ") instanceof ListCommand);
+        // Both leading and trailing whitespaces
+        assertTrue(parser.parseCommand("   " + ListCommand.COMMAND_WORD + "   ") instanceof ListCommand);
+    }
 }
