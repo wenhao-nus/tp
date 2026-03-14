@@ -13,9 +13,8 @@ import seedu.address.model.person.Person;
  */
 public class ExpandedContactPanel extends UiPart<Region> {
     private static final String FXML = "ExpandedContactPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(ExpandedContactPanel.class);
-
     private static final String DEFAULT_MESSAGE = "Select any contact to see full details.";
+    private final Logger logger = LogsCenter.getLogger(ExpandedContactPanel.class);
 
     // Person whose contact details will be displayed
     private Person selectedContact;
