@@ -138,6 +138,11 @@ public class ParserUtilTest {
     }
 
     @Test
+    public void parsePhone_placeholderValue_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parsePhone("-"));
+    }
+
+    @Test
     public void parsePhone_validValueWithoutWhitespace_returnsPhone() throws Exception {
         Phone expectedPhone = new Phone(VALID_PHONE);
         assertEquals(expectedPhone, ParserUtil.parsePhone(VALID_PHONE));
@@ -181,6 +186,11 @@ public class ParserUtilTest {
     @Test
     public void parseEmail_invalidValue_throwsParseException() {
         assertThrows(ParseException.class, () -> ParserUtil.parseEmail(INVALID_EMAIL));
+    }
+
+    @Test
+    public void parseEmail_placeholderValue_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseEmail("-"));
     }
 
     @Test
