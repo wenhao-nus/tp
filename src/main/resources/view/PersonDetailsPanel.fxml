@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.FlowPane?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" spacing="10">
+  <HBox fx:id="fieldsContainer" spacing="5">
+    <VBox fx:id="fieldNamesColumn" minWidth="80" prefWidth="100"/>
+    <VBox fx:id="fieldValuesColumn" HBox.hgrow="ALWAYS" prefWidth="300"/>
+  </HBox>
+  <FlowPane fx:id="tags" />
+</VBox>
