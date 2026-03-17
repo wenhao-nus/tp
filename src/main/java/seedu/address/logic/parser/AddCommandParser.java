@@ -56,7 +56,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 ? ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get())
                 : new Address("-");
 
-        Telegram telegram = ParserUtil.parseTelegram(argMultimap.getValue(PREFIX_TELEGRAM).orElse(""));
+        Telegram telegram = ParserUtil.parseTelegram(argMultimap.getValue(PREFIX_TELEGRAM).orElse("-"));
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
         Person person = new Person(name, phone, email, address, telegram, tagList);

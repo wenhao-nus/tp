@@ -31,7 +31,7 @@ public class TelegramTest {
         assertFalse(Telegram.isValidTelegramHandle("@johndoe!!!"));
 
         // valid telegram handles
-        assertTrue(Telegram.isValidTelegramHandle(""));
+        assertTrue(Telegram.isValidTelegramHandle("-"));
         assertTrue(Telegram.isValidTelegramHandle("johndoe"));
         assertTrue(Telegram.isValidTelegramHandle("@johndoe"));
         assertTrue(Telegram.isValidTelegramHandle("@john_doe_123"));

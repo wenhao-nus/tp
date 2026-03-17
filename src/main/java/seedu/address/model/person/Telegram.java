@@ -25,7 +25,7 @@ public class Telegram {
         requireNonNull(telegramHandle);
         checkArgument(isValidTelegramHandle(telegramHandle), MESSAGE_CONSTRAINTS);
 
-        if (!telegramHandle.isEmpty() && !telegramHandle.startsWith("@")) {
+        if (!telegramHandle.equals("-") && !telegramHandle.startsWith("@")) {
             this.value = "@" + telegramHandle;
         } else {
             this.value = telegramHandle;
@@ -36,7 +36,7 @@ public class Telegram {
      * Returns true if a given string is a valid telegramHandle.
      */
     public static boolean isValidTelegramHandle(String test) {
-        return test.matches(VALIDATION_REGEX);
+        return test.equals("-") || test.matches(VALIDATION_REGEX);
     }
 
     @Override

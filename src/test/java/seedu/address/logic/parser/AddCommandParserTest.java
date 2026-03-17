@@ -145,7 +145,7 @@ public class AddCommandParserTest {
                 .withPhone("-")
                 .withEmail("-")
                 .withAddress("-")
-                .withTelegram("")
+                .withTelegram("-")
                 .withTags()
                 .build();
         assertParseSuccess(parser, NAME_DESC_AMY,
