@@ -132,6 +132,12 @@
     -fx-text-fill: #010504;
 }
 
+.cell_small_bolded_label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 13px;
+    -fx-text-fill: #010504;
+}
+
 .stack-pane {
      -fx-background-color: derive(#1d1d1d, 20%);
 }
@@ -349,4 +355,9 @@
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;
+}
+
+.field-missing {
+    -fx-text-fill: #808080;
+    -fx-font-style: italic;
 }

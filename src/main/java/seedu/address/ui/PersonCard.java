@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import seedu.address.model.person.Person;
 
 /**
@@ -33,13 +34,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
-    private Label phone;
-    @FXML
-    private Label address;
-    @FXML
-    private Label email;
-    @FXML
-    private Label telegram;
+    private VBox fieldsContainer;
     @FXML
     private FlowPane tags;
 
@@ -51,10 +46,13 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
-        phone.setText(person.getPhone().value);
-        address.setText(person.getAddress().value);
-        email.setText(person.getEmail().value);
-        telegram.setText(person.getTelegram().value);
+
+        fieldsContainer.getChildren().addAll(
+                new PersonCardField("Email", person.getEmail().value).getRoot(),
+                new PersonCardField("Telegram", person.getTelegram().value).getRoot(),
+                new PersonCardField("Phone", person.getPhone().value).getRoot()
+        );
+
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
