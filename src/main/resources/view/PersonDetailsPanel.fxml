@@ -7,14 +7,14 @@
 <?import javafx.scene.layout.FlowPane?>
 
 <VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" spacing="10">
-  <Label fx:id="name" styleClass="name-label"/>
+  <Label fx:id="name" styleClass="name-label" wrapText="true" />
 
-  <HBox fx:id="fieldsContainer" spacing="5" >
-    <VBox fx:id="fieldNamesColumn" styleClass="field-names-column" minWidth="80" prefWidth="100"/>
+  <HBox fx:id="fieldsContainer">
+    <VBox fx:id="fieldNamesColumn" styleClass="field-names-column" minWidth="80" prefWidth="100" />
 
     <ScrollPane fx:id="fieldValuesScrollPane" styleClass="field-values-scroll-pane" HBox.hgrow="ALWAYS"
         hbarPolicy="AS_NEEDED" vbarPolicy="NEVER" fitToHeight="true">
-      <VBox fx:id="fieldValuesColumn" styleClass="field-values-column"/>
+      <VBox fx:id="fieldValuesColumn" styleClass="field-values-column" />
     </ScrollPane>
   </HBox>
 

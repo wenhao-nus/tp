@@ -11,7 +11,7 @@
     -fx-text-fill: #342a01;
     -fx-font-weight: bold;
     -fx-font-size: 24px;
-    -fx-padding: 0 0 6 0;
+    -fx-padding: 0 0 10 0;
 }
 
 .field-values-scroll-pane {
@@ -55,11 +55,19 @@
 }
 
 .field-values-column {
-    -fx-padding: 0 0 20 0;
+    -fx-padding: 0 0 18 0;
 }
 
 .field-names-column .label.missing-field,
 .field-values-column .label.missing-field {
     -fx-font-style: italic;
     -fx-text-fill: derive(#1d1d1d, 40%);
+}
+
+#tags .label {
+    -fx-background-color: #775500ca;
+    -fx-padding: 3 6 3 6;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-font-size: 13px;
 }
