@@ -4,43 +4,47 @@
     -fx-border-color: #818181;
     -fx-border-radius: 10;
     -fx-border-width: 4;
-    -fx-padding: 18 22 18 22;
+    -fx-padding: 18 15 18 22;
 }
 
 .name-label {
     -fx-text-fill: #342a01;
     -fx-font-weight: bold;
     -fx-font-size: 24px;
-    -fx-padding: 0 0 10 0;
+    -fx-padding: 0 0 8 0;
 }
 
-.field-values-scroll-pane {
+.scroll-pane {
     -fx-background-color: #cacaca;
 }
 
-.field-values-scroll-pane .viewport {
+.scroll-pane .viewport {
     -fx-background-color: #cacaca;
-    -fx-background-insets: 0;
 }
 
-.field-values-scroll-pane .scroll-bar:horizontal {
+.scroll-pane .scroll-bar {
     -fx-background-color: #cacaca;
-    -fx-pref-height: 13;
+    -fx-pref-height: 14;
+    -fx-pref-width: 14;
 }
 
-.field-values-scroll-pane .scroll-bar:horizontal .thumb {
+.scroll-pane .thumb {
     -fx-background-color: derive(#cacaca, -60%);
     -fx-background-insets: 2;
 }
 
-.field-values-scroll-pane .scroll-bar:horizontal .increment-button,
-.field-values-scroll-pane .scroll-bar:horizontal .decrement-button {
+.scroll-pane .increment-button,
+.scroll-pane .decrement-button {
     -fx-background-color: transparent;
 }
 
-.field-values-scroll-pane .scroll-bar:horizontal .increment-arrow,
-.field-values-scroll-pane .scroll-bar:horizontal .decrement-arrow {
+.scroll-pane .increment-arrow,
+.scroll-pane .decrement-arrow {
     -fx-shape: " ";
+}
+
+.scroll-pane .corner {
+    -fx-background-color: transparent;
 }
 
 .field-names-column .label {
@@ -52,10 +56,6 @@
 .field-values-column .label {
     -fx-text-fill: derive(#1d1d1d, 20%);
     -fx-font-size: 16px;
-}
-
-.field-values-column {
-    -fx-padding: 0 0 18 0;
 }
 
 .field-names-column .label.missing-field,

@@ -191,5 +191,4 @@ public class PersonDetailsPanel extends UiPart<Region> {
     private boolean isMissingValue(String value) {
         return (value.isEmpty() || value.equals("-"));
     }
-
 }
