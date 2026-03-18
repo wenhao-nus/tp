@@ -69,16 +69,24 @@ public class Person {
     }
 
     /**
-     * Returns true if both persons have the same name.
+     * Returns true if both persons have the same email.
      * This defines a weaker notion of equality between two persons.
+     * The placeholder email "-" is not considered unique.
      */
     public boolean isSamePerson(Person otherPerson) {
         if (otherPerson == this) {
             return true;
         }
 
-        return otherPerson != null
-                && otherPerson.getName().equals(getName());
+        if (otherPerson == null) {
+            return false;
+        }
+
+        if (getEmail().value.equals("-") || otherPerson.getEmail().value.equals("-")) {
+            return false;
+        }
+
+        return otherPerson.getEmail().equals(getEmail());
     }
 
     /**
