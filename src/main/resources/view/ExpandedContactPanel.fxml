@@ -2,6 +2,6 @@
 
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
     fx:id="detailsContainer" stylesheets="@ExpandedContactPanel.css" styleClass="expanded-panel">
 </VBox>
