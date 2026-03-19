@@ -12,7 +12,7 @@ public class Telegram {
     public static final String MESSAGE_CONSTRAINTS =
             "Telegram handles must be 5-32 characters long, can only contain alphanumeric characters or underscores, "
                     + "and can optionally start with '@'.";
-    public static final String VALIDATION_REGEX = "^$|^@?[a-zA-Z0-9_]{5,32}$";
+    public static final String VALIDATION_REGEX = "^@?[a-zA-Z0-9_]{5,32}$";
 
     public final String value;
 
@@ -23,13 +23,18 @@ public class Telegram {
      */
     public Telegram(String telegramHandle) {
         requireNonNull(telegramHandle);
-        checkArgument(isValidTelegramHandle(telegramHandle), MESSAGE_CONSTRAINTS);
 
-        if (!telegramHandle.equals("-") && !telegramHandle.startsWith("@")) {
-            this.value = "@" + telegramHandle;
-        } else {
-            this.value = telegramHandle;
+        String cleanHandle = telegramHandle;
+
+        if (!cleanHandle.equals("-") && cleanHandle.startsWith("@")) {
+            cleanHandle = cleanHandle.substring(1);
         }
+
+        if (!cleanHandle.equals("-")) {
+            checkArgument(isValidTelegramHandle(cleanHandle), MESSAGE_CONSTRAINTS);
+        }
+
+        this.value = cleanHandle;
     }
 
     /**

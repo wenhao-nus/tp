@@ -293,4 +293,11 @@ public class ParserUtilTest {
         Telegram expectedTelegram = new Telegram("@johndoe");
         assertEquals(expectedTelegram, ParserUtil.parseTelegram(telegramWithWhitespace));
     }
+
+    @Test
+    public void parseTelegram_emptyValue_returnsTelegramPlaceholder() throws Exception {
+        Telegram expectedTelegram = new Telegram("-");
+        assertEquals(expectedTelegram, ParserUtil.parseTelegram(""));
+        assertEquals(expectedTelegram, ParserUtil.parseTelegram("  \n  "));
+    }
 }

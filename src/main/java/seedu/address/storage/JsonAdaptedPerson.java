@@ -106,14 +106,15 @@ class JsonAdaptedPerson {
             throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
         }
         final Address modelAddress = new Address(address);
-        final Telegram modelTelegram;
+
         if (telegram == null) {
-            modelTelegram = new Telegram("");
-        } else if (!Telegram.isValidTelegramHandle(telegram)) {
-            throw new IllegalValueException(Telegram.MESSAGE_CONSTRAINTS);
-        } else {
-            modelTelegram = new Telegram(telegram);
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Telegram.class.getSimpleName()));
         }
+        if (!telegram.equals("-") && !Telegram.isValidTelegramHandle(telegram)) {
+            throw new IllegalValueException(Telegram.MESSAGE_CONSTRAINTS);
+        }
+        final Telegram modelTelegram = new Telegram(telegram);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTelegram, modelTags);

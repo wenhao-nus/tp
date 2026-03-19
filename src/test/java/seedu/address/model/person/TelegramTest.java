@@ -13,29 +13,32 @@ public class TelegramTest {
         assertThrows(NullPointerException.class, () -> new Telegram(null));
     }
 
+
+
     @Test
     public void constructor_invalidTelegram_throwsIllegalArgumentException() {
         String invalidTelegram = "!!!invalid_tg";
         assertThrows(IllegalArgumentException.class, () -> new Telegram(invalidTelegram));
+
+        assertThrows(IllegalArgumentException.class, () -> new Telegram(""));
+
+        assertThrows(IllegalArgumentException.class, () -> new Telegram("@"));
     }
 
     @Test
     public void isValidTelegramHandle() {
-        // null telegram handle
         assertThrows(NullPointerException.class, () -> Telegram.isValidTelegramHandle(null));
 
         // invalid telegram handles
+        assertFalse(Telegram.isValidTelegramHandle(""));
+        assertFalse(Telegram.isValidTelegramHandle("@"));
         assertFalse(Telegram.isValidTelegramHandle("john doe"));
         assertFalse(Telegram.isValidTelegramHandle("john"));
-        assertFalse(Telegram.isValidTelegramHandle("john@doe"));
-        assertFalse(Telegram.isValidTelegramHandle("@johndoe!!!"));
 
         // valid telegram handles
-        assertTrue(Telegram.isValidTelegramHandle("-"));
         assertTrue(Telegram.isValidTelegramHandle("johndoe"));
-        assertTrue(Telegram.isValidTelegramHandle("@johndoe"));
-        assertTrue(Telegram.isValidTelegramHandle("@john_doe_123"));
-        assertTrue(Telegram.isValidTelegramHandle("12345"));
+        assertTrue(Telegram.isValidTelegramHandle("john_doe_123"));
+        assertTrue(Telegram.isValidTelegramHandle("123456"));
     }
 
     @Test
