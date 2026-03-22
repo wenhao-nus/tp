@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import static seedu.address.model.person.Telegram.TELEGRAM_PREFIX;
 import static seedu.address.ui.PersonDetailsPanel.EMPTY_FIELD_VALUE;
 
 import javafx.fxml.FXML;
@@ -28,16 +29,25 @@ public class PersonCardField extends UiPart<Region> {
     public PersonCardField(String fieldType, String value) {
         super(FXML);
         this.fieldType.setText(fieldType + ":");
+        this.value.setText(formatValue(fieldType, value));
         if (value.equals("-")) {
-            this.value.setText(EMPTY_FIELD_VALUE);
-            this.fieldType.getStyleClass().add("field-missing");
-            this.value.getStyleClass().add("field-missing");
-        } else {
-            if (fieldType.equals("Telegram")) {
-                this.value.setText("@" + value);
-            } else {
-                this.value.setText(value);
-            }
+            applyMissingFieldStyle();
         }
+    }
+
+    private String formatValue(String fieldType, String value) {
+        if (value.equals("-")) {
+            return EMPTY_FIELD_VALUE;
+        }
+        if (fieldType.equals("Telegram")) {
+            return TELEGRAM_PREFIX + value;
+        } else {
+            return value;
+        }
+    }
+
+    private void applyMissingFieldStyle() {
+        this.fieldType.getStyleClass().add("field-missing");
+        this.value.getStyleClass().add("field-missing");
     }
 }

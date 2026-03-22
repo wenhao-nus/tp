@@ -92,7 +92,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
 
         String[] fieldValues = {
                 person.getEmail().value,
-                "@" + person.getTelegram().value,
+                person.getTelegram().value,
                 person.getPhone().value,
                 person.getAddress().value
         };
