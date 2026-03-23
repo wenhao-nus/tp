@@ -11,7 +11,7 @@
     -fx-text-fill: #342a01;
     -fx-font-weight: bold;
     -fx-font-size: 24px;
-    -fx-padding: 0 0 8 0;
+    -fx-padding: 0 0 10 0;
 }
 
 .shared-scroll-pane {
@@ -24,12 +24,12 @@
 
 .shared-scroll-pane .scroll-bar {
     -fx-background-color: #cacaca;
-    -fx-pref-height: 12;
-    -fx-pref-width: 12;
+    -fx-pref-height: 11;
+    -fx-pref-width: 11;
 }
 
 .shared-scroll-pane .thumb {
-    -fx-background-color: derive(#cacaca, -50%);
+    -fx-background-color: derive(#cacaca, -40%);
     -fx-background-insets: 1;
 }
 

@@ -6,8 +6,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.FlowPane?>
 
-<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" spacing="6">
-  <Label fx:id="name" styleClass="name-label" wrapText="true" />
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" spacing="5">
+  <ScrollPane fx:id="nameScrollPane" styleClass="shared-scroll-pane" fitToWidth="false" fitToHeight="true"
+      hbarPolicy="AS_NEEDED" vbarPolicy="NEVER">
+    <Label fx:id="name" styleClass="name-label" />
+  </ScrollPane>
 
   <HBox fx:id="fieldsContainer" spacing="6">
     <VBox fx:id="fieldNamesColumn" styleClass="field-names-column" minWidth="80" />
