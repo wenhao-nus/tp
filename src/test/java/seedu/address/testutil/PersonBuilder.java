@@ -1,6 +1,8 @@
 package seedu.address.testutil;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import seedu.address.model.person.Address;
@@ -9,6 +11,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Telegram;
+import seedu.address.model.person.TutInfo;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -29,6 +32,7 @@ public class PersonBuilder {
     private Address address;
     private Telegram telegram;
     private Set<Tag> tags;
+    private List<TutInfo> tutInfos;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -40,6 +44,7 @@ public class PersonBuilder {
         address = new Address(DEFAULT_ADDRESS);
         telegram = new Telegram(DEFAULT_TELEGRAM);
         tags = new HashSet<>();
+        tutInfos = new ArrayList<>();
     }
 
     /**
@@ -52,6 +57,7 @@ public class PersonBuilder {
         address = personToCopy.getAddress();
         telegram = personToCopy.getTelegram();
         tags = new HashSet<>(personToCopy.getTags());
+        tutInfos = new ArrayList<>(personToCopy.getTutInfos());
     }
 
     /**
@@ -102,8 +108,16 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code List<TutInfo>} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withTutInfos(List<TutInfo> tutInfos) {
+        this.tutInfos = new ArrayList<>(tutInfos);
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, telegram, tags);
+        return new Person(name, phone, email, address, telegram, tags, tutInfos);
     }
 
 }
