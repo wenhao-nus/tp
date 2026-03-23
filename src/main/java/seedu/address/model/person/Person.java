@@ -2,8 +2,10 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -26,18 +28,21 @@ public class Person {
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
     private final Telegram telegram;
+    private final List<TutInfo> tutInfos = new ArrayList<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Telegram telegram, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, telegram, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Telegram telegram, Set<Tag> tags,
+                  List<TutInfo> tutInfos) {
+        requireAllNonNull(name, phone, email, address, telegram, tags, tutInfos);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.telegram = telegram;
         this.tags.addAll(tags);
+        this.tutInfos.addAll(tutInfos);
     }
 
     public Name getName() {
@@ -66,6 +71,14 @@ public class Person {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
+    }
+
+    /**
+     * Returns an immutable tutInfo list, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public List<TutInfo> getTutInfos() {
+        return Collections.unmodifiableList(tutInfos);
     }
 
     /**
@@ -110,13 +123,14 @@ public class Person {
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
                 && otherPerson.getTelegram().equals(getTelegram())
-                && tags.equals(otherPerson.tags);
+                && tags.equals(otherPerson.tags)
+                && tutInfos.equals(otherPerson.tutInfos);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, telegram, tags);
+        return Objects.hash(name, phone, email, address, telegram, tags, tutInfos);
     }
 
     @Override
@@ -128,6 +142,7 @@ public class Person {
                 .add("address", address)
                 .add("telegram", telegram)
                 .add("tags", tags)
+                .add("tutInfos", tutInfos)
                 .toString();
     }
 

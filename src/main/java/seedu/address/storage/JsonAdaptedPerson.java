@@ -16,6 +16,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Telegram;
+import seedu.address.model.person.TutInfo;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -31,6 +32,7 @@ class JsonAdaptedPerson {
     private final String address;
     private final String telegram;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final List<JsonAdaptedTutInfo> tutInfos = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -39,7 +41,8 @@ class JsonAdaptedPerson {
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String
                                          address, @JsonProperty("telegram") String telegram,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+            @JsonProperty("tags") List<JsonAdaptedTag> tags,
+            @JsonProperty("tutInfos") List<JsonAdaptedTutInfo> tutInfos) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -47,6 +50,9 @@ class JsonAdaptedPerson {
         this.telegram = telegram;
         if (tags != null) {
             this.tags.addAll(tags);
+        }
+        if (tutInfos != null) {
+            this.tutInfos.addAll(tutInfos);
         }
     }
 
@@ -62,6 +68,9 @@ class JsonAdaptedPerson {
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+        tutInfos.addAll(source.getTutInfos().stream()
+                .map(JsonAdaptedTutInfo::new)
+                .collect(Collectors.toList()));
     }
 
     /**
@@ -73,6 +82,11 @@ class JsonAdaptedPerson {
         final List<Tag> personTags = new ArrayList<>();
         for (JsonAdaptedTag tag : tags) {
             personTags.add(tag.toModelType());
+        }
+
+        final List<TutInfo> personTutInfos = new ArrayList<>();
+        for (JsonAdaptedTutInfo tutInfo : tutInfos) {
+            personTutInfos.add(tutInfo.toModelType());
         }
 
         if (name == null) {
@@ -117,7 +131,7 @@ class JsonAdaptedPerson {
         final Telegram modelTelegram = new Telegram(telegram);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTelegram, modelTags);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTelegram, modelTags, personTutInfos);
     }
 
 }
