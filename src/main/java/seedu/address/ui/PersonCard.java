@@ -57,7 +57,8 @@ public class PersonCard extends UiPart<Region> {
 
         person.getTutInfos()
                 .forEach(tutInfo -> tutInfosContainer
-                        .getChildren().add(new TutInfoField(tutInfo.getCourseCode(), tutInfo.getTutorialCode()).getRoot()));
+                        .getChildren().add(
+                                new TutInfoField(tutInfo.getCourseCode(), tutInfo.getTutorialCode()).getRoot()));
 
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
