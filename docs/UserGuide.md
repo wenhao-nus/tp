@@ -3,7 +3,12 @@ layout: page
 title: User Guide
 ---
 
-AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB3 can get your contact management tasks done faster than traditional GUI apps.
+**TAConnect** is a **desktop app for managing contacts, optimized for use via a Command Line Interface (CLI)** while still providing the benefits of a Graphical User Interface (GUI). It helps users quickly organize contacts into tutorial groups, tags, and custom fields (e.g., Telegram handles), with only names being mandatory. Fast CLI commands allow adding, viewing, editing, and searching contacts efficiently, while the GUI displays full details and organized lists.
+
+**Target Users:** NUS Computer Science TAs
+
+**Assumptions:** Users have basic computer literacy and are familiar with command-line operations.
+
 
 * Table of Contents
 {:toc}
@@ -31,6 +36,8 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tg/@johndoe` : Adds a contact named `John Doe` to the Address Book.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
+
+   * `view 2` : Displays the full details of the second contact in the current contact list.
 
    * `clear` : Deletes all contacts.
 
