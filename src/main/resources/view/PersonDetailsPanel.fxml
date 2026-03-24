@@ -2,11 +2,12 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" spacing="5">
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" spacing="3">
   <ScrollPane fx:id="nameScrollPane" styleClass="shared-scroll-pane" fitToWidth="false" fitToHeight="true"
       hbarPolicy="AS_NEEDED" vbarPolicy="NEVER">
     <Label fx:id="name" styleClass="name-label" />
@@ -26,8 +27,10 @@
     </ScrollPane>
   </HBox>
 
-  <ScrollPane fx:id="tagsScrollPane" styleClass="shared-scroll-pane" fitToWidth="true" fitToHeight="true"
-      hbarPolicy="AS_NEEDED" vbarPolicy="AS_NEEDED">
-    <FlowPane fx:id="tags" styleClass="flow-pane" maxHeight="55" prefHeight="55" />
+  <ScrollPane fx:id="tagsScrollPane" styleClass="shared-scroll-pane, tags-scroll-pane"
+      fitToWidth="true" fitToHeight="false" hbarPolicy="AS_NEEDED" vbarPolicy="AS_NEEDED">
+    <FlowPane fx:id="tags" styleClass="tags-flow-pane" />
   </ScrollPane>
+
+  <Separator styleClass="separating-line" />
 </VBox>

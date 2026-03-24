@@ -25,6 +25,8 @@ public class PersonDetailsPanel extends UiPart<Region> {
 
     private static final String[] FIELD_NAMES = { "Email", "Telegram", "Phone", "Address" };
 
+    private static final double TAGS_FLOWPANE_MAX_HEIGHT = 55;
+
     private final Logger logger = LogsCenter.getLogger(PersonDetailsPanel.class);
 
     private final Person person;
@@ -126,7 +128,6 @@ public class PersonDetailsPanel extends UiPart<Region> {
         tags.getChildren().clear();
 
         boolean hasTags = !(person.getTags().isEmpty());
-
         tagsScrollPane.setVisible(hasTags);
         tagsScrollPane.setManaged(hasTags);
 
@@ -140,6 +141,16 @@ public class PersonDetailsPanel extends UiPart<Region> {
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+
+        limitTagsHeight();
+    }
+
+    /**
+     * Limits the height of the {@code tags} to {@code TAGS_FLOWPANE_MAX_HEIGHT}.
+     */
+    private void limitTagsHeight() {
+        tags.heightProperty().addListener((observable, oldHeight, newHeight)
+                -> tags.setPrefHeight(Math.min(newHeight.doubleValue(), TAGS_FLOWPANE_MAX_HEIGHT)));
     }
 
     /**

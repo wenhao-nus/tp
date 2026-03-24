@@ -47,8 +47,16 @@
     -fx-background-color: transparent;
 }
 
+.course-tutorial-label {
+    -fx-background-color: rgb(225, 191, 0);
+    -fx-padding: 3 6 3 6;
+    -fx-background-radius: 4;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+
 .fields-container {
-    -fx-padding: 8 0 0 0;
+    -fx-padding: 6 0 4 0;
 }
 
 .field-names-column .label {
@@ -68,6 +76,10 @@
     -fx-text-fill: derive(#1d1d1d, 40%);
 }
 
+.tags-scroll-pane {
+    -fx-padding: 0 0 6 0;
+}
+
 #tags .label {
     -fx-background-color: #775500ca;
     -fx-padding: 3 6 3 6;
@@ -75,14 +87,11 @@
     -fx-font-size: 13px;
 }
 
-.flow-pane {
+.tags-flow-pane {
     -fx-padding: 0 4 0 0;
 }
 
-.course-tutorial-label {
-    -fx-background-color: rgb(225, 191, 0);
-    -fx-padding: 3 6 3 6;
-    -fx-background-radius: 4;
-    -fx-text-fill: white;
-    -fx-font-size: 14px;
+.separating-line {
+    -fx-background-color: black;
+    -fx-pref-height: 2px;
 }
