@@ -55,6 +55,41 @@ public class UnattendCommandTest {
     }
 
     @Test
+    public void execute_unattendMultipleCourses_success() {
+        Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        String course1 = "CS1101S";
+        String course2 = "CS2103T";
+        int week = 1;
+
+        // Setup: Enrol the person in two courses
+        TutInfo tutInfo1 = new TutInfo(course1, "T01");
+        TutInfo tutInfo2 = new TutInfo(course2, "T02").setAttendance(week, true);
+        List<TutInfo> tutInfos = new ArrayList<>();
+        tutInfos.add(tutInfo1);
+        tutInfos.add(tutInfo2);
+
+        Person personWithCourses = new PersonBuilder(personToEdit).withTutInfos(tutInfos).build();
+        model.setPerson(personToEdit, personWithCourses);
+
+        // Unattend the second course
+        UnattendCommand unattendCommand = new UnattendCommand(INDEX_FIRST_PERSON, course2, week);
+
+        TutInfo expectedTutInfo2 = tutInfo2.setAttendance(week, false);
+        List<TutInfo> expectedTutInfos = new ArrayList<>();
+        expectedTutInfos.add(tutInfo1);
+        expectedTutInfos.add(expectedTutInfo2);
+        Person expectedPerson = new PersonBuilder(personWithCourses).withTutInfos(expectedTutInfos).build();
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(personWithCourses, expectedPerson);
+
+        String expectedMessage = String.format(UnattendCommand.MESSAGE_SUCCESS, INDEX_FIRST_PERSON.getOneBased(),
+                personWithCourses.getName(), course2, "T02", week);
+
+        assertCommandSuccess(unattendCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
     public void execute_courseNotFound_throwsCommandException() {
         String courseCode = "CS2103T";
         int week = 1;
