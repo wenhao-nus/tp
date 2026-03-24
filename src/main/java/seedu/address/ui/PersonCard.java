@@ -55,7 +55,8 @@ public class PersonCard extends UiPart<Region> {
                 new PersonCardField("Phone", person.getPhone().value).getRoot()
         );
 
-        person.getTutInfos()
+        person.getTutInfos().stream()
+                .sorted(Comparator.comparing(tutInfo -> tutInfo.getCourseCode().toUpperCase()))
                 .forEach(tutInfo -> tutInfosContainer
                         .getChildren().add(
                                 new TutInfoField(tutInfo.getCourseCode(), tutInfo.getTutorialCode()).getRoot()));

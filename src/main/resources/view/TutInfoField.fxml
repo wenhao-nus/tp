@@ -4,6 +4,6 @@
 <?import javafx.scene.layout.HBox?>
 
 <HBox spacing="4" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
-    <Label fx:id="courseName" styleClass="cell_small_bolded_label"/>
-    <Label fx:id="tutName" styleClass="cell_small_label"/>
+    <Label fx:id="courseCode" styleClass="cell_small_bolded_label"/>
+    <Label fx:id="tutCode" styleClass="cell_small_label"/>
 </HBox>

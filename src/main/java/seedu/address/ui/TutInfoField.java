@@ -12,19 +12,19 @@ public class TutInfoField extends UiPart<Region> {
     private static final String FXML = "TutInfoField.fxml";
 
     @FXML
-    private Label courseName;
+    private Label courseCode;
     @FXML
-    private Label tutName;
+    private Label tutCode;
 
     /**
      * Creates a {@code TutInfoField} with the given course name and tut name to display.
      *
-     * @param courseName The label describing the field (e.g. "Phone", "Address").
-     * @param tutName The value to display.
+     * @param courseCode The label describing the field (e.g. "Phone", "Address").
+     * @param tutCode The value to display.
      */
-    public TutInfoField(String courseName, String tutName) {
+    public TutInfoField(String courseCode, String tutCode) {
         super(FXML);
-        this.courseName.setText(courseName);
-        this.tutName.setText(tutName);
+        this.courseCode.setText(courseCode);
+        this.tutCode.setText(tutCode);
     }
 }
