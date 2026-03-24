@@ -1,8 +1,11 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
@@ -10,6 +13,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.Messages;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -57,5 +62,43 @@ public class UnattendCommandTest {
         String expectedMessage = String.format(UnattendCommand.MESSAGE_COURSE_NOT_FOUND, courseCode);
 
         assertCommandFailure(unattendCommand, model, expectedMessage);
+    }
+
+    @Test
+    public void execute_invalidIndex_throwsCommandException() {
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        UnattendCommand unattendCommand = new UnattendCommand(outOfBoundIndex, "CS2103T", 1);
+
+        assertCommandFailure(unattendCommand, model, Messages.MESSAGE_INDEX_OUT_OF_BOUNDS);
+    }
+
+    @Test
+    public void equals() {
+        UnattendCommand unattendFirstCommand = new UnattendCommand(INDEX_FIRST_PERSON, "CS2103T", 1);
+        UnattendCommand unattendSecondCommand = new UnattendCommand(INDEX_SECOND_PERSON, "CS2103T", 1);
+        UnattendCommand unattendThirdCommand = new UnattendCommand(INDEX_FIRST_PERSON, "CS1231S", 1);
+        UnattendCommand unattendFourthCommand = new UnattendCommand(INDEX_FIRST_PERSON, "CS2103T", 2);
+
+        // same object -> returns true
+        assertTrue(unattendFirstCommand.equals(unattendFirstCommand));
+
+        // same values -> returns true
+        UnattendCommand unattendFirstCommandCopy = new UnattendCommand(INDEX_FIRST_PERSON, "CS2103T", 1);
+        assertTrue(unattendFirstCommand.equals(unattendFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(unattendFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(unattendFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(unattendFirstCommand.equals(unattendSecondCommand));
+
+        // different course code -> returns false
+        assertFalse(unattendFirstCommand.equals(unattendThirdCommand));
+
+        // different week -> returns false
+        assertFalse(unattendFirstCommand.equals(unattendFourthCommand));
     }
 }

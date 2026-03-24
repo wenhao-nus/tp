@@ -38,6 +38,12 @@ public class UnattendCommandParserTest {
 
     @Test
     public void parse_invalidValue_failure() {
+        // invalid index
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnattendCommand.MESSAGE_USAGE);
+        assertParseFailure(parser, " a " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK + "1", expectedMessage);
+        assertParseFailure(parser, " 0 " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK + "1", expectedMessage);
+        assertParseFailure(parser, " -1 " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK + "1", expectedMessage);
+
         // invalid week
         assertParseFailure(parser, " 1 " + PREFIX_COURSE + "CS2103T "
                 + PREFIX_WEEK + "0", "Week must be between 1 and 13");

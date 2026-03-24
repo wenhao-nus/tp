@@ -1,8 +1,11 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
@@ -10,6 +13,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.Messages;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -58,5 +63,43 @@ public class AttendCommandTest {
         String expectedMessage = String.format(AttendCommand.MESSAGE_COURSE_NOT_FOUND, courseCode);
 
         assertCommandFailure(attendCommand, model, expectedMessage);
+    }
+
+    @Test
+    public void execute_invalidIndex_throwsCommandException() {
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        AttendCommand attendCommand = new AttendCommand(outOfBoundIndex, "CS2103T", 1);
+
+        assertCommandFailure(attendCommand, model, Messages.MESSAGE_INDEX_OUT_OF_BOUNDS);
+    }
+
+    @Test
+    public void equals() {
+        AttendCommand attendFirstCommand = new AttendCommand(INDEX_FIRST_PERSON, "CS2103T", 1);
+        AttendCommand attendSecondCommand = new AttendCommand(INDEX_SECOND_PERSON, "CS2103T", 1);
+        AttendCommand attendThirdCommand = new AttendCommand(INDEX_FIRST_PERSON, "CS1231S", 1);
+        AttendCommand attendFourthCommand = new AttendCommand(INDEX_FIRST_PERSON, "CS2103T", 2);
+
+        // same object -> returns true
+        assertTrue(attendFirstCommand.equals(attendFirstCommand));
+
+        // same values -> returns true
+        AttendCommand attendFirstCommandCopy = new AttendCommand(INDEX_FIRST_PERSON, "CS2103T", 1);
+        assertTrue(attendFirstCommand.equals(attendFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(attendFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(attendFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(attendFirstCommand.equals(attendSecondCommand));
+
+        // different course code -> returns false
+        assertFalse(attendFirstCommand.equals(attendThirdCommand));
+
+        // different week -> returns false
+        assertFalse(attendFirstCommand.equals(attendFourthCommand));
     }
 }
