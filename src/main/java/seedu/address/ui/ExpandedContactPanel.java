@@ -32,12 +32,15 @@ public class ExpandedContactPanel extends UiPart<Region> {
     }
 
     /**
-     * Updates the panel with the selected {@code person} to show the contact details and attendance record.
-     * Displays default message if the selected contact is null.
+     * Updates the panel to display the details and attendance records of the {@code selectedPerson}.
+     * Displays default message if the {@code selectedPerson} is null.
+     * Applies styling to highlight the panel only when a person is selected.
      *
      * @param selectedPerson The person who is currently selected in the contact list.
      */
     public void setSelectedPerson(Person selectedPerson) {
+        detailsContainer.getStyleClass().remove("contact-selected");
+
         if (selectedPerson == null) {
             logger.fine("Showing default details due to no contact selected");
 
@@ -47,6 +50,8 @@ public class ExpandedContactPanel extends UiPart<Region> {
 
             showPersonDetails(selectedPerson);
             showAttendanceSection(selectedPerson);
+
+            detailsContainer.getStyleClass().add("contact-selected");
         }
     }
 

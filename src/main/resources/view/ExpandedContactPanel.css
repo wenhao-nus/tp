@@ -4,7 +4,12 @@
     -fx-border-color: #818181;
     -fx-border-radius: 10;
     -fx-border-width: 4;
-    -fx-padding: 18 18 12 26;
+    -fx-padding: 15 18 12 26;
+}
+
+.expanded-panel.contact-selected {
+    -fx-border-color:derive(#342a01, 70%);
+    -fx-border-width: 6;
 }
 
 .name-label {
