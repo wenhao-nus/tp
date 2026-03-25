@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
@@ -37,13 +38,17 @@ public class EnrollCommandTest {
         expectedTutInfos.add(validTutInfo);
         Person expectedPerson = new PersonBuilder(personToEdit).withTutInfos(expectedTutInfos).build();
 
+        model.setPersonToShow(null);
+
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(personToEdit, expectedPerson);
+        expectedModel.setPersonToShow(expectedPerson);
 
         String expectedMessage = String.format(EnrollCommand.MESSAGE_SUCCESS,
                 validTutInfo.getCourseCode(), validTutInfo.getTutorialCode());
 
         assertCommandSuccess(enrollCommand, model, expectedMessage, expectedModel);
+        assertEquals(expectedModel.getPersonToShow(), model.getPersonToShow());
     }
 
     @Test

@@ -23,6 +23,7 @@ public class ListCommand extends Command {
             // Always show the first person in the list
             model.setPersonToShow(model.getFilteredPersonList().get(0));
         } else {
+            // No one to show in empty list
             model.setPersonToShow(null);
         }
 

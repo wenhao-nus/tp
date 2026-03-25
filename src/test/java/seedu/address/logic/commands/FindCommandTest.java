@@ -59,9 +59,14 @@ public class FindCommandTest {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
         NameContainsKeywordsPredicate predicate = preparePredicate(" ");
         FindCommand command = new FindCommand(predicate);
+
+        model.setPersonToShow(FIONA);
         expectedModel.updateFilteredPersonList(predicate);
+        expectedModel.setPersonToShow(null); // No person to show when filtered list is empty
+
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(Collections.emptyList(), model.getFilteredPersonList());
+        assertEquals(expectedModel.getPersonToShow(), model.getPersonToShow());
     }
 
     @Test
@@ -69,9 +74,15 @@ public class FindCommandTest {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         NameContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz");
         FindCommand command = new FindCommand(predicate);
+
+        model.setPersonToShow(FIONA);
         expectedModel.updateFilteredPersonList(predicate);
+        // Shows the first person in filtered list as it is not empty
+        expectedModel.setPersonToShow(CARL);
+
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getFilteredPersonList());
+        assertEquals(expectedModel.getPersonToShow(), model.getPersonToShow());
     }
 
     @Test

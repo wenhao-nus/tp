@@ -43,10 +43,14 @@ public class EditCommandTest {
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
 
+        model.setPersonToShow(null);
+
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(model.getFilteredPersonList().get(0), editedPerson);
+        expectedModel.setPersonToShow(editedPerson); // Always show editedPerson
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        assertEquals(expectedModel.getPersonToShow(), model.getPersonToShow());
     }
 
     @Test
@@ -64,10 +68,14 @@ public class EditCommandTest {
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
 
+        model.setPersonToShow(null);
+
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(lastPerson, editedPerson);
+        expectedModel.setPersonToShow(editedPerson);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        assertEquals(expectedModel.getPersonToShow(), model.getPersonToShow());
     }
 
     @Test
@@ -77,9 +85,13 @@ public class EditCommandTest {
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
 
+        model.setPersonToShow(null);
+
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPersonToShow(editedPerson);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        assertEquals(expectedModel.getPersonToShow(), model.getPersonToShow());
     }
 
     @Test
@@ -93,10 +105,14 @@ public class EditCommandTest {
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
 
+        model.setPersonToShow(editedPerson); // Edited person is the current showing person
+
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(model.getFilteredPersonList().get(0), editedPerson);
+        expectedModel.setPersonToShow(editedPerson); // Shows same person with edited field
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        assertEquals(expectedModel.getPersonToShow(), model.getPersonToShow());
     }
 
     @Test

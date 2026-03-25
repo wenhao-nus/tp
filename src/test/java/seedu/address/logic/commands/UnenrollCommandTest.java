@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
@@ -31,25 +32,29 @@ public class UnenrollCommandTest {
     public void execute_unenrollUnfilteredList_success() {
         Person originalPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         TutInfo tutInfoToEnroll = new TutInfo("CS2103T", "T01");
+
         List<TutInfo> initialTutInfos = new ArrayList<>(originalPerson.getTutInfos());
         initialTutInfos.add(tutInfoToEnroll);
         Person personWithCourse = new PersonBuilder(originalPerson).withTutInfos(initialTutInfos).build();
 
         model.setPerson(originalPerson, personWithCourse);
+        model.setPersonToShow(null);
 
         UnenrollCommand unenrollCommand = new UnenrollCommand(INDEX_FIRST_PERSON, "CS2103T");
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(personWithCourse, originalPerson);
+        expectedModel.setPersonToShow(originalPerson);
 
         String expectedMessage = String.format(UnenrollCommand.MESSAGE_SUCCESS, "CS2103T");
 
         assertCommandSuccess(unenrollCommand, model, expectedMessage, expectedModel);
+        assertEquals(expectedModel.getPersonToShow(), model.getPersonToShow());
     }
 
     @Test
     public void execute_notEnrolled_throwsCommandException() {
-        Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
 
         String courseToRemove = "CS2103T";
         UnenrollCommand unenrollCommand = new UnenrollCommand(INDEX_FIRST_PERSON, courseToRemove);

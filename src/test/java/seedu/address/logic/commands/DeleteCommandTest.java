@@ -18,6 +18,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
+import seedu.address.testutil.PersonBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for
@@ -35,10 +36,16 @@ public class DeleteCommandTest {
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS,
                 Messages.format(personToDelete));
 
+        model.setPersonToShow(personToDelete);
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
         expectedModel.deletePerson(personToDelete);
 
+        // personToShow will be cleared to null as the person shown is deleted
+        expectedModel.setPersonToShow(null);
+
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+        assertEquals(expectedModel.getPersonToShow(), model.getPersonToShow());
     }
 
     @Test
@@ -47,7 +54,7 @@ public class DeleteCommandTest {
         DeleteCommand deleteCommand = new DeleteCommand(outOfBoundIndex);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_INDEX_ERROR
-                                        + Messages.MESSAGE_INDEX_OUT_OF_BOUNDS + "\n%s", DeleteCommand.MESSAGE_USAGE);
+                + Messages.MESSAGE_INDEX_OUT_OF_BOUNDS + "\n%s", DeleteCommand.MESSAGE_USAGE);
 
         assertCommandFailure(deleteCommand, model, expectedMessage);
     }
@@ -62,11 +69,18 @@ public class DeleteCommandTest {
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS,
                 Messages.format(personToDelete));
 
+        Person personToShow = new PersonBuilder().withName("NOT THE DELETED PERSON").build();
+        model.setPersonToShow(personToShow);
+
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
         showNoPerson(expectedModel);
 
+        // personToShow will be remained unchanged as the person shown is not deleted person
+        expectedModel.setPersonToShow(personToShow);
+
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+        assertEquals(expectedModel.getPersonToShow(), model.getPersonToShow());
     }
 
     @Test
@@ -80,7 +94,7 @@ public class DeleteCommandTest {
         DeleteCommand deleteCommand = new DeleteCommand(outOfBoundIndex);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_INDEX_ERROR
-                                        + Messages.MESSAGE_INDEX_OUT_OF_BOUNDS + "\n%s", DeleteCommand.MESSAGE_USAGE);
+                + Messages.MESSAGE_INDEX_OUT_OF_BOUNDS + "\n%s", DeleteCommand.MESSAGE_USAGE);
 
         assertCommandFailure(deleteCommand, model, expectedMessage);
     }

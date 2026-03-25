@@ -37,6 +37,7 @@ public class FindCommand extends Command {
             // Show the first person in filtered list
             model.setPersonToShow(model.getFilteredPersonList().get(0));
         } else {
+            // Has no person in filtered list to show
             model.setPersonToShow(null);
         }
 
