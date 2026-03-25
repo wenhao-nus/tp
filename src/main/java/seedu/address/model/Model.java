@@ -3,6 +3,7 @@ package seedu.address.model;
 import java.nio.file.Path;
 import java.util.function.Predicate;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.person.Person;
@@ -72,7 +73,8 @@ public interface Model {
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     * The person identity of {@code editedPerson} must not be the same as
+     * another existing person in the address book.
      */
     void setPerson(Person target, Person editedPerson);
 
@@ -84,4 +86,22 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    /**
+     * Returns the {@code ObjectProperty} that tracks which {@code Person} should be shown
+     * in the {@code ExpandedContactPanel}.
+     */
+    ObjectProperty<Person> personToShowProperty();
+
+    /**
+     * Sets the person to be displayed in the {@code ExpandedContactPanel}.
+     *
+     * @param person The {@code person} to show.
+     */
+    void setPersonToShow(Person person);
+
+    /**
+     * Returns the {@code Person} that is currently shown in the {@code ExpandedContactPanel}.
+     */
+    Person getPersonToShow();
 }

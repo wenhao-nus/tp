@@ -2,6 +2,7 @@ package seedu.address.logic;
 
 import java.nio.file.Path;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.commands.CommandResult;
@@ -47,4 +48,18 @@ public interface Logic {
      * Set the user prefs' GUI settings.
      */
     void setGuiSettings(GuiSettings guiSettings);
+
+    /**
+     * Returns the {@code ObjectProperty} holding the {@code Person}
+     * to be shown in the {@code ExpandedContactPanel}.
+     */
+    ObjectProperty<Person> personToShowProperty();
+
+    /**
+     * Sets the person to be displayed in the {@code ExpandedContactPanel}.
+     *
+     * @param person The {@code person} to show.
+     */
+    void setPersonToShow(Person person);
+
 }

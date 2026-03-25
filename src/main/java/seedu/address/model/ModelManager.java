@@ -7,6 +7,8 @@ import java.nio.file.Path;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
@@ -22,6 +24,10 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+
+    // Solution below inspired by https://stackoverflow.com/q/53745004
+    // Tracks which Person should be shown in the Expanded Contact Panel
+    private final ObjectProperty<Person> personToShowNext = new SimpleObjectProperty<>();
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -145,4 +151,21 @@ public class ModelManager implements Model {
                 && filteredPersons.equals(otherModelManager.filteredPersons);
     }
 
+    // ========== Person To Show In Expanded Contact Panel====================================================
+
+    @Override
+    public ObjectProperty<Person> personToShowProperty() {
+        return personToShowNext;
+    }
+
+    @Override
+    public void setPersonToShow(Person person) {
+        personToShowNext.set(person);
+    }
+
+    @Override
+    public Person getPersonToShow() {
+        return personToShowNext.get();
+    }
+    
 }
