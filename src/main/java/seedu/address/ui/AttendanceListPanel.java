@@ -11,11 +11,11 @@ import seedu.address.model.person.Person;
 /**
  * An UI component that displays attendance record of a {@code person}.
  */
-public class AttendancePanel extends UiPart<Region> {
+public class AttendanceListPanel extends UiPart<Region> {
 
-    private static final String FXML = "AttendancePanel.fxml";
+    private static final String FXML = "AttendanceListPanel.fxml";
 
-    private final Logger logger = LogsCenter.getLogger(AttendancePanel.class);
+    private final Logger logger = LogsCenter.getLogger(AttendanceListPanel.class);
 
     private final Person person;
 
@@ -27,7 +27,7 @@ public class AttendancePanel extends UiPart<Region> {
      *
      * @param person The {@code person} whose attendance record will be displayed.
      */
-    public AttendancePanel(Person person) {
+    public AttendanceListPanel(Person person) {
         super(FXML);
         this.person = person;
 

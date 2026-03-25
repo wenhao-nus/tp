@@ -18,7 +18,7 @@ public class ExpandedContactPanel extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(ExpandedContactPanel.class);
 
-    // Container holding the PersonDetailsPanel and AttendancePanel.
+    // Container holding the PersonDetailsPanel and AttendanceListPanel.
     @FXML
     private VBox detailsContainer;
 
@@ -81,7 +81,7 @@ public class ExpandedContactPanel extends UiPart<Region> {
     private void showAttendanceSection(Person person) {
         logger.fine("Adding attendance section for: " + person.getName().fullName);
 
-        AttendancePanel attendancePanel = new AttendancePanel(person);
+        AttendanceListPanel attendancePanel = new AttendanceListPanel(person);
         detailsContainer.getChildren().add(attendancePanel.getRoot());
     }
 
