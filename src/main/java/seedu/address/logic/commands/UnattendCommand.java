@@ -86,6 +86,8 @@ public class UnattendCommand extends Command {
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+        model.setPersonToShow(editedPerson); // Always show the unattended person
+
         return new CommandResult(String.format(MESSAGE_SUCCESS, index.getOneBased(), personToEdit.getName(),
                 courseCode, tutInfoToUpdate.getTutorialCode(), week));
     }

@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
@@ -38,6 +39,7 @@ public class AttendCommandTest {
         tutInfos.add(tutInfo);
         Person personWithCourse = new PersonBuilder(personToEdit).withTutInfos(tutInfos).build();
         model.setPerson(personToEdit, personWithCourse);
+        model.setPersonToShow(null);
 
         AttendCommand attendCommand = new AttendCommand(INDEX_FIRST_PERSON, courseCode, week);
 
@@ -48,11 +50,13 @@ public class AttendCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(personWithCourse, expectedPerson);
+        expectedModel.setPersonToShow(expectedPerson); // Always show the attended person
 
         String expectedMessage = String.format(AttendCommand.MESSAGE_SUCCESS, INDEX_FIRST_PERSON.getOneBased(),
                 personWithCourse.getName(), courseCode, "T01", week);
 
         assertCommandSuccess(attendCommand, model, expectedMessage, expectedModel);
+        assertEquals(expectedModel.getPersonToShow(), model.getPersonToShow());
     }
 
     @Test
@@ -72,6 +76,9 @@ public class AttendCommandTest {
         Person personWithCourses = new PersonBuilder(personToEdit).withTutInfos(tutInfos).build();
         model.setPerson(personToEdit, personWithCourses);
 
+        // Set third person full details shown before attending the first person
+        model.setPersonToShow(model.getFilteredPersonList().get(2));
+
         // Attend the second course
         AttendCommand attendCommand = new AttendCommand(INDEX_FIRST_PERSON, course2, week);
 
@@ -83,11 +90,13 @@ public class AttendCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(personWithCourses, expectedPerson);
+        expectedModel.setPersonToShow(expectedPerson); // Always show the attended person
 
         String expectedMessage = String.format(AttendCommand.MESSAGE_SUCCESS, INDEX_FIRST_PERSON.getOneBased(),
                 personWithCourses.getName(), course2, "T02", week);
 
         assertCommandSuccess(attendCommand, model, expectedMessage, expectedModel);
+        assertEquals(expectedModel.getPersonToShow(), model.getPersonToShow());
     }
 
     @Test

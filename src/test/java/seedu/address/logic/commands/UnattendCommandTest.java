@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
@@ -38,6 +39,9 @@ public class UnattendCommandTest {
         Person personWithCourse = new PersonBuilder(personToEdit).withTutInfos(tutInfos).build();
         model.setPerson(personToEdit, personWithCourse);
 
+        // Set third person full details shown before unattending the first person
+        model.setPersonToShow(model.getFilteredPersonList().get(2));
+
         UnattendCommand unattendCommand = new UnattendCommand(INDEX_FIRST_PERSON, courseCode, week);
 
         TutInfo expectedTutInfo = tutInfo.setAttendance(week, false);
@@ -47,11 +51,13 @@ public class UnattendCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(personWithCourse, expectedPerson);
+        expectedModel.setPersonToShow(expectedPerson); // Always show the unattended person
 
         String expectedMessage = String.format(UnattendCommand.MESSAGE_SUCCESS, INDEX_FIRST_PERSON.getOneBased(),
                 personWithCourse.getName(), courseCode, "T01", week);
 
         assertCommandSuccess(unattendCommand, model, expectedMessage, expectedModel);
+        assertEquals(expectedModel.getPersonToShow(), model.getPersonToShow());
     }
 
     @Test
@@ -70,6 +76,7 @@ public class UnattendCommandTest {
 
         Person personWithCourses = new PersonBuilder(personToEdit).withTutInfos(tutInfos).build();
         model.setPerson(personToEdit, personWithCourses);
+        model.setPersonToShow(null);
 
         // Unattend the second course
         UnattendCommand unattendCommand = new UnattendCommand(INDEX_FIRST_PERSON, course2, week);
@@ -82,11 +89,13 @@ public class UnattendCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(personWithCourses, expectedPerson);
+        expectedModel.setPersonToShow(expectedPerson); // Always show the unattended person
 
         String expectedMessage = String.format(UnattendCommand.MESSAGE_SUCCESS, INDEX_FIRST_PERSON.getOneBased(),
                 personWithCourses.getName(), course2, "T02", week);
 
         assertCommandSuccess(unattendCommand, model, expectedMessage, expectedModel);
+        assertEquals(expectedModel.getPersonToShow(), model.getPersonToShow());
     }
 
     @Test
