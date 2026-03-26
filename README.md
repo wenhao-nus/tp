@@ -39,9 +39,7 @@
 
     * `attend 1 c/CS2103T w/1` : Marks the first student as attended for CS2103T in Week 1.
 
-* For more usage documentation, head over to the [**User Guide**](UserGuide.html).
-* If you are interested in developing TAConnect, refer to [**Developer Guide**](DeveloperGuide.html) for more details.
-
+* For detailed information, head over to our [**documentation**](https://ay2526s2-cs2103t-t10-4.github.io/tp/).
 
 ## Acknowledgements
 
