@@ -37,6 +37,9 @@ public class AttendanceCard extends UiPart<Region> {
      */
     public AttendanceCard(TutInfo tutInfo) {
         super(FXML);
+
+        assert(tutInfo != null);
+
         this.tutInfo = tutInfo;
         this.attendance = tutInfo.getAttendance();
         courseCode.setText(tutInfo.getCourseCode());
