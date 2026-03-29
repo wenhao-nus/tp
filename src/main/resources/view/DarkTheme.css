@@ -404,7 +404,7 @@
 
 .list-cell .label.unattended {
     -fx-text-fill: #888888;
-    -fx-background-color: #cccccc;
+    -fx-background-color: #dbd9d9;
     -fx-padding: 1 10 1 10;
     -fx-background-radius: 20;
     -fx-font-size: 14;
