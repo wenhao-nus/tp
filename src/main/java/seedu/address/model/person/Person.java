@@ -152,4 +152,74 @@ public class Person {
                 .toString();
     }
 
+    /**
+     * Returns true if the Person's name matches the keyword
+     * Case-insensitive
+     */
+    public boolean nameMatches(String keyword) {
+        return seedu.address.commons.util.StringUtil.containsIgnoreCase(name.fullName, keyword);
+    }
+
+    /**
+     * Returns true if the Person's phone matches the keyword
+     * Case-insensitive
+     */
+    public boolean phoneMatches(String keyword) {
+        return seedu.address.commons.util.StringUtil.containsIgnoreCase(phone.value, keyword);
+    }
+
+    /**
+     * Returns true if the Person's email matches the keyword
+     * Case-insensitive
+     */
+    public boolean emailMatches(String keyword) {
+        return seedu.address.commons.util.StringUtil.containsIgnoreCase(email.value, keyword);
+    }
+
+    /**
+     * Returns true if the Person's address matches the keyword
+     * Case-insensitive
+     */
+    public boolean addressMatches(String keyword) {
+        return seedu.address.commons.util.StringUtil.containsIgnoreCase(address.value, keyword);
+    }
+
+    /**
+     * Returns true if the Person's telegram handle matches the keyword
+     * Case-insensitive
+     */
+    public boolean telegramMatches(String keyword) {
+        String cleanKeyword = keyword;
+        if (cleanKeyword.startsWith("@")) {
+            cleanKeyword = cleanKeyword.substring(1);
+        }
+        return seedu.address.commons.util.StringUtil.containsIgnoreCase(telegram.value, cleanKeyword);
+    }
+
+    /**
+     * Returns true if any of the Person's tags matches the keyword
+     * Case-insensitive
+     */
+    public boolean tagMatches(String keyword) {
+        return tags.stream()
+                .anyMatch(tag -> tag.tagName.equalsIgnoreCase(keyword));
+    }
+
+    /**
+     * Returns true if any of the Person's enrolled course codes in TutInfo matches the keyword
+     * Case-insensitive
+     */
+    public boolean courseMatches(String keyword) {
+        return tutInfos.stream()
+                .anyMatch(tutInfo -> tutInfo.getCourseCode().equalsIgnoreCase(keyword));
+    }
+
+    /**
+     * Returns true if any of the Person's tutorial codes in TutInfo matches the keyword
+     * Case-insensitive
+     */
+    public boolean tutorialMatches(String keyword) {
+        return tutInfos.stream()
+                .anyMatch(tutInfo -> tutInfo.getTutorialCode().equalsIgnoreCase(keyword));
+    }
 }
