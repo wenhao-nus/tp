@@ -123,7 +123,7 @@ public class PersonTest {
         TutInfo cs2103Tut = new TutInfo("CS2103T", "G01");
         TutInfo cs2109Tut = new TutInfo("CS2109", "G02");
         Person person = new PersonBuilder(ALICE)
-                .withTutInfos(Arrays.asList(cs2109Tut, cs2109Tut))
+                .withTutInfos(Arrays.asList(cs2109Tut, cs2103Tut))
                 .withTelegram("@alice_pauline")
                 .build();
 
@@ -170,7 +170,7 @@ public class PersonTest {
         // courseMatches
         assertTrue(person.courseMatches("CS2103T"));
         assertTrue(person.courseMatches("cs2103t"));
-        assertTrue(person.courseMatches("CS210"));
+        assertFalse(person.courseMatches("CS210"));
         assertFalse(person.courseMatches("CS2100"));
 
 
@@ -178,6 +178,7 @@ public class PersonTest {
         assertTrue(person.tutorialMatches("G01"));
         assertTrue(person.tutorialMatches("g01"));
         assertTrue(person.tutorialMatches("G02"));
+        assertFalse(person.tutorialMatches("G0"));
         assertFalse(person.tutorialMatches("G03"));
     }
 }
