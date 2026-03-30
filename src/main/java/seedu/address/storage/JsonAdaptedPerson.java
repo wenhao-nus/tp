@@ -92,7 +92,8 @@ class JsonAdaptedPerson {
         }
 
         if (name == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Name.class.getSimpleName()));
         }
         if (!Name.isValidName(name)) {
             throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
@@ -100,41 +101,52 @@ class JsonAdaptedPerson {
         final Name modelName = new Name(name);
 
         if (phone == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Phone.class.getSimpleName()));
         }
-        if (!Phone.isValidPhone(phone)) {
-            throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
-        }
+
         final Optional<Phone> modelPhone = (phone.equals("-")) ? Optional.empty() : Optional.of(new Phone(phone));
 
+        if (modelPhone.isPresent() && !(Phone.isValidPhone(phone))) {
+            throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
+        }
+
         if (email == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Email.class.getSimpleName()));
         }
-        if (!Email.isValidEmail(email)) {
-            throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
-        }
+
         final Optional<Email> modelEmail = (email.equals("-")) ? Optional.empty() : Optional.of(new Email(email));
 
+        if (modelEmail.isPresent() && !(Email.isValidEmail(email))) {
+            throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
+        }
+
         if (address == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Address.class.getSimpleName()));
         }
-        if (!Address.isValidAddress(address)) {
-            throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
-        }
+
         final Optional<Address> modelAddress = (address.equals("-"))
                 ? Optional.empty()
                 : Optional.of(new Address(address));
+
+        if (modelAddress.isPresent() && !(Address.isValidAddress(address))) {
+            throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
+        }
 
         if (telegram == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Telegram.class.getSimpleName()));
         }
-        if (!Telegram.isValidTelegramHandle(telegram)) {
-            throw new IllegalValueException(Telegram.MESSAGE_CONSTRAINTS);
-        }
+
         final Optional<Telegram> modelTelegram = (telegram.equals("-"))
                 ? Optional.empty()
                 : Optional.of(new Telegram(telegram));
+
+        if (modelTelegram.isPresent() && !(Telegram.isValidTelegramHandle(telegram))) {
+            throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
+        }
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
