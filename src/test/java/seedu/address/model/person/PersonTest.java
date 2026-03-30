@@ -12,6 +12,8 @@ import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
 
+import java.util.Arrays;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.address.testutil.PersonBuilder;
@@ -114,5 +116,69 @@ public class PersonTest {
         // same values -> returns same hashcode
         Person aliceCopy = new PersonBuilder(ALICE).build();
         assertTrue(ALICE.hashCode() == aliceCopy.hashCode());
+    }
+
+    @Test
+    public void testMatchingMethods() {
+        TutInfo cs2103Tut = new TutInfo("CS2103T", "G01");
+        TutInfo cs2109Tut = new TutInfo("CS2109", "G02");
+        Person person = new PersonBuilder(ALICE)
+                .withTutInfos(Arrays.asList(cs2109Tut, cs2103Tut))
+                .withTelegram("@alice_pauline")
+                .build();
+
+
+        // nameMatches
+        assertTrue(person.nameMatches("Alice"));
+        assertTrue(person.nameMatches("ALICE"));
+        // partial match
+        assertTrue(person.nameMatches("Ali"));
+        assertFalse(person.nameMatches("Bob"));
+
+
+        // phoneMatches
+        assertTrue(person.phoneMatches("94351253"));
+        // partial match
+        assertTrue(person.phoneMatches("9435125"));
+        assertFalse(person.phoneMatches("9435126"));
+
+
+        // emailMatches
+        assertTrue(person.emailMatches("alice@example.com"));
+        assertTrue(person.emailMatches("alice")); // partial match
+        assertFalse(person.emailMatches("bob"));
+
+
+        // addressMatches
+        assertTrue(person.addressMatches("Jurong"));
+        assertTrue(person.addressMatches("123"));
+        assertFalse(person.addressMatches("Clementi"));
+
+
+        // telegramMatches
+        assertTrue(person.telegramMatches("alice"));
+        assertTrue(person.telegramMatches("@alice"));
+        assertFalse(person.telegramMatches("bob"));
+
+
+        // tagMatches
+        assertTrue(person.tagMatches("friends"));
+        assertTrue(person.tagMatches("FRIENDS"));
+        assertFalse(person.tagMatches("nonexistent"));
+
+
+        // courseMatches
+        assertTrue(person.courseMatches("CS2103T"));
+        assertTrue(person.courseMatches("cs2103t"));
+        assertFalse(person.courseMatches("CS210"));
+        assertFalse(person.courseMatches("CS2100"));
+
+
+        // tutorialMatches
+        assertTrue(person.tutorialMatches("G01"));
+        assertTrue(person.tutorialMatches("g01"));
+        assertTrue(person.tutorialMatches("G02"));
+        assertFalse(person.tutorialMatches("G0"));
+        assertFalse(person.tutorialMatches("G03"));
     }
 }

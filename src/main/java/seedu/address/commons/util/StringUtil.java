@@ -39,6 +39,16 @@ public class StringUtil {
     }
 
     /**
+     * Returns true if the {@code str} contains the {@code searchStr}
+     * Case-insensitive.
+     */
+    public static boolean containsIgnoreCase(String str, String searchStr) {
+        requireNonNull(str);
+        requireNonNull(searchStr);
+        return str.toLowerCase().contains(searchStr.toLowerCase());
+    }
+
+    /**
      * Returns a detailed message of the t, including the stack trace.
      */
     public static String getDetails(Throwable t) {
