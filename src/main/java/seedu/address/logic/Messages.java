@@ -1,11 +1,13 @@
 package seedu.address.logic;
 
+import java.util.Comparator;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.TutInfo;
 
 /**
  * Container for user visible messages.
@@ -47,13 +49,17 @@ public class Messages {
                 .append(person.getDisplayAddress())
                 .append("; Courses: ");
 
-        person.getTutInfos().forEach(tut -> builder
-                .append("[")
-                .append(tut.toDisplayString())
-                .append("]"));
+        // Sort tutorials first by course code, then by tutorial code (case-sensitive)
+        person.getTutInfos().stream()
+                .sorted(Comparator.comparing(TutInfo::getCourseCode).thenComparing(TutInfo::getTutorialCode))
+                .forEach(tut -> builder.append("[").append(tut.toDisplayString()).append("]"));
 
         builder.append("; Tags: ");
-        person.getTags().forEach(builder::append);
+
+        // Sorting by tagName alphabetically (case-sensitive)
+        person.getTags().stream()
+                .sorted(Comparator.comparing(tag -> tag.tagName))
+                .forEach(builder::append);
 
         return builder.toString();
     }
