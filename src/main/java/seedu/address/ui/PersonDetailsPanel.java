@@ -31,7 +31,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
     private final Person person;
 
     @FXML
-    private ScrollPane nameScrollPane; 
+    private ScrollPane nameScrollPane;
 
     @FXML
     private Label name;
