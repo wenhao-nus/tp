@@ -79,12 +79,12 @@ public class TutInfo {
     }
 
     /**
-     * Formats and returns the course code and tutorial code in uppercase and separated by a space.
+     * Formats and returns the course code and tutorial code separated by a space.
      *
      * @return A formatted string representation of the course and tutorial codes for display.
      */
     public String toDisplayString() {
-        return courseCode.toUpperCase() + " " + tutorialCode.toUpperCase();
+        return courseCode + " " + tutorialCode;
     }
 
     @Override
