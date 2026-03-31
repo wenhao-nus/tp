@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -30,6 +31,9 @@ public class PersonDetailsPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(PersonDetailsPanel.class);
 
     private final Person person;
+
+    @FXML
+    private ScrollPane nameScrollPane; 
 
     @FXML
     private Label name;
@@ -77,6 +81,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
         assert person != null : "Person must not be null";
         this.person = person;
 
+        preventVerticalScroll(nameScrollPane);
         displayPersonDetails();
     }
 
@@ -269,6 +274,18 @@ public class PersonDetailsPanel extends UiPart<Region> {
         label.getStyleClass().add("course-tutorial-label");
 
         courseTutorials.getChildren().add(label);
+    }
+
+    /**
+     * Prevents vertical scrolling of a ScrollPane by consuming vertical scroll events.
+     */
+    private void preventVerticalScroll(ScrollPane scrollPane) {
+        // Solution below inspired by https://stackoverflow.com/a/53991807
+        scrollPane.addEventFilter(ScrollEvent.SCROLL, event -> {
+            if (event.getDeltaY() != 0) {
+                event.consume();
+            }
+        });
     }
 
     /**
