@@ -101,61 +101,82 @@ class JsonAdaptedPerson {
         }
         final Name modelName = new Name(name);
 
-        if (phone == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    Phone.class.getSimpleName()));
-        }
-
-        final Optional<Phone> modelPhone = (phone.equals(EMPTY_FIELD_PLACEHOLDER))
-                ? Optional.empty()
-                : Optional.of(new Phone(phone));
-
-        if (modelPhone.isPresent() && !(Phone.isValidPhone(phone))) {
-            throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
-        }
-
-        if (email == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    Email.class.getSimpleName()));
-        }
-
-        final Optional<Email> modelEmail = (email.equals(EMPTY_FIELD_PLACEHOLDER))
-                ? Optional.empty()
-                : Optional.of(new Email(email));
-
-        if (modelEmail.isPresent() && !(Email.isValidEmail(email))) {
-            throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
-        }
-
-        if (address == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    Address.class.getSimpleName()));
-        }
-
-        final Optional<Address> modelAddress = (address.equals(EMPTY_FIELD_PLACEHOLDER))
-                ? Optional.empty()
-                : Optional.of(new Address(address));
-
-        if (modelAddress.isPresent() && !(Address.isValidAddress(address))) {
-            throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
-        }
-
-        if (telegram == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    Telegram.class.getSimpleName()));
-        }
-
-        final Optional<Telegram> modelTelegram = (telegram.equals(EMPTY_FIELD_PLACEHOLDER))
-                ? Optional.empty()
-                : Optional.of(new Telegram(telegram));
-
-        if (modelTelegram.isPresent() && !(Telegram.isValidTelegramHandle(telegram))) {
-            throw new IllegalValueException(Telegram.MESSAGE_CONSTRAINTS);
-        }
+        final Optional<Phone> modelPhone = parsePhone(phone);
+        final Optional<Email> modelEmail = parseEmail(email);
+        final Optional<Address> modelAddress = parseAddress(address);
+        final Optional<Telegram> modelTelegram = parseTelegram(telegram);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTelegram, modelTags, personTutInfos);
+    }
+
+    private Optional<Phone> parsePhone(String phone) throws IllegalValueException {
+        if (phone == null) {
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
+        }
+
+        if (phone.equals(EMPTY_FIELD_PLACEHOLDER)) {
+            return Optional.empty();
+        }
+
+        if (!Phone.isValidPhone(phone)) {
+            throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
+        }
+
+        return Optional.of(new Phone(phone));
+    }
+
+    private Optional<Email> parseEmail(String email) throws IllegalValueException {
+        if (email == null) {
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
+        }
+
+        if (email.equals(EMPTY_FIELD_PLACEHOLDER)) {
+            return Optional.empty();
+        }
+
+        if (!Email.isValidEmail(email)) {
+            throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
+        }
+
+        return Optional.of(new Email(email));
+    }
+
+    private Optional<Address> parseAddress(String address) throws IllegalValueException {
+        if (address == null) {
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
+        }
+
+        if (address.equals(EMPTY_FIELD_PLACEHOLDER)) {
+            return Optional.empty();
+        }
+
+        if (!Address.isValidAddress(address)) {
+            throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
+        }
+
+        return Optional.of(new Address(address));
+    }
+
+    private Optional<Telegram> parseTelegram(String telegram) throws IllegalValueException {
+        if (telegram == null) {
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, Telegram.class.getSimpleName()));
+        }
+
+        if (telegram.equals(EMPTY_FIELD_PLACEHOLDER)) {
+            return Optional.empty();
+        }
+
+        if (!Telegram.isValidTelegramHandle(telegram)) {
+            throw new IllegalValueException(Telegram.MESSAGE_CONSTRAINTS);
+        }
+
+        return Optional.of(new Telegram(telegram));
     }
 
 }
