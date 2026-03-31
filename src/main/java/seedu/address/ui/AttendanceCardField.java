@@ -11,6 +11,9 @@ import javafx.scene.layout.Region;
 public class AttendanceCardField extends UiPart<Region> {
 
     private static final String FXML = "AttendanceListCardField.fxml";
+    private static final String WEEK_STRING = "Week ";
+    private static final String ATTENDED_STRING = "✓";
+    private static final String NOT_ATTENDED_STRING = "-";
 
     @FXML
     private Label week;
@@ -25,12 +28,12 @@ public class AttendanceCardField extends UiPart<Region> {
      */
     public AttendanceCardField(int week, boolean isAttended) {
         super(FXML);
-        this.week.setText("Week " + week);
+        this.week.setText(WEEK_STRING + week);
         if (isAttended) {
-            this.isAttended.setText("Attended");
+            this.isAttended.setText(ATTENDED_STRING);
             this.isAttended.getStyleClass().add("attended");
         } else {
-            this.isAttended.setText("Not attended");
+            this.isAttended.setText(NOT_ATTENDED_STRING);
             this.isAttended.getStyleClass().add("unattended");
         }
     }

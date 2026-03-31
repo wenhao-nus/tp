@@ -14,17 +14,17 @@ public class TutInfoField extends UiPart<Region> {
     @FXML
     private Label courseCode;
     @FXML
-    private Label tutCode;
+    private Label tutorialCode;
 
     /**
      * Creates a {@code TutInfoField} with the given course name and tut name to display.
      *
      * @param courseCode The label describing the field (e.g. "Phone", "Address").
-     * @param tutCode The value to display.
+     * @param tutorialCode The value to display.
      */
-    public TutInfoField(String courseCode, String tutCode) {
+    public TutInfoField(String courseCode, String tutorialCode) {
         super(FXML);
         this.courseCode.setText(courseCode);
-        this.tutCode.setText(tutCode);
+        this.tutorialCode.setText(tutorialCode);
     }
 }

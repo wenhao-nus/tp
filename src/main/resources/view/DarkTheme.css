@@ -380,13 +380,13 @@
 }
 
 .tut-info-scroll {
-    -fx-background-color: transparent;
+    -fx-background-color: #cacaca;
     -fx-border-color: transparent;
     -fx-padding: 0;
 }
 
 .tut-info-scroll .viewport {
-    -fx-background-color: transparent;
+    -fx-background-color: #cacaca;
 }
 
 .tut-info-scroll .scroll-bar:vertical {
@@ -394,11 +394,58 @@
 }
 
 .list-cell .label.attended {
-    -fx-font-family: "Segoe UI Semibold";
-    -fx-text-fill: #32a852;
+     -fx-text-fill: #1a6b3c;
+     -fx-background-color: #d4edda;
+     -fx-padding: 1 6 1 6;
+     -fx-background-radius: 20;
+     -fx-font-size: 14;
+     -fx-font-family: "Segoe UI Semibold";
 }
 
 .list-cell .label.unattended {
-    -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: #808080;
+    -fx-text-fill: #888888;
+    -fx-background-color: #dbd9d9;
+    -fx-padding: 1 10 1 10;
+    -fx-background-radius: 20;
+    -fx-font-size: 14;
+}
+
+#courseCode {
+    -fx-text-fill: #1a56b0;
+    -fx-background-color: #e8f0fe;
+    -fx-padding: 1 1 1 1;
+    -fx-border-radius: 4;
+    -fx-border-color: #1a56b0;
+    -fx-background-radius: 4;
+    -fx-font-size: 14;
+}
+
+#tutorialCode {
+    -fx-text-fill: #7a5000;
+    -fx-background-color: #fff3cd;
+    -fx-padding: 1 1 1 1;
+    -fx-border-radius: 4;
+    -fx-border-color: #7a5000;
+    -fx-background-radius: 4;
+    -fx-font-size: 14;
+}
+
+.attendance-list .list-view,
+.attendance-list .list-cell,
+.attendance-list .list-cell:filled:even,
+.attendance-list .list-cell:filled:odd,
+.attendance-list .list-cell:filled:selected {
+    -fx-background-color: transparent;
+}
+
+.attendance-list .label {
+    -fx-font-size: 14;
+}
+
+.attendance-card {
+    -fx-background-color: white;
+    -fx-background-radius: 14;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.8), 10, 0, 0, 4);
+    -fx-border-radius: 10;
+    -fx-border-width: 4;
 }

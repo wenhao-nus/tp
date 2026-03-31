@@ -31,17 +31,20 @@ public class AttendCommandTest {
     @Test
     public void execute_attendUnfilteredList_success() {
         Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        String courseCode = "CS2103T";
+
+        String inputCourseCode = "cs2103t";
+        String expectedCourseCode = "CS2103T";
         int week = 1;
-        // Setup: Enrol the person first
-        TutInfo tutInfo = new TutInfo(courseCode, "T01");
+
+        // Setup: Enrol the person first with lowercase
+        TutInfo tutInfo = new TutInfo(inputCourseCode, "t01");
         List<TutInfo> tutInfos = new ArrayList<>(personToEdit.getTutInfos());
         tutInfos.add(tutInfo);
         Person personWithCourse = new PersonBuilder(personToEdit).withTutInfos(tutInfos).build();
         model.setPerson(personToEdit, personWithCourse);
         model.setPersonToShow(null);
 
-        AttendCommand attendCommand = new AttendCommand(INDEX_FIRST_PERSON, courseCode, week);
+        AttendCommand attendCommand = new AttendCommand(INDEX_FIRST_PERSON, expectedCourseCode, week);
 
         TutInfo expectedTutInfo = tutInfo.setAttendance(week, true);
         List<TutInfo> expectedTutInfos = new ArrayList<>(tutInfos);
@@ -53,7 +56,7 @@ public class AttendCommandTest {
         expectedModel.setPersonToShow(expectedPerson); // Always show the attended person
 
         String expectedMessage = String.format(AttendCommand.MESSAGE_SUCCESS, INDEX_FIRST_PERSON.getOneBased(),
-                personWithCourse.getName(), courseCode, "T01", week);
+                personWithCourse.getName(), expectedCourseCode, "T01", week);
 
         assertCommandSuccess(attendCommand, model, expectedMessage, expectedModel);
         assertEquals(expectedModel.getPersonToShow(), model.getPersonToShow());
@@ -62,13 +65,15 @@ public class AttendCommandTest {
     @Test
     public void execute_attendMultipleCourses_success() {
         Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        String course1 = "CS1101S";
-        String course2 = "CS2103T";
+
+        String inputCourse1 = "cs1101s";
+        String inputCourse2 = "cs2103t";
+        String expectedCourse2 = "CS2103T";
         int week = 1;
 
         // Setup: Enrol the person in two courses
-        TutInfo tutInfo1 = new TutInfo(course1, "T01");
-        TutInfo tutInfo2 = new TutInfo(course2, "T02");
+        TutInfo tutInfo1 = new TutInfo(inputCourse1, "t01");
+        TutInfo tutInfo2 = new TutInfo(inputCourse2, "t02");
         List<TutInfo> tutInfos = new ArrayList<>();
         tutInfos.add(tutInfo1);
         tutInfos.add(tutInfo2);
@@ -79,8 +84,8 @@ public class AttendCommandTest {
         // Set third person full details shown before attending the first person
         model.setPersonToShow(model.getFilteredPersonList().get(2));
 
-        // Attend the second course
-        AttendCommand attendCommand = new AttendCommand(INDEX_FIRST_PERSON, course2, week);
+        // Attend the second course using uppercase
+        AttendCommand attendCommand = new AttendCommand(INDEX_FIRST_PERSON, expectedCourse2, week);
 
         TutInfo expectedTutInfo2 = tutInfo2.setAttendance(week, true);
         List<TutInfo> expectedTutInfos = new ArrayList<>();
@@ -93,7 +98,7 @@ public class AttendCommandTest {
         expectedModel.setPersonToShow(expectedPerson); // Always show the attended person
 
         String expectedMessage = String.format(AttendCommand.MESSAGE_SUCCESS, INDEX_FIRST_PERSON.getOneBased(),
-                personWithCourses.getName(), course2, "T02", week);
+                personWithCourses.getName(), expectedCourse2, "T02", week);
 
         assertCommandSuccess(attendCommand, model, expectedMessage, expectedModel);
         assertEquals(expectedModel.getPersonToShow(), model.getPersonToShow());

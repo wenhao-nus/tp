@@ -31,6 +31,10 @@ public class AttendanceCard extends UiPart<Region> {
     private Label courseCode;
     @FXML
     private Label tutorialCode;
+    @FXML
+    private VBox leftColumn;
+    @FXML
+    private VBox rightColumn;
 
     /**
      * Creates a {@code AttendanceCard} with the given {@code TutInfo}.
@@ -46,7 +50,12 @@ public class AttendanceCard extends UiPart<Region> {
         tutorialCode.setText(tutInfo.getTutorialCode());
 
         for (int i = 1; i <= 13; i++) {
-            cardPane.getChildren().add(new AttendanceCardField(i, attendance[i - 1]).getRoot());
+            AttendanceCardField field = new AttendanceCardField(i, attendance[i - 1]);
+            if (i <= 6) {
+                leftColumn.getChildren().add(field.getRoot());
+            } else {
+                rightColumn.getChildren().add(field.getRoot());
+            }
         }
     }
 }

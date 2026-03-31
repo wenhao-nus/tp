@@ -31,8 +31,8 @@ public class TutInfo {
         checkArgument(isValidCode(courseCode), MESSAGE_CONSTRAINTS);
         checkArgument(isValidCode(tutorialCode), MESSAGE_CONSTRAINTS);
 
-        this.courseCode = courseCode;
-        this.tutorialCode = tutorialCode;
+        this.courseCode = courseCode.toUpperCase();
+        this.tutorialCode = tutorialCode.toUpperCase();
         // Defensive programming, to prevent the client from providing an array with wrong length
         this.attendance = Arrays.copyOf(attendance, NUMBER_OF_WEEKS_PER_SEM);
     }
@@ -44,7 +44,7 @@ public class TutInfo {
      * @param tutorialCode A valid tutorial code. (E.g. Tut01)
      */
     public TutInfo(String courseCode, String tutorialCode) {
-        this(courseCode, tutorialCode, new boolean[NUMBER_OF_WEEKS_PER_SEM]);
+        this(courseCode.toUpperCase(), tutorialCode.toUpperCase(), new boolean[NUMBER_OF_WEEKS_PER_SEM]);
     }
 
     public String getCourseCode() {

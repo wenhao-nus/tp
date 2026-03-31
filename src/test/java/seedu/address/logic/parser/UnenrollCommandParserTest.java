@@ -19,6 +19,7 @@ public class UnenrollCommandParserTest {
         UnenrollCommand expectedCommand = new UnenrollCommand(INDEX_FIRST_PERSON, expectedCourseCode);
 
         assertParseSuccess(parser, " 1 c/CS2103T", expectedCommand);
+
     }
 
     @Test

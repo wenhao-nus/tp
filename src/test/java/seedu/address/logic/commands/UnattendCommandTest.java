@@ -31,30 +31,38 @@ public class UnattendCommandTest {
     @Test
     public void execute_unattendUnfilteredList_success() {
         Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        String courseCode = "CS2103T";
+
+        String inputCourse1 = "cs1101s";
+        String inputCourse2 = "cs2103t";
+        String expectedCourse2 = "CS2103T";
         int week = 1;
-        TutInfo tutInfo = new TutInfo(courseCode, "T01").setAttendance(week, true);
-        List<TutInfo> tutInfos = new ArrayList<>(personToEdit.getTutInfos());
-        tutInfos.add(tutInfo);
-        Person personWithCourse = new PersonBuilder(personToEdit).withTutInfos(tutInfos).build();
-        model.setPerson(personToEdit, personWithCourse);
 
-        // Set third person full details shown before unattending the first person
-        model.setPersonToShow(model.getFilteredPersonList().get(2));
+        // Setup: Enrol the person in two courses
+        TutInfo tutInfo1 = new TutInfo(inputCourse1, "t01");
+        TutInfo tutInfo2 = new TutInfo(inputCourse2, "t02").setAttendance(week, true);
+        List<TutInfo> tutInfos = new ArrayList<>();
+        tutInfos.add(tutInfo1);
+        tutInfos.add(tutInfo2);
 
-        UnattendCommand unattendCommand = new UnattendCommand(INDEX_FIRST_PERSON, courseCode, week);
+        Person personWithCourses = new PersonBuilder(personToEdit).withTutInfos(tutInfos).build();
+        model.setPerson(personToEdit, personWithCourses);
+        model.setPersonToShow(null);
 
-        TutInfo expectedTutInfo = tutInfo.setAttendance(week, false);
-        List<TutInfo> expectedTutInfos = new ArrayList<>(tutInfos);
-        expectedTutInfos.set(expectedTutInfos.indexOf(tutInfo), expectedTutInfo);
-        Person expectedPerson = new PersonBuilder(personWithCourse).withTutInfos(expectedTutInfos).build();
+        // Unattend the second course
+        UnattendCommand unattendCommand = new UnattendCommand(INDEX_FIRST_PERSON, expectedCourse2, week);
+
+        TutInfo expectedTutInfo2 = tutInfo2.setAttendance(week, false);
+        List<TutInfo> expectedTutInfos = new ArrayList<>();
+        expectedTutInfos.add(tutInfo1);
+        expectedTutInfos.add(expectedTutInfo2);
+        Person expectedPerson = new PersonBuilder(personWithCourses).withTutInfos(expectedTutInfos).build();
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setPerson(personWithCourse, expectedPerson);
+        expectedModel.setPerson(personWithCourses, expectedPerson);
         expectedModel.setPersonToShow(expectedPerson); // Always show the unattended person
 
         String expectedMessage = String.format(UnattendCommand.MESSAGE_SUCCESS, INDEX_FIRST_PERSON.getOneBased(),
-                personWithCourse.getName(), courseCode, "T01", week);
+                personWithCourses.getName(), expectedCourse2, "T02", week);
 
         assertCommandSuccess(unattendCommand, model, expectedMessage, expectedModel);
         assertEquals(expectedModel.getPersonToShow(), model.getPersonToShow());

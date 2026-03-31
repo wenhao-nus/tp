@@ -19,6 +19,8 @@ public class UnattendCommandParserTest {
     public void parse_allFieldsPresent_success() {
         UnattendCommand expectedCommand = new UnattendCommand(INDEX_FIRST_PERSON, "CS2103T", 1);
 
+        assertParseSuccess(parser, " 1 " + PREFIX_COURSE + "cs2103T " + PREFIX_WEEK + "1", expectedCommand);
+        assertParseSuccess(parser, " 1 " + PREFIX_COURSE + "cS2103t " + PREFIX_WEEK + "1", expectedCommand);
         assertParseSuccess(parser, " 1 " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK + "1", expectedCommand);
     }
 

@@ -53,9 +53,10 @@
 }
 
 .course-tutorial-label {
-    -fx-background-color: rgb(225, 191, 0);
+    -fx-background-color: #e09731;
     -fx-padding: 3 6 3 6;
     -fx-background-radius: 4;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.8), 10, 0, 0, 4);
     -fx-text-fill: white;
     -fx-font-size: 14px;
 }

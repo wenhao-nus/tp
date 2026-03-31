@@ -31,7 +31,8 @@ public class UnenrollCommandTest {
     @Test
     public void execute_unenrollUnfilteredList_success() {
         Person originalPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        TutInfo tutInfoToEnroll = new TutInfo("CS2103T", "T01");
+
+        TutInfo tutInfoToEnroll = new TutInfo("cs2103t", "t01");
 
         List<TutInfo> initialTutInfos = new ArrayList<>(originalPerson.getTutInfos());
         initialTutInfos.add(tutInfoToEnroll);

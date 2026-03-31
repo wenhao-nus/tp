@@ -31,7 +31,7 @@ public class EnrollCommandTest {
     @Test
     public void execute_enrollUnfilteredList_success() {
         Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        TutInfo validTutInfo = new TutInfo("CS2103T", "T01");
+        TutInfo validTutInfo = new TutInfo("cs2103t", "t01");
         EnrollCommand enrollCommand = new EnrollCommand(INDEX_FIRST_PERSON, validTutInfo);
 
         List<TutInfo> expectedTutInfos = new ArrayList<>(personToEdit.getTutInfos());
@@ -45,7 +45,7 @@ public class EnrollCommandTest {
         expectedModel.setPersonToShow(expectedPerson);
 
         String expectedMessage = String.format(EnrollCommand.MESSAGE_SUCCESS,
-                validTutInfo.getCourseCode(), validTutInfo.getTutorialCode());
+                "CS2103T", "T01");
 
         assertCommandSuccess(enrollCommand, model, expectedMessage, expectedModel);
         assertEquals(expectedModel.getPersonToShow(), model.getPersonToShow());
@@ -54,15 +54,17 @@ public class EnrollCommandTest {
     @Test
     public void execute_duplicateCourse_throwsCommandException() {
         Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        TutInfo validTutInfo = new TutInfo("CS2103T", "T01");
 
+        TutInfo existingTutInfo = new TutInfo("CS2103T", "T01");
         List<TutInfo> initialTutInfos = new ArrayList<>();
-        initialTutInfos.add(validTutInfo);
+        initialTutInfos.add(existingTutInfo);
         Person personWithCourse = new PersonBuilder(personToEdit).withTutInfos(initialTutInfos).build();
         model.setPerson(personToEdit, personWithCourse);
 
-        EnrollCommand enrollCommand = new EnrollCommand(INDEX_FIRST_PERSON, validTutInfo);
-        String expectedMessage = String.format(EnrollCommand.MESSAGE_DUPLICATE_COURSE, validTutInfo.getCourseCode());
+        TutInfo duplicateTutInfoLower = new TutInfo("cs2103t", "t01");
+        EnrollCommand enrollCommand = new EnrollCommand(INDEX_FIRST_PERSON, duplicateTutInfoLower);
+
+        String expectedMessage = String.format(EnrollCommand.MESSAGE_DUPLICATE_COURSE, "CS2103T");
 
         assertCommandFailure(enrollCommand, model, expectedMessage);
     }

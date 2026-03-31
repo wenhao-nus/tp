@@ -21,6 +21,8 @@ public class EnrollCommandParserTest {
 
         assertParseSuccess(parser, " 1 c/CS2103T tut/T01", expectedCommand);
 
+        assertParseSuccess(parser, " 1 c/cs2103T tut/t01", expectedCommand);
+
         assertParseSuccess(parser, " 1 tut/T01 c/CS2103T", expectedCommand);
     }
 
