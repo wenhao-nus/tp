@@ -85,7 +85,7 @@ public class EditPersonDescriptorBuilder {
      * Sets the {@code Phone} of the {@code EditPersonDescriptor} to be missing.
      */
     public EditPersonDescriptorBuilder withoutPhone() {
-        descriptor.setPhone(null);
+        descriptor.setPhone((Phone) null);
         return this;
     }
 
@@ -93,7 +93,7 @@ public class EditPersonDescriptorBuilder {
      * Sets the {@code Email} of the {@code EditPersonDescriptor} to be missing.
      */
     public EditPersonDescriptorBuilder withoutEmail() {
-        descriptor.setEmail(null);
+        descriptor.setEmail((Email) null);
         return this;
     }
 
@@ -101,7 +101,7 @@ public class EditPersonDescriptorBuilder {
      * Sets the {@code Address} of the {@code EditPersonDescriptor} to be missing.
      */
     public EditPersonDescriptorBuilder withoutAddress() {
-        descriptor.setAddress(null);
+        descriptor.setAddress((Address) null);
         return this;
     }
 
@@ -109,7 +109,7 @@ public class EditPersonDescriptorBuilder {
      * Sets the {@code Telegram} of the {@code EditPersonDescriptor} to be missing.
      */
     public EditPersonDescriptorBuilder withoutTelegram() {
-        descriptor.setTelegram(null);
+        descriptor.setTelegram((Telegram) null);
         return this;
     }
 

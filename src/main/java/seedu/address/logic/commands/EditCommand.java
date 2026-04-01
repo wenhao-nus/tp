@@ -100,10 +100,10 @@ public class EditCommand extends Command {
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
 
-        Optional<Phone> updatedPhone = editPersonDescriptor.getPhone().or(() -> personToEdit.getPhone());
-        Optional<Email> updatedEmail = editPersonDescriptor.getEmail().or(() -> personToEdit.getEmail());
-        Optional<Address> updatedAddress = editPersonDescriptor.getAddress().or(() -> personToEdit.getAddress());
-        Optional<Telegram> updatedTelegram = editPersonDescriptor.getTelegram().or(() -> personToEdit.getTelegram());
+        Optional<Phone> updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
+        Optional<Email> updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
+        Optional<Address> updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        Optional<Telegram> updatedTelegram = editPersonDescriptor.getTelegram().orElse(personToEdit.getTelegram());
 
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         List<TutInfo> tutInfos = personToEdit.getTutInfos();
@@ -149,11 +149,11 @@ public class EditCommand extends Command {
      */
     public static class EditPersonDescriptor {
         private Name name;
-        private Phone phone;
-        private Email email;
-        private Address address;
+        private Optional<Phone> phone;
+        private Optional<Email> email;
+        private Optional<Address> address;
         private Set<Tag> tags;
-        private Telegram telegram;
+        private Optional<Telegram> telegram;
 
         public EditPersonDescriptor() {
         }
@@ -164,10 +164,10 @@ public class EditCommand extends Command {
          */
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             setName(toCopy.name);
-            setPhone(toCopy.phone);
-            setEmail(toCopy.email);
-            setAddress(toCopy.address);
-            setTelegram(toCopy.telegram);
+            this.phone = toCopy.phone;
+            this.email = toCopy.email;
+            this.address = toCopy.address;
+            this.telegram = toCopy.telegram;
             setTags(toCopy.tags);
         }
 
@@ -187,34 +187,50 @@ public class EditCommand extends Command {
         }
 
         public void setPhone(Phone phone) {
+            this.phone = Optional.ofNullable(phone);
+        }
+
+        public void setPhone(Optional<Phone> phone) {
             this.phone = phone;
         }
 
-        public Optional<Phone> getPhone() {
+        public Optional<Optional<Phone>> getPhone() {
             return Optional.ofNullable(phone);
         }
 
         public void setEmail(Email email) {
+            this.email = Optional.ofNullable(email);
+        }
+
+        public void setEmail(Optional<Email> email) {
             this.email = email;
         }
 
-        public Optional<Email> getEmail() {
+        public Optional<Optional<Email>> getEmail() {
             return Optional.ofNullable(email);
         }
 
         public void setAddress(Address address) {
+            this.address = Optional.ofNullable(address);
+        }
+
+        public void setAddress(Optional<Address> address) {
             this.address = address;
         }
 
-        public Optional<Address> getAddress() {
+        public Optional<Optional<Address>> getAddress() {
             return Optional.ofNullable(address);
         }
 
         public void setTelegram(Telegram telegram) {
+            this.telegram = Optional.ofNullable(telegram);
+        }
+
+        public void setTelegram(Optional<Telegram> telegram) {
             this.telegram = telegram;
         }
 
-        public Optional<Telegram> getTelegram() {
+        public Optional<Optional<Telegram>> getTelegram() {
             return Optional.ofNullable(telegram);
         }
 

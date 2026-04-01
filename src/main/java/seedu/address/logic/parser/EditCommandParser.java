@@ -10,6 +10,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -59,16 +60,16 @@ public class EditCommandParser implements Parser<EditCommand> {
         setFieldIfPresent(argMultimap.getValue(PREFIX_NAME),
                 editPersonDescriptor::setName, ParserUtil::parseName);
 
-        setFieldIfPresent(argMultimap.getValue(PREFIX_PHONE),
+        setOptionalFieldIfPresent(argMultimap.getValue(PREFIX_PHONE),
                 editPersonDescriptor::setPhone, ParserUtil::parsePhone);
 
-        setFieldIfPresent(argMultimap.getValue(PREFIX_EMAIL),
+        setOptionalFieldIfPresent(argMultimap.getValue(PREFIX_EMAIL),
                 editPersonDescriptor::setEmail, ParserUtil::parseEmail);
 
-        setFieldIfPresent(argMultimap.getValue(PREFIX_ADDRESS),
+        setOptionalFieldIfPresent(argMultimap.getValue(PREFIX_ADDRESS),
                 editPersonDescriptor::setAddress, ParserUtil::parseAddress);
 
-        setFieldIfPresent(argMultimap.getValue(PREFIX_TELEGRAM),
+        setOptionalFieldIfPresent(argMultimap.getValue(PREFIX_TELEGRAM),
                 editPersonDescriptor::setTelegram, ParserUtil::parseTelegram);
 
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
@@ -93,6 +94,24 @@ public class EditCommandParser implements Parser<EditCommand> {
     }
 
     /**
+     * Sets an optional field in the {@code EditPersonDescriptor} if a value is present.
+     * If {@code Optional<String> value} is present and empty, it will be cleared.
+     * If {@code Optional<String> value} is present and non-empty, it will be parsed and passed into the updater.
+     */
+    private <T> void setOptionalFieldIfPresent(Optional<String> value, Consumer<Optional<T>> fieldUpdater,
+            StringParser<T> parser) throws ParseException {
+
+        if (value.isPresent()) {
+            String val = value.get();
+            if (val.isEmpty()) {
+                fieldUpdater.accept(Optional.empty());
+            } else {
+                fieldUpdater.accept(Optional.of(parser.parse(val)));
+            }
+        }
+    }
+
+    /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
      * Validation of invalid or empty tags is handled in parseTags.
      */
@@ -103,7 +122,8 @@ public class EditCommandParser implements Parser<EditCommand> {
             return Optional.empty();
         }
 
-        return Optional.of(ParserUtil.parseTags(tags));
+        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
+        return Optional.of(ParserUtil.parseTags(tagSet));
     }
 
 }

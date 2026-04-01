@@ -37,6 +37,8 @@ title: User Guide
 
    * `view 2` : Displays the full details of the second contact in the current contact list.
 
+   * `unset 2 tg/` : Removes the telegram handle of the 2nd contact.
+
    * `clear` : Deletes all contacts.
 
    * `exit` : Exits the app.
@@ -120,6 +122,22 @@ Format: `edit INDEX [n/NAME] [p/PHONE_Number] [e/EMAIL] [a/ADDRESS] [tg/TELEGRAM
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+### Unsetting fields of a person : `unset`
+
+Removes specified optional fields of an existing person in the address book.
+
+Format: `unset INDEX [p/] [e/] [a/] [tg/] [t/]…​`
+
+* Removes the specified fields of the person at the specified `INDEX`.
+* The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* At least one of the optional field prefixes must be provided.
+* The mandatory `name` field cannot be unset.
+* For tags, providing the `t/` prefix will remove **all** tags from the person.
+
+Examples:
+* `unset 1 p/ tg/` Removes the phone number and telegram handle of the 1st person.
+* `unset 2 t/` Removes all tags of the 2nd person.
 
 ### Enrolling a person : `enroll`
 
@@ -274,10 +292,11 @@ _Details coming soon ..._
 
 Action | Format, Examples
 --------|------------------
-**Add** | `add n/NAME [p/PHONE_NUMBER] [tg/TELEGRAM] t[e/EMAIL] [a/ADDRESS] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 tg/JamesHo0318 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Add** | `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [tg/TELEGRAM_HANDLE] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 tg/JamesHo0318 t/friend t/colleague`
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [tg/TELEGRAM_HANDLE] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Unset** | `unset INDEX [p/] [e/] [a/] [tg/] [t/]…​`<br> e.g., `unset 2 tg/`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **View** | `view INDEX`<br> e.g., `view 1`
 **List** | `list`
