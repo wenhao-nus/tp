@@ -202,15 +202,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the System is `TAConnect` unless specified otherwise)
+(For all use cases below, the **System** is `TAConnect` and the **Actor** is `NUS Computer Science Teaching Assistant (NUS CS TA)` unless specified otherwise)
 
 <ins> **Use case: UC01 - View All Contacts** </ins>
 
 **Preconditions:** TA has at least one contact in their list
-
-**Guarantees:** All of the contacts in the address book are displayed
-
-**Actor:** TA
+**Guarantees:** All the contacts in the address book are displayed
 
 **MSS**
 
@@ -236,8 +233,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Guarantees:** A new contact is stored in the address book
 
-**Actor:** TA
-
 **MSS**
 
 1. TA requests to add a contact with the accompanying details.
@@ -259,10 +254,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 <ins> **Use case: UC03 - Delete A Contact** </ins>
 
 **Preconditions:** TA has at least one contact in their list
-
 **Guarantees:** The chosen contact is removed from the address book
-
-**Actor:** TA
 
 **MSS**
 
@@ -284,8 +276,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Preconditions:** TA has at least one contact in their list
 
 **Guarantees:** The contact’s detail(s) is/are updated with the new information
-
-**Actor:** TA
 
 **MSS**
 
@@ -313,8 +303,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Guarantees:** Contacts matching the search criteria are displayed
 
-**Actor:** TA
-
 **MSS**
 
 1. TA enters a search query by a specific field (e.g. by name or tag).
@@ -338,8 +326,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Preconditions:** TA has at least one contact in their list
 
 **Guarantees:** Contacts matching the search criteria are displayed
-
-**Actor:** TA
 
 **MSS**
 
