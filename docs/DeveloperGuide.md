@@ -332,6 +332,33 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
+<ins>**Use case: UC06 - View A Contact**<ins>
+
+**Preconditions:** TA has at least one contact in their list.
+
+**Guarantees:** The full details of the specified contact are displayed only if the contact index is valid.
+
+**MSS**
+
+1. TA requests to view the full details of a specific contact.
+2. TAConnect displays the full details of the contact.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. TAConnect detects an invalid or out-of-range contact index.
+
+    * 1a1. TAConnect informs TA of the invalid index and displays the correct format with an example.
+
+      Use case ends.
+
+* 1b. TAConnect detects other invalid input.
+
+    * 1b1. TAConnect informs TA of the invalid input and displays the correct format with an example.
+
+      Use case ends.
+
 ### Non-Functional Requirements
 
 1. All commands should have a response within 500ms.
