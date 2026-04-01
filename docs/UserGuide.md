@@ -292,3 +292,4 @@ Action | Format, Examples
 **Unenroll** | `unenroll INDEX c/COURSE_CODE` <br> e.g., `unenroll 1 c/CS2103T`
 **Attend** | `attend INDEX c/COURSE_CODE w/WEEK` <br> e.g., `attend 1 c/CS2103T w/1`
 **Unattend** | `unattend INDEX c/COURSE_CODE w/WEEK` <br> e.g., `unattend 1 c/CS2103T w/1`
+**Exit** | `exit`
