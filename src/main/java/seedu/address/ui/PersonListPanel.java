@@ -68,6 +68,13 @@ public class PersonListPanel extends UiPart<Region> {
     }
 
     /**
+     * Clears any currently selected person in the person list so no person is highlighted.
+     */
+    public void clearSelection() {
+        personListView.getSelectionModel().clearSelection();
+    }
+
+    /**
      * Returns true if the selection was triggered manually by a mouse click or keyboard press.
      */
     public boolean isManualSelection() {

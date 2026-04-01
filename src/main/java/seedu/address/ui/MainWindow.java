@@ -138,6 +138,7 @@ public class MainWindow extends UiPart<Stage> {
 
     /**
      * Detects changes in the selected person, then updates the {@code ExpandedContactPanel}.
+     * Clears the selection of deleted person in {@code PersonListPanel} if deleted person is viewed currently.
      * Scrolls the {@code PersonListPanel} to show corresponding {@code PersonCard} only if the
      * person selection was triggered via commands and not manually by a mouseclick or keyboard press.
      */
@@ -145,7 +146,9 @@ public class MainWindow extends UiPart<Stage> {
         logic.personToShowProperty().addListener((obs, oldPerson, newPerson) -> {
             expandedContactPanel.setSelectedPerson(newPerson);
 
-            if (newPerson != null && !(personListPanel.isManualSelection())) {
+            if (newPerson == null) {
+                personListPanel.clearSelection();
+            } else if (!(personListPanel.isManualSelection())) {
                 personListPanel.scrollToPerson(newPerson);
             }
 
