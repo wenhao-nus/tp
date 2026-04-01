@@ -359,6 +359,40 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
+<ins>**Use case: UC07 - Enroll A Student**<ins>
+
+**Preconditions:** TA has at least one contact in their list.
+
+**Guarantees:** The specified student is enrolled in the given course and tutorial group only if the input is valid.
+
+**MSS**
+
+1. TA requests to enroll a specific contact into a course and tutorial group.
+2. TAConnect validates the input.
+3. TAConnect enrolls the student, displays a success message, and shows the updated contact details.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. TAConnect detects an invalid or out-of-range contact index.
+
+    * 1a1. TAConnect informs TA of the invalid index and displays the correct format with an example.
+
+      Use case ends.
+
+* 1b. TAConnect detects other invalid input (e.g. missing course code or tutorial group).
+
+    * 1b1. TAConnect informs TA of the invalid input and displays the correct format with an example.
+
+      Use case ends.
+
+* 2a. Student is already enrolled in the given course and tutorial group.
+
+    * 2a1. TAConnect informs TA that the student is already enrolled.
+
+      Use case ends.
+
 ### Non-Functional Requirements
 
 1. All commands should have a response within 500ms.
