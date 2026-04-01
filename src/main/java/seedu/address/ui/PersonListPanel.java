@@ -3,6 +3,7 @@ package seedu.address.ui;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
@@ -62,8 +63,14 @@ public class PersonListPanel extends UiPart<Region> {
         int index = personListView.getItems().indexOf(person);
 
         if (index >= 0) {
-            personListView.scrollTo(index);
-            personListView.getSelectionModel().select(index);
+            logger.info("currently personListIndex is selecting " + person.getName().fullName + " at index " + index);
+
+            personListView.layout();
+
+            Platform.runLater(() -> {
+                personListView.getSelectionModel().select(index);
+                personListView.scrollTo(index);
+            });
         }
     }
 
