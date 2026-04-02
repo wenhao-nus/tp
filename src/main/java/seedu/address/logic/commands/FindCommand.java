@@ -50,8 +50,6 @@ public class FindCommand extends Command {
         requireNonNull(model);
         model.updateFilteredPersonList(predicate);
 
-        model.setPersonToShow(null);
-
         if (!(model.getFilteredPersonList().isEmpty())) {
             // Show the first person in filtered list
             model.setPersonToShow(model.getFilteredPersonList().get(0));

@@ -55,9 +55,12 @@ public class DeleteCommand extends Command {
         Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
         model.deletePerson(personToDelete);
 
-        // Clear expanded panel if the deleted person is currently shown
-        if (personToDelete.equals(currentlyShown)) {
-            model.setPersonToShow(null);
+        // Clear the currently shown person first
+        model.setPersonToShow(null);
+
+        // Restore the currently viewed person if the deleted person was not the one being shown.
+        if (!personToDelete.equals(currentlyShown)) {
+            model.setPersonToShow(currentlyShown);
         }
 
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
