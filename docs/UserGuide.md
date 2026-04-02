@@ -37,6 +37,8 @@ title: User Guide
 
    * `view 2` : Displays the full details of the second contact in the current contact list.
 
+   * `unset 1 tg/` : Removes the Telegram handle of the 1st contact shown in the current contact list.
+
    * `clear` : Deletes all contacts.
 
    * `exit` : Exits the app.
@@ -108,7 +110,7 @@ Format: `list`
 
 Edits an existing person in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE_Number] [e/EMAIL] [a/ADDRESS] [tg/TELEGRAM_HANDLE][t/TAG]…​`
+Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [tg/TELEGRAM_HANDLE] [t/TAG]…​`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -120,6 +122,25 @@ Format: `edit INDEX [n/NAME] [p/PHONE_Number] [e/EMAIL] [a/ADDRESS] [tg/TELEGRAM
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+### Unsetting a field : `unset`
+
+Unsets exactly one optional field of an existing person in the address book.
+
+Format: `unset INDEX FIELD_PREFIX`
+
+* Unsets the optional field identified by `FIELD_PREFIX` for the person at the specified `INDEX`.
+* The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* `FIELD_PREFIX` must be exactly one of `p/`, `e/`, `a/`, `tg/`, or `t/`.
+* The prefix must be provided without any value after it. For example, use `unset 1 tg/`, not `unset 1 tg/@johndoe`.
+* `n/` is not allowed because a person's name cannot be unset.
+* `unset INDEX t/` removes all existing tags from the person.
+* You cannot unset a field that is already missing.
+
+Examples:
+* `unset 1 tg/` Unsets the Telegram handle of the 1st person.
+* `unset 2 e/` Unsets the email address of the 2nd person.
+* `unset 3 t/` Removes all tags from the 3rd person.
 
 ### Enrolling a person : `enroll`
 
@@ -293,10 +314,11 @@ _Details coming soon ..._
 
 Action | Format, Examples
 --------|------------------
-**Add** | `add n/NAME [p/PHONE_NUMBER] [tg/TELEGRAM] t[e/EMAIL] [a/ADDRESS] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 tg/JamesHo0318 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Add** | `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [tg/TELEGRAM_HANDLE] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 tg/JamesHo0318 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [tg/TELEGRAM_HANDLE] [t/TAG]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com`
+**Unset** | `unset INDEX FIELD_PREFIX`<br> `FIELD_PREFIX` must be exactly one of `p/`, `e/`, `a/`, `tg/`, or `t/`.<br> e.g., `unset 1 tg/`
 **Find** | `find [n/NAME]… [p/PHONE_NUMBER]… [e/EMAIL]… [a/ADDRESS]… [tg/TELEGRAM_HANDLE]… [t/TAG]… [c/COURSE_CODE]… [tut/TUTORIAL_GROUP]…` <br> e.g., `find p/807 e/alex`
 **View** | `view INDEX`<br> e.g., `view 1`
 **List** | `list`

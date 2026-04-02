@@ -31,6 +31,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.UnattendCommand;
 import seedu.address.logic.commands.UnenrollCommand;
+import seedu.address.logic.commands.UnsetCommand;
 import seedu.address.logic.commands.ViewCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Person;
@@ -83,6 +84,13 @@ public class AddressBookParserTest {
 
         EditCommand command = (EditCommand) parser.parseCommand(commandString);
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
+    }
+
+    @Test
+    public void parseCommand_unset() throws Exception {
+        UnsetCommand command = (UnsetCommand) parser.parseCommand(
+                UnsetCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " tg/");
+        assertEquals(new UnsetCommand(INDEX_FIRST_PERSON, CliSyntax.PREFIX_TELEGRAM), command);
     }
 
     @Test
