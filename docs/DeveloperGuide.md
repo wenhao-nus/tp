@@ -202,47 +202,37 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the System is `TAConnect` unless specified otherwise)
+(For all use cases below, the **System** is `TAConnect` and the **Actor** is `NUS Computer Science Teaching Assistant (NUS CS TA)` unless specified otherwise)
 
-<ins> **Use case: UC01 - View All Contacts** </ins>
+<ins>**Use case: UC01 - View All Contacts**</ins>
 
-**Preconditions:** TA has at least one contact in their list
-
-**Guarantees:** All of the contacts in the address book are displayed
-
-**Actor:** TA
+**Guarantees:** All the contacts in the address book are displayed in the contact list.
 
 **MSS**
 
 1. TA requests to view their list of all contacts.
-2. TAConnect displays the TA’s list of all contacts.
+2. TAConnect lists all contacts and displays a success message.
 
     Use case ends.
 
 **Extensions**
 
-* 2a. TA chooses to undo.
+* 2a. No contacts exist.
 
-    * 2a1. TAConnect undo the change and displays the updated list.
-
-* 2b. No contacts exist.
-
-    * 2b1. TAConnect displays an empty state message.
+    * 2a1. TAConnect displays an empty state message.
 
       Use case ends.
 
 
-<ins> **Use case: UC02 - Add A Contact** </ins>
+<ins>**Use case: UC02 - Add A Contact**</ins>
 
-**Guarantees:** A new contact is stored in the address book
-
-**Actor:** TA
+**Guarantees:** A new contact is stored in the address book only if the input is valid.
 
 **MSS**
 
-1. TA requests to add a contact with the accompanying details.
+1. TA requests to add a contact with a name and any optional details (phone number, email, address, Telegram handle, tags).
 2. TAConnect validates the input.
-3. TAConnect adds the contact, displays a success message and the updated list.
+3. TAConnect adds the contact, displays a success message, and shows the updated contact list with the new contact's details.
    
    Use case ends.
 
@@ -250,111 +240,260 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. TAConnect detects invalid input.
 
-    * 2a1. TAConnect informs TA of invalid input and displays a template and example.
+    * 2a1. TAConnect informs TA of invalid input and displays the correct format with an example.
 
-* 3a. TA chooses to undo
+      Use case ends.
 
-    * 3a1. TAConnect undo the change and displays the updated list.
+<ins>**Use case: UC03 - Delete A Contact**</ins>
 
-<ins> **Use case: UC03 - Delete A Contact** </ins>
+**Preconditions:** TA has at least one contact in their list.
 
-**Preconditions:** TA has at least one contact in their list
-
-**Guarantees:** The chosen contact is removed from the address book
-
-**Actor:** TA
+**Guarantees:** The chosen contact is removed from the address book only if the contact index is valid.
 
 **MSS**
 
 1. TA requests to delete a specific contact.
-2. TAConnect deletes the contact, displays a success message and the updated list.
+2. TAConnect deletes the contact, displays a success message, and shows the updated contact list.
 
    Use case ends.
 
 **Extensions**
 
-* 1a. TAConnect detects invalid contact index and informs TA.
+* 1a. TAConnect detects an invalid or out-of-range contact index.
 
-* 2a. TA chooses to undo
+    * 1a1. TAConnect informs TA of the invalid index and displays the correct format with an example.
 
-    * 2a1. TAConnect undo the change and displays the updated list.
+      Use case ends.
 
-<ins> **Use case: UC04 - Edit A Contact** </ins>
+* 1b. TAConnect detects other invalid input.
 
-**Preconditions:** TA has at least one contact in their list
+    * 1b1. TAConnect informs TA of the invalid input and displays the correct format with an example.
 
-**Guarantees:** The contact’s detail(s) is/are updated with the new information
+      Use case ends.
 
-**Actor:** TA
+<ins>**Use case: UC04 - Edit A Contact**</ins>
+
+**Preconditions:** TA has at least one contact in their list.
+
+**Guarantees:** The contact's details are updated only if the input and contact index are valid.
 
 **MSS**
 
-1. TA requests to edit specific fields of a specific contact.
-2. TAConnect validates the updated input.
-3. TAConnect updates the contact, displays a success message and the updated list.
+1. TA requests to edit specific field(s) of a specific contact with new value(s).
+2. TAConnect validates the new value(s) for the specified field(s).
+3. TAConnect updates the contact, displays a success message, and shows the updated contact list.
 
    Use case ends.
 
 **Extensions**
 
-* 1a. TAConnect detects invalid contact index and informs TA.
+* 1a. TAConnect detects an invalid or out-of-range contact index.
 
-* 2a. TAConnect detects invalid input.
+    * 1a1. TAConnect informs TA of the invalid index and displays the correct format with an example.
 
-    * 2a1. TAConnect informs TA of invalid input and displays a template and example.
+      Use case ends.
 
-* 3a. TA chooses to undo
+* 1b. TAConnect detects other invalid input (e.g. no fields provided, invalid field values).
 
-    * 3a1. TAConnect undo the change and displays the updated list.
+    * 1b1. TAConnect informs TA of the invalid input and displays the correct format with an example.
 
-<ins> **Use case: UC05 - Search/Filter Contacts** </ins>
+      Use case ends.
 
-**Preconditions:** TA has at least one contact in their list
+<ins>**Use case: UC05 - Search/Filter Contacts**<ins>
 
-**Guarantees:** Contacts matching the search criteria are displayed
+**Preconditions:** TA has at least one contact in their list.
 
-**Actor:** TA
+**Guarantees:** Contacts matching the search criteria are displayed only if the input is valid.
 
 **MSS**
 
-1. TA enters a search query by a specific field (e.g. by name or tag).
-2. TAConnect retrieves and displays matching contacts.
+1. TA enters a search query with a valid combination of filter criteria (e.g. name, course, tutorial group, tag).
+2. TAConnect retrieves the relevant contacts, displays a success message, and shows the filtered contact list.
 
    Use case ends.
 
 **Extensions**
 
-* 2a. No contacts match the query.
+* 1a. TA specifies a tutorial group without a course code.
+
+    * 1a1. TAConnect informs TA that a course code is required when filtering by tutorial group.
+
+      Use case ends.
+
+* 1b. TAConnect detects other invalid input.
+
+    * 1b1. TAConnect informs TA of the invalid input and displays the correct format with an example.
+
+      Use case ends.
+
+* 2a. No contacts match the given criteria.
 
     * 2a1. TAConnect informs TA that no matching contacts were found.
-    * Use case ends.
 
-* 3a. TA chooses to undo
+      Use case ends.
 
-    * 3a1. TAConnect undo the change and displays the updated list.
+<ins>**Use case: UC06 - View A Contact**<ins>
 
-<ins> **Use case: UC06 - Organise Contacts Into New Groups** </ins>
+**Preconditions:** TA has at least one contact in their list.
 
-**Preconditions:** TA has at least one contact in their list
-
-**Guarantees:** Contacts matching the search criteria are displayed
-
-**Actor:** TA
+**Guarantees:** The full details of the specified contact are displayed only if the contact index is valid.
 
 **MSS**
 
-1. TA selects multiple entries in the contact list and groups them into a new group.
-2. TAConnect organises the contacts into the new group.
-3. TAConnect shows the updated contact list with new group tags added to entries.
-    
-    Use case ends.
+1. TA requests to view the full details of a specific contact.
+2. TAConnect displays the full details of the contact.
+
+   Use case ends.
 
 **Extensions**
 
-* 1a. The number of selected contacts is less than 1.
+* 1a. TAConnect detects an invalid or out-of-range contact index.
 
-    * TAConnect informs TA that not enough contacts are selected.
-    * Use case ends.
+    * 1a1. TAConnect informs TA of the invalid index and displays the correct format with an example.
+
+      Use case ends.
+
+* 1b. TAConnect detects other invalid input.
+
+    * 1b1. TAConnect informs TA of the invalid input and displays the correct format with an example.
+
+      Use case ends.
+
+<ins>**Use case: UC07 - Enroll A Student**<ins>
+
+**Preconditions:** TA has at least one contact in their list.
+
+**Guarantees:** The specified student is enrolled in the given course and tutorial group only if the input is valid.
+
+**MSS**
+
+1. TA requests to enroll a specific contact into a course and tutorial group.
+2. TAConnect validates the input.
+3. TAConnect enrolls the student into the course and tutorial group, displays a success message, and shows the updated contact details.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. TAConnect detects an invalid or out-of-range contact index.
+
+    * 1a1. TAConnect informs TA of the invalid index and displays the correct format with an example.
+
+      Use case ends.
+
+* 1b. TAConnect detects other invalid input (e.g. missing course code or tutorial group).
+
+    * 1b1. TAConnect informs TA of the invalid input and displays the correct format with an example.
+
+      Use case ends.
+
+* 2a. Student is already enrolled in the given course and tutorial group.
+
+    * 2a1. TAConnect informs TA that the student is already enrolled.
+
+      Use case ends.
+
+<ins>**Use case: UC08 - Unenroll A Student**<ins>
+
+**Preconditions:** TA has at least one contact in their list.
+
+**Guarantees:** The specified student is unenrolled from the given course only if the input is valid.
+
+**MSS**
+
+1. TA requests to unenroll a specific contact from a course.
+2. TAConnect validates the input.
+3. TAConnect unenrolls the student from the course, displays a success message, and shows the updated contact details.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. TAConnect detects an invalid or out-of-range contact index.
+
+    * 1a1. TAConnect informs TA of the invalid index and displays the correct format with an example.
+
+      Use case ends.
+
+* 1b. TAConnect detects other invalid input (e.g. missing course code, or unnecessarily provided tutorial group).
+
+    * 1b1. TAConnect informs TA of the invalid input and displays the correct format with an example.
+
+      Use case ends.
+
+* 2a. Student is not enrolled in the given course.
+
+    * 2a1. TAConnect informs TA that the student is not enrolled in the given course.
+
+      Use case ends.
+
+<ins>**Use case: UC09 - Mark Attendance**<ins>
+
+**Preconditions:** TA has at least one contact in their list.
+
+**Guarantees:** The specified student's attendance is marked for the given course and week only if the input is valid.
+
+**MSS**
+
+1. TA requests to mark attendance for a specific contact for a given course and week.
+2. TAConnect validates the input.
+3. TAConnect marks the attendance, displays a success message, and shows the updated contact details.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. TAConnect detects an invalid or out-of-range contact index.
+
+    * 1a1. TAConnect informs TA of the invalid index and displays the correct format with an example.
+
+      Use case ends.
+
+* 1b. TAConnect detects other invalid input (e.g. missing course code, missing week number, week number out of range 1-13, unnecessarily provided tutorial group).
+
+    * 1b1. TAConnect informs TA of the invalid input and displays the correct format with an example.
+
+      Use case ends.
+
+* 2a. Student is not enrolled in the given course.
+
+    * 2a1. TAConnect informs TA that the student is not enrolled in the given course.
+
+      Use case ends.
+
+<ins>**Use case: UC10 - Unmark Attendance**<ins>
+
+**Preconditions:** TA has at least one contact in their list.
+
+**Guarantees:** The specified student's attendance is unmarked for the given course and week only if the input is valid.
+
+**MSS**
+
+1. TA requests to unmark attendance for a specific contact for a given course and week.
+2. TAConnect validates the input.
+3. TAConnect unmarks the attendance, displays a success message, and shows the updated contact details.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. TAConnect detects an invalid or out-of-range contact index.
+
+    * 1a1. TAConnect informs TA of the invalid index and displays the correct format with an example.
+
+      Use case ends.
+
+* 1b. TAConnect detects other invalid input (e.g. missing course code, missing week number, week number out of range 1-13, unnecessarily provided tutorial group).
+
+    * 1b1. TAConnect informs TA of the invalid input and displays the correct format with an example.
+
+      Use case ends.
+
+* 2a. Student is not enrolled in the given course.
+
+    * 2a1. TAConnect informs TA that the student is not enrolled in the given course.
+
+      Use case ends.
 
 ### Non-Functional Requirements
 
