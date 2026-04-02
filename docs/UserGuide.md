@@ -33,7 +33,7 @@ title: User Guide
 
    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tg/@johndoe` : Adds a contact named `John Doe` to the Address Book.
 
-   * `delete 3` : Deletes the 3rd contact shown in the current list.
+   * `delete 3` : Deletes the 3rd contact shown in the current contact list.
 
    * `view 2` : Displays the full details of the second contact in the current contact list.
 
@@ -41,9 +41,9 @@ title: User Guide
 
    * `exit` : Exits the app.
 
-   * `enroll 1 c/CS2103T tut/T01` : Enrolls the first student into CS2103T tutorial group T01.
+   * `enroll 1 c/CS2103T tut/T01` : Enrolls the first contact in the current contact list into CS2103T tutorial group T01.
 
-   * `attend 1 c/CS2103T w/1` : Marks the first student as attended for CS2103T in Week 1.
+   * `attend 1 c/CS2103T w/1` : Marks the first contact in the current contact list as attended for CS2103T in Week 1.
 
 1. Refer to the [Features](#features) below for details of each command.
 
@@ -178,7 +178,7 @@ Format: `unattend INDEX c/COURSE_CODE w/WEEK`
 Examples:
 * `unattend 1 c/CS2103T w/1` unmarks the attendance of the 1st student for CS2103T in Week 1.
 
-### Locating persons by name: `find`
+### Locating contacts: `find`
 
 Finds persons whose attributes matches at least one of the given keywords for every field specified in the command flags.
 
@@ -198,15 +198,21 @@ will have the same effect as `find c/CS2103T n/Alex`
 e.g. `n/Han` will match `Hans`
 * Exact matching is used for shorter fields (i.e. Tag, Course code, and Tutorial group). 
 e.g. `c/CS210` won't match `CS2103T`
-* To search by tutorial group, you must also provide a course code (e.g., `c/CS2103T tut/T01`). 
+* To search by tutorial group, you must also provide at least one course code (e.g., `c/CS2103T tut/T01 tut/T02 tut/T03`).
 Which means commands like `find tut/T01` won't work.
+* Multiple course codes and/or tutorial groups can be provided together. The standard `AND`/`OR` rules still apply:
+    * Multiple course codes (e.g., `c/CS2103T c/CS2101`) will match contacts in *either* course (`OR` search).
+    * Multiple tutorial groups (e.g., `tut/T01 tut/T02`) will match contacts in *either* tutorial group (`OR` search).
+    * Providing both will match contacts who are in (at least one of the courses) `AND` (at least one of the tutorial groups).
 
 Examples:
 * `find n/John` returns `john` and `John Doe`
 * `find n/alex n/david` returns `Alex Yeoh`, `David Li`
-* `find c/CS2103T tut/T01` returns all students in CS2103T tutorial group T01.
-* `find p/807 e/alex` returns all students with `807` in their phone number **AND** `alex` in their email address.
-* `find n/alex n/david t/friends t/buddy` returns students whose name contains "alex" **OR** "david", **AND** who are tagged as "friends" **OR** "buddy".
+* `find c/CS2103T tut/T01` returns all contacts in CS2103T tutorial group T01.
+* `find c/CS2103T tut/T01 tut/T02` returns all contacts in CS2103T who are in tutorial group T01 **OR** T02.
+* `find c/CS2103T c/CS2101 tut/T01` returns all contacts in CS2103T **OR** CS2101 who are in tutorial group T01.
+* `find p/807 e/alex` returns all contacts with `807` in their phone number **AND** `alex` in their email address.
+* `find n/alex n/david t/friends t/buddy` returns contacts whose name contains "alex" **OR** "david", **AND** who are tagged as "friends" **OR** "buddy".
 
   ![result for 'find n/alex n/david'](images/findAlexDavidResult.png)
 
