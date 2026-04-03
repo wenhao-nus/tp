@@ -195,19 +195,19 @@ This product aims to streamline communication from TAs‘ to their students, oth
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​ | I want to …​                                                   | So that I can…​                                                                                            |
-|----------|---------|----------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|
-| `* * *`  | TA      | add a contact to the address book                              | keep a record of a person.                                                                                 |
-| `* * *`  | TA      | delete a contact from the app                                  | remove unwanted entries and keep my contact list accurate.                                                 |
-| `* * *`  | TA      | view all contacts in the app                                   | see all entries in the contact list.                                                                       |
-| `* *`    | TA      | edit details of a contact                                      | keep contact information up to date                                                                        |
-| `* *`    | TA      | find contacts from the app by one or more specific attributes  | see specific types of contacts(e.g.,a specific tag/course) in the contact list.                            |
-| `* *`    | TA      | view detailed information of a contact                         | access all relevant information including attendance record about the student                              |
-| `*`      | TA      | enroll a student to a course and a tutorial group              | distinguish my students from different courses                                                             |
-| `*`      | TA      | remove a student from a tutorial or course                     | update course droppings or enrollment mistakes                                                             |
-| `*`      | TA      | mark a tutorial session from a course of a student as attended | identify if a student needs help                                                                           |
-| `*`      | TA      | update a student’s attendance record                           | fix any incorrect attendance records (i.e.,unattend a session)                                             |
-| `*`      | TA      | assign a contact tags                                          | specify specific roles for my contacts (e.g.,fellow TAs) or mark them (e.g.,mark a student as an absentee) |
+| Priority | As a …​ | I want to …​                                                   | So that I can…​                                                                                    |
+|----------|---------|----------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
+| `* * *`  | TA      | add a contact to the address book                              | keep a record of a person.                                                                         |
+| `* * *`  | TA      | delete a contact from the app                                  | remove unwanted entries and keep my contact list accurate.                                         |
+| `* * *`  | TA      | view all contacts in the app                                   | see all entries in the contact list.                                                               |
+| `* *`    | TA      | edit details of a contact                                      | keep contact information up to date                                                                |
+| `* *`    | TA      | find contacts from the app by one or more specific attributes  | see specific types of contacts(e.g.,a specific tag/course) in the contact list.                    |
+| `* *`    | TA      | view detailed information of a contact                         | access all relevant information including attendance record about the student                      |
+| `*`      | TA      | enroll a student to a course and a tutorial group              | distinguish my students from different courses                                                     |
+| `*`      | TA      | remove a student from a tutorial or course                     | update course droppings or enrollment mistakes                                                     |
+| `*`      | TA      | mark a tutorial session from a course of a student as attended | identify if a student needs help                                                                   |
+| `*`      | TA      | update a student’s attendance record                           | fix any incorrect attendance records (i.e.,unattend a session)                                     |
+| `*`      | TA      | assign a contact tags                                          | specify  roles for my contacts (e.g.,fellow TAs) or mark them (e.g.,mark a student as an absentee) |
 
 ### Use cases
 
