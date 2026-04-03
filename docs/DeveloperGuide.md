@@ -177,9 +177,9 @@ TODO: Add the implementations of some of our features here
 
 * is a NUS computer science teaching assistant managing multiple tutorial classes
 * needs to organize and track contacts across distinct academic roles (students, professors, fellow TAs, course admins)
-* requires the ability to categorize and quickly retrieve contacts using specific tags (e.g., by tutorial group)
+* requires the ability to categorize and quickly retrieve contacts using specific fields (e.g., by tutorial group)
 * frequently handles incomplete contact profiles that need to be updated iteratively (e.g., adding Telegram handles later)
-* needs a reliable way to archive and export contact data at the end of the academic semester
+* needs a reliable way to archive and export contact data at the end of the academic semester (e.g., a JSON file)
 * prefers a streamlined, role-specific tool over a general-purpose address book
 * can type fast
 * prefers desktop apps over other types
@@ -187,19 +187,21 @@ TODO: Add the implementations of some of our features here
 * is reasonably comfortable using CLI apps
 
 **Value proposition**: 
-This product aims to streamline communication from TA’s to their students, other TA’s, teaching staff, professors, and course admins. It achieves this by organizing contacts into tutorial groups and tags. It supports custom contact categories (e.g. Telegram handles), and more searching functionality (e.g. by groups). It also makes contacts storing more flexible by only making names mandatory. 
+This product aims to streamline communication from TA’s to their students, other TA’s, teaching staff, professors, and course admins. It achieves this by organizing contacts into courses, tutorial groups and tags. It supports custom contact categories (e.g. Telegram handles), and more searching functionality (e.g. by groups and/or by email etc.). It also makes contacts storing more flexible by only making names mandatory. 
 
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​ | I want to …​                         | So that I can…​                                                                                                          |
-| -------- |---------|--------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
-| `* * *`  | TA      | add a contact to the address book    | keep a record of a person.                                                                                               |
-| `* * *`  | TA      | delete a contact from the app        | remove unwanted entries and keep my contact list accurate.                                                               |
-| `* * *`  | TA      | view all contacts from the app       | see all entries in the contact list.                                                                                     |
-
+| Priority | As a …​ | I want to …​                                                       | So that I can…​                                            |
+|----------|---------|--------------------------------------------------------------------|------------------------------------------------------------|
+| `* * *`  | TA      | add a contact to the address book                                  | keep a record of a person.                                 |
+| `* * *`  | TA      | delete a contact from the app                                      | remove unwanted entries and keep my contact list accurate. |
+| `* * *`  | TA      | view all contacts from the app                                     | see all entries in the contact list.                       |
+| `* *`    | TA      | find some contacts from the app by one or more specific attributes | see some special type of contacts in the contact list.     |
+| `*`      | TA      | enroll a students to a course and a tutorial group                 | distinguish my students from different course              |
+| `*`      | TA      | mark a tutrial session from a course of a student as attend        | identify if a student need help                            |
 ### Use cases
 
 (For all use cases below, the **System** is `TAConnect` and the **Actor** is `NUS Computer Science Teaching Assistant (NUS CS TA)` unless specified otherwise)
@@ -500,16 +502,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1. All commands should have a response within 500ms.
 2. All contact information should be stored locally.
 3. Whenever a typo or mistake is made there is a message instead of a crash.
-4. All actions other than ‘list’ should have a warning before it for confirmation.
-5. The software should be able to host at least 100 students in total.
-6. The software should take no more than 200MB of space.
-7. Exported files for backup should be stored in a user-editable format.
-8. The software should be platform-independent, supporting all Windows, macOS and Linux.
-9. The software should not require any installers and should be able to be packaged into a single JAR file.
-10. The software should not depend on any remote server.
-11. GUI should provide visual feedback, but input is primarily text-based.
-12. The software should be able to handle corrupted and missing files.
-13. The software should be single-user based only.
+4. The software should be able to host at least 100 students in total.
+5. The software should take no more than 200MB of space.
+6. Exported files for backup should be stored in a user-editable format (e.g., a JSON file).
+7. The software should be platform-independent, supporting all Windows, macOS and Linux.
+8. The software should not require any installers and should be able to be packaged into a single JAR file.
+9. The software should not depend on any remote server.
+10. GUI should provide visual feedback, but input is primarily text-based.
+11. The software should be able to handle corrupted and missing files.
+12. The software should be single-user based only.
 
 ### Glossary
 
