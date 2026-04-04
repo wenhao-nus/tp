@@ -17,8 +17,8 @@
             <ColumnConstraints hgrow="NEVER" minWidth="10" prefWidth="130"/>
         </columnConstraints>
 
-        <ScrollPane id="scrollPane" vbarPolicy="NEVER" hbarPolicy="AS_NEEDED" GridPane.columnIndex="0"
-                    prefWidth="150" fitToWidth="false" fitToHeight="true">
+        <ScrollPane id="scrollPane" fx:id="contactInfoScrollPane" vbarPolicy="NEVER" hbarPolicy="AS_NEEDED"
+                    GridPane.columnIndex="0" prefWidth="150" fitToWidth="false" fitToHeight="true">
             <VBox alignment="CENTER_LEFT" prefWidth="130" prefHeight="105">
                 <padding>
                     <Insets top="5" right="5" bottom="5" left="15"/>
