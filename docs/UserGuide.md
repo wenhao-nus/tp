@@ -89,7 +89,9 @@ Adds a person to the address book.
 Format: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [tg/TELEGRAM_HANDLE] [t/TAG]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A person can have any number of tags (including 0)
+A person can have any number of tags (including 0). 
+Tags are case-insensitive and duplicate tags will be automatically filtered 
+(e.g., `t/friend t/Friend` will be treated as only one `friend` tag).
 </div>
 
 Examples:
@@ -115,6 +117,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [tg/TELEGRAM
 - At least one of the optional fields must be provided.
 - Existing values will be updated to the input values.
 - When editing tags, the existing tags of the person will be replaced.
+- Tags are case-insensitive and duplicate tags will be automatically filtered (e.g., `t/friend t/Friend` will be treated as only one `friend` tag).
 
 Examples:
 
