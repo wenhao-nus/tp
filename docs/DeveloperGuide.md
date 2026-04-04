@@ -568,6 +568,38 @@ testers are expected to do more *exploratory* testing.
    4. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous (i.e. 3rd test case above).
 
+### Editing a person
+
+1. Editing a person while all persons are being shown
+   1. Prerequisites: List all persons using the `list` command, and at least one person exists in the addressbook.
+
+   2. Test case: `edit 1 a/Blk 400, Tampines Street 4, #12-28`<br>
+      Expected: The first contact in the list is updated successfully. Details of the edited contact with the updated address are shown in the status message.
+
+   3. Test case: `edit 1 t/`<br>
+      Expected: No changes are made. Error details of tag cannot be empty is shown in the status message.
+
+2. Editing a person in a filtered list
+   1. Prerequisites: A person with the name `Bernice` exists. Filter the list using `find n/bernice`.
+
+   2. Test case: `edit 1 t/friend`<br>
+      Expected: The first person in the filtered list is updated successfully with a single new tag `friend`. After editing, the full original person list is displayed again.
+
+### Enrolling a person
+
+1. Enrolling a person into a course with tutorial class
+
+    1. Prerequisites: 
+    - The first person in the contact list is enrolled in the course `CS2103T` and tutorial class `T11`.
+    - If the first person is enrolled in `CS2103T` but in different tutorial class, unenroll the person first using `unenroll 1 c/CS2103T` then followed by `enroll 1 c/CS2103T t/T11`.
+    - If not enrolled into any tutorials of `CS2103T`, enroll the first person using `enroll 1 c/CS2103T t/T11`
+
+    2. Test case: `enroll 1 CS2103T T19`<br>
+       Expected: The first person is not enrolled into `CS2103T T19`. Error details is shown in the status message indicating that the student is already enrolled in `CS2103T`.
+    
+    3. Test case: `enroll 1 CS2109S T06`<br>
+       Expected: The student is successfully enrolled in course `CS2109S` with tutorial `T06`. The status message shows the student details with the updated course and tutorial enrollment.
+
 ### Saving data
 
 1. Dealing with missing data files

@@ -174,6 +174,8 @@ Format: `unset INDEX FIELD_PREFIX`
 - Instead, The app will notify the user that the field is already empty, while still displaying the person’s details.
 </div>
 
+Examples:
+
 - `unset 1 tg/` Unsets the Telegram handle of the 1st person.
 - `unset 2 a/` Unsets the address of the 2nd person.
 - `unset 3 t/` Removes all tags from the 3rd person.
