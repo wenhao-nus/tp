@@ -9,8 +9,8 @@ title: User Guide
 
 **Assumptions:** Users have basic computer literacy and are familiar with command-line operations.
 
-- Table of Contents
-  {:toc}
+* Table of Contents
+{:toc}
 
 ---
 
@@ -98,6 +98,21 @@ Examples:
 - `add n/Alex Yeoh`
 - `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 tg/@betsycrowe t/criminal`
 - `add n/David Li tg/davidli`
+
+### Deleting a person : `delete`
+
+Deletes the specified person from the address book.
+
+Format: `delete INDEX`
+
+- Deletes the person at the specified `INDEX`.
+- The index refers to the index number shown in the displayed person list.
+- The index **must be a positive integer** 1, 2, 3, …​
+
+Examples:
+
+- `list` followed by `delete 2` deletes the 2nd person in the address book.
+- `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
 ### Listing all persons : `list`
 
@@ -239,21 +254,6 @@ Examples:
 - `find n/alex n/david t/friends t/buddy` returns contacts whose name contains "alex" **OR** "david", **AND** who are tagged as "friends" **OR** "buddy".
 
   ![result for 'find n/alex n/david'](images/findAlexDavidResult.png)
-
-### Deleting a person : `delete`
-
-Deletes the specified person from the address book.
-
-Format: `delete INDEX`
-
-- Deletes the person at the specified `INDEX`.
-- The index refers to the index number shown in the displayed person list.
-- The index **must be a positive integer** 1, 2, 3, …​
-
-Examples:
-
-- `list` followed by `delete 2` deletes the 2nd person in the address book.
-- `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
 ### Viewing a contact : `view`
 
