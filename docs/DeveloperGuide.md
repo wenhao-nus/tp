@@ -539,29 +539,47 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tg/@johndoe t/student`<br>
       Expected: A new contact with the specified details is added to the list. Details of the newly added contact shown in the status message.
 
-1. Adding a new person with only mandatory fields
-   1. Test case: `add n/Alex Yeoh`<br>
-      Expected: A new contact with the name "Alex Yeoh" is added to the list. Details of the newly added contact shown in the status message.
+2. Adding a new person with only mandatory fields
+   1. Test case: `add n/Alex Yeoh e/alexyeoh@example.com`<br>
+      Expected: A new contact with the name `Alex Yeoh` and email of `alexyeoh@example.com` is added to the list. Details of the newly added contact shown in the status message.
 
-1. Adding a person with missing mandatory fields
-   1. Test case: `add p/98765432 e/johnd@example.com`<br>
-      Expected: No person is added. Error details indicating the missing name and the correct command format are shown in the status message.
+3. Adding a person with missing mandatory fields
+   1. Test case: `add p/98765432 tg/@johndoe`<br>
+      Expected: No person is added. Error details indicating the name is missing and the correct command format are shown in the status message.
+
+4. Adding a person that duplicates an existing contact
+   1. Prerequisites: A person with either the same email, Telegram handle, or phone number already exists in the address book. <br>
+      e.g. `add n/Peter Tan p/98765432 e/peter@example.com`
+
+   2. Test case: `add n/peter e/peter@example.com tg/@peter_1011`<br>
+      Expected: No new person is added. Error details shown in the status message indicating that a person with the same email already exists.
 
 ### Deleting a person
 
 1. Deleting a person while all persons are being shown
    1. Prerequisites: List all persons using the `list` command. Multiple persons are displayed.
 
-   1. Test case: `delete 1`<br>
+   2. Test case: `delete 1`<br>
       Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message.
 
-   1. Test case: `delete 0`<br>
+   3. Test case: `delete 0`<br>
       Expected: No person is deleted. Error details shown in the status message.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+   4. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+      Expected: Similar to previous (i.e. 3rd test case above).
 
 ### Saving data
 
-1. Dealing with missing/corrupted data files
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+1. Dealing with missing data files
+   1. Test case: Delete the `addressbook.json` file from `[JAR file location]/data/` if present. Launch the application.<br>
+      Expected: 
+      - The application detects that the data file is missing and launches without any crashes.
+      - A default sample contact list containing 6 persons is automatically loaded.
+
+2. Dealing with corrupted data files
+   1. Prerequisites: A save file exists at `[JAR file location]/data/addressbook.json`.
+   2. Test case: Open `addressbook.json` and corrupt the save file by modifying the first person’s name entry from <br>
+        `"name" : "Alex Yeoh"`  to  `"name" : "-"` and launch the application.<br>
+      Expected:
+      - The application detects that the data file is corrupted and launches without crashing.
+      - The application is loaded with an empty contact list.
