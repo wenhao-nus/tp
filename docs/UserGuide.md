@@ -19,7 +19,6 @@ This app enables TAs to **quickly and efficiently** organise contacts into cours
 {:toc}
 
 ---
-
 ## Quick start
 
 1. Ensure you have Java `17` or above installed in your Computer.<br>
