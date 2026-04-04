@@ -29,7 +29,13 @@ public class AttendCommandParser implements Parser<AttendCommand> {
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_INDEX + "\n" + AttendCommand.MESSAGE_USAGE), pe);
+            throw new ParseException(
+                    String.format(
+                            MESSAGE_INVALID_COMMAND_FORMAT,
+                            MESSAGE_INVALID_INDEX + "\n" + AttendCommand.MESSAGE_USAGE
+                    ),
+                    pe
+            );
         }
 
         if (!arePrefixesPresent(argMultimap, PREFIX_COURSE, PREFIX_WEEK)
