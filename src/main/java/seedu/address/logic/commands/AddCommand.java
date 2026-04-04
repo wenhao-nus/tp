@@ -41,6 +41,8 @@ public class AddCommand extends Command {
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "Email must be unique!"
             + " This email already exists in the address book.";
+    public static final String MESSAGE_MISSING_NAME = "Name is required for adding a person!";
+    public static final String MESSAGE_MISSING_EMAIL = "Email is required for adding a person!";
 
     private final Person toAdd;
 
