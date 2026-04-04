@@ -51,9 +51,18 @@ public class UnattendCommandParserTest {
         String expectedInvalidCommandMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 Messages.MESSAGE_INVALID_INDEX + "\n" + UnattendCommand.MESSAGE_USAGE);
 
-        assertParseFailure(parser, " a " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK + "1", expectedInvalidCommandMessage);
-        assertParseFailure(parser, " 0 " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK + "1", expectedInvalidCommandMessage);
-        assertParseFailure(parser, " -1 " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK + "1", expectedInvalidCommandMessage);
+        assertParseFailure(
+                parser,
+                " a " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK + "1", expectedInvalidCommandMessage
+        );
+        assertParseFailure(
+                parser,
+                " 0 " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK + "1", expectedInvalidCommandMessage
+        );
+        assertParseFailure(
+                parser,
+                " -1 " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK + "1", expectedInvalidCommandMessage
+        );
 
         // invalid week
         assertParseFailure(parser, " 1 " + PREFIX_COURSE + "CS2103T "
