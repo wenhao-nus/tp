@@ -27,7 +27,7 @@ public class SampleDataUtil {
                     "@AlexYeoh1230", getTagSet("friends"),
                     createTutInfoList(new String[]{"CS2103T", "T21"}, new String[]{"CS2101", "T02"})),
 
-            createPerson("Bernice Yu", null, null, "Blk 30 Lorong 3 Serangoon Gardens, #07-18",
+            createPerson("Bernice Yu", null, "berniceyu3@gmail.com", "Blk 30 Lorong 3 Serangoon Gardens, #07-18",
                     null, getTagSet("colleagues", "friends"),
                     createTutInfoList(new String[]{"CS2103T", "T21"})),
 
@@ -75,14 +75,14 @@ public class SampleDataUtil {
 
     /**
      * Creates a {@code Person} with the given fields.
-     * Missing optional fields (phone, email, address, telegram) are represented by null.
+     * Missing optional fields (phone, address, telegram) are represented by null.
      */
     private static Person createPerson(String name, String phone, String email, String address,
                                     String telegram, Set<Tag> tags, ArrayList<TutInfo> tutInfos) {
         return new Person(
             new Name(name),
             createOptionalPhone(phone),
-            createOptionalEmail(email),
+            new Email(email),
             createOptionalAddress(address),
             createOptionalTelegram(telegram),
             tags,
@@ -94,10 +94,6 @@ public class SampleDataUtil {
     // If the value is missing represented by null, returns an empty Optional.
     private static Optional<Phone> createOptionalPhone(String phone) {
         return (phone == null) ? Optional.empty() : Optional.of(new Phone(phone));
-    }
-
-    private static Optional<Email> createOptionalEmail(String email) {
-        return (email == null) ? Optional.empty() : Optional.of(new Email(email));
     }
 
     private static Optional<Address> createOptionalAddress(String address) {

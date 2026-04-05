@@ -71,7 +71,6 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_edit() throws Exception {
-        Person person = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
                 .withName("Amy Bee")
                 .withPhone("85355255")

@@ -71,7 +71,7 @@ public class PersonCard extends UiPart<Region> {
         name.setText(person.getName().fullName);
 
         fieldsContainer.getChildren().addAll(
-                new PersonCardField("Email", person.getDisplayEmail()).getRoot(),
+                new PersonCardField("Email", person.getEmail().toString()).getRoot(),
                 new PersonCardField("Telegram", person.getDisplayTelegram()).getRoot(),
                 new PersonCardField("Phone", person.getDisplayPhone()).getRoot()
         );

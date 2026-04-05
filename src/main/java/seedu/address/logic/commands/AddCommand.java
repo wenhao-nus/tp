@@ -23,22 +23,27 @@ public class AddCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
             + "Parameters: "
-            + PREFIX_NAME + "NAME (mandatory) "
+            + PREFIX_NAME + "NAME "
+            + PREFIX_EMAIL + "EMAIL "
             + "[" + PREFIX_PHONE + "PHONE] "
-            + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_TELEGRAM + "TELEGRAM] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
-            + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
+            + PREFIX_PHONE + "98765432 "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_TELEGRAM + "@johndoe "
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
+    public static final String MESSAGE_MISSING_NAME =
+            "Name is required and must start with the prefix (n/) for adding a person\n" + MESSAGE_USAGE;
+
+    public static final String MESSAGE_MISSING_EMAIL =
+            "Email is required and must start with the prefix (e/) for adding a person\n" + MESSAGE_USAGE;
     public static final String MESSAGE_DUPLICATE_PERSON = "Email, Telegram handle, and phone number must be unique!"
             + " A contact with the same email, phone number, or Telegram handle already exists in the addressbook.";
 

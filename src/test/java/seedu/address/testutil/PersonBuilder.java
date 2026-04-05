@@ -27,8 +27,8 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
 
     private Name name;
+    private Email email;
     private Optional<Phone> phone;
-    private Optional<Email> email;
     private Optional<Address> address;
     private Optional<Telegram> telegram;
     private Set<Tag> tags;
@@ -39,8 +39,8 @@ public class PersonBuilder {
      */
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
+        email = new Email(DEFAULT_EMAIL);
         phone = Optional.of(new Phone(DEFAULT_PHONE));
-        email = Optional.of(new Email(DEFAULT_EMAIL));
         address = Optional.of(new Address(DEFAULT_ADDRESS));
         telegram = Optional.empty();
         tags = new HashSet<>();
@@ -77,6 +77,14 @@ public class PersonBuilder {
     }
 
     /**
+     * Removes all {@code tags} from the {@code Person} that we are building.
+     */
+    public PersonBuilder withoutTags() {
+        this.tags = new HashSet<>();
+        return this;
+    }
+
+    /**
      * Sets the {@code Address} of the {@code Person} that we are building.
      */
     public PersonBuilder withAddress(String address) {
@@ -96,7 +104,7 @@ public class PersonBuilder {
      * Sets the {@code Email} of the {@code Person} that we are building.
      */
     public PersonBuilder withEmail(String email) {
-        this.email = Optional.of(new Email(email));
+        this.email = new Email(email);
         return this;
     }
 
@@ -113,14 +121,6 @@ public class PersonBuilder {
      */
     public PersonBuilder withoutPhone() {
         this.phone = Optional.empty();
-        return this;
-    }
-
-    /**
-     * Sets the {@code Email} of the {@code Person} to be missing.
-     */
-    public PersonBuilder withoutEmail() {
-        this.email = Optional.empty();
         return this;
     }
 

@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TELEGRAM;
@@ -31,25 +30,25 @@ public class UnsetCommand extends Command {
     public static final String COMMAND_WORD = "unset";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Unsets exactly one optional field of the person "
-            + "identified by the index number used in the displayed person list. "
-            + "Use the field prefix with no value.\n"
-            + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_PHONE + "] "
-            + "[" + PREFIX_EMAIL + "] "
-            + "[" + PREFIX_ADDRESS + "] "
-            + "[" + PREFIX_TELEGRAM + "] "
-            + "[" + PREFIX_TAG + "]\n"
+            + "identified by the index number used in the displayed person list.\n"
+            + "Parameters: INDEX (must be a positive integer) [OPTIONAL_FIELD_PREFIX] "
+            + "Optional fields: " + PREFIX_PHONE + " " + PREFIX_ADDRESS + " "
+            + PREFIX_TELEGRAM + " " + PREFIX_TAG + "\n"
             + "Example: " + COMMAND_WORD + " 1 " + PREFIX_TELEGRAM;
 
     public static final String MESSAGE_NOT_UNSET = "Exactly one field to unset must be provided.";
     public static final String MESSAGE_MULTIPLE_FIELDS = "Only one field can be unset at a time.";
-    public static final String MESSAGE_NAME_CANNOT_BE_UNSET = "Name cannot be unset.";
+    public static final String MESSAGE_NAME_CANNOT_BE_UNSET = "Name is a mandatory field and cannot be unset.";
+    public static final String MESSAGE_EMAIL_CANNOT_BE_UNSET = "Email is a mandatory field and cannot be unset.";
+    public static final String MESSAGE_TUTINFO_CANNOT_BE_UNSET =
+        "Tutorials or courses cannot be removed using 'unset'.\n"
+        + "Tips: Use 'unenroll' to remove a course, which also removes its tutorial.";
     public static final String MESSAGE_FIELD_VALUE_NOT_ALLOWED =
             "Unset only accepts a field prefix with no value. Example: unset 1 tg/";
     public static final String MESSAGE_UNSET_SUCCESS =
-            "Unset %1$s (previously: %2$s) for %3$s (person at index %4$s).";
+            "Successfully unset %1$s (Previously: %2$s) for %3$s at index %4$s.";
     public static final String MESSAGE_FIELD_ALREADY_MISSING =
-            "Cannot unset %1$s for %2$s (person at index %3$s) because it is already missing.";
+            "Note: %1$s for %2$s at index %3$s is already missing; No changes were made.";
 
     private final Index index;
     private final Prefix fieldPrefix;
@@ -75,10 +74,6 @@ public class UnsetCommand extends Command {
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
-        if (!isFieldSet(personToEdit, fieldPrefix)) {
-            throw new CommandException(String.format(MESSAGE_FIELD_ALREADY_MISSING,
-                    getDisplayName(fieldPrefix), personToEdit.getName(), index.getOneBased()));
-        }
 
         String previousValue = getDisplayValue(personToEdit, fieldPrefix);
         Person editedPerson = unsetField(personToEdit, fieldPrefix);
@@ -86,6 +81,12 @@ public class UnsetCommand extends Command {
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.setPersonToShow(editedPerson);
+
+        // Unsetting an already missing optional field
+        if (!isFieldSet(personToEdit, fieldPrefix)) {
+            return new CommandResult(String.format(MESSAGE_FIELD_ALREADY_MISSING,
+                    capitaliseFirstLetter(getDisplayName(fieldPrefix)), personToEdit.getName(), index.getOneBased()));
+        }
 
         return new CommandResult(String.format(MESSAGE_UNSET_SUCCESS,
                 getDisplayName(fieldPrefix), previousValue, personToEdit.getName(), index.getOneBased()));
@@ -120,8 +121,6 @@ public class UnsetCommand extends Command {
         switch (fieldPrefix.getPrefix()) {
         case "p/":
             return person.getPhone().isPresent();
-        case "e/":
-            return person.getEmail().isPresent();
         case "a/":
             return person.getAddress().isPresent();
         case "tg/":
@@ -140,8 +139,6 @@ public class UnsetCommand extends Command {
         switch (fieldPrefix.getPrefix()) {
         case "p/":
             return "phone number";
-        case "e/":
-            return "email";
         case "a/":
             return "address";
         case "tg/":
@@ -160,8 +157,6 @@ public class UnsetCommand extends Command {
         switch (fieldPrefix.getPrefix()) {
         case "p/":
             return person.getDisplayPhone();
-        case "e/":
-            return person.getDisplayEmail();
         case "a/":
             return person.getDisplayAddress();
         case "tg/":
@@ -184,9 +179,6 @@ public class UnsetCommand extends Command {
         case "p/":
             return new Person(person.getName(), Optional.empty(), person.getEmail(),
                     person.getAddress(), person.getTelegram(), person.getTags(), person.getTutInfos());
-        case "e/":
-            return new Person(person.getName(), person.getPhone(), Optional.empty(),
-                    person.getAddress(), person.getTelegram(), person.getTags(), person.getTutInfos());
         case "a/":
             return new Person(person.getName(), person.getPhone(), person.getEmail(),
                     Optional.empty(), person.getTelegram(), person.getTags(), person.getTutInfos());
@@ -199,5 +191,16 @@ public class UnsetCommand extends Command {
         default:
             throw new IllegalArgumentException("Unsupported unset field prefix: " + fieldPrefix);
         }
+    }
+
+    /**
+     * Capatilise the first letter of the string given.
+     */
+    private String capitaliseFirstLetter(String input) {
+        if (input == null || input.isEmpty()) {
+            return input;
+        }
+
+        return input.substring(0, 1).toUpperCase() + input.substring(1);
     }
 }

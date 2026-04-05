@@ -110,7 +110,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
         name.setText(formatFieldValue(person.getName().fullName));
 
         String[] fieldValues = {
-                person.getDisplayEmail(),
+                person.getEmail().toString(),
                 person.getDisplayTelegram(),
                 person.getDisplayPhone(),
                 person.getDisplayAddress()

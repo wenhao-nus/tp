@@ -38,15 +38,6 @@ public class PersonTest {
     }
 
     @Test
-    public void getDisplayEmail_withOrWithoutEmail_returnsCorrectValue() {
-        Person personWithEmail = new PersonBuilder().withEmail("xxx@gmail.com").build();
-        assertEquals("xxx@gmail.com", personWithEmail.getDisplayEmail());
-
-        Person personWithoutEmail = new PersonBuilder().withoutEmail().build();
-        assertEquals(Person.MISSING_OPTIONAL_FIELD_VALUE, personWithoutEmail.getDisplayEmail());
-    }
-
-    @Test
     public void getDisplayAddress_withOrWithoutAddress_returnsCorrectValue() {
         Person personWithAddress = new PersonBuilder().withAddress("Blk 30 Geylang Street 29, #06-40").build();
         assertEquals("Blk 30 Geylang Street 29, #06-40", personWithAddress.getDisplayAddress());
@@ -99,25 +90,6 @@ public class PersonTest {
         // telegram differs, all other attributes same -> returns true
         editedBob = new PersonBuilder(BOB).withTelegram(VALID_TELEGRAM_BOB.toUpperCase()).build();
         assertTrue(BOB.isSamePerson(editedBob));
-
-        // email, phone, telegram are missing on both -> returns false
-        editedAlice = new PersonBuilder(ALICE).withoutEmail().withoutPhone().withoutTelegram().build();
-        Person anotherEditedAlice = new PersonBuilder(ALICE).withoutEmail().withoutPhone().withoutTelegram().build();
-        assertFalse(editedAlice.isSamePerson(anotherEditedAlice));
-
-        // email missing on both, but same phone -> returns true
-        editedAlice = new PersonBuilder(ALICE).withoutEmail().build();
-        Person anotherEditedAlice2 = new PersonBuilder(ALICE).withoutEmail().build();
-        assertTrue(editedAlice.isSamePerson(anotherEditedAlice2));
-
-        // first person email missing, second has email and same phone -> returns true (phone matches)
-        assertFalse(editedAlice.isSamePerson(new PersonBuilder(ALICE).withoutEmail().withPhone(VALID_PHONE_BOB)
-                .withoutTelegram().build()));
-
-        // all unique identifiers missing on one side -> returns false
-        editedAlice = new PersonBuilder(ALICE).withoutEmail().withoutPhone().withoutTelegram().build();
-        assertFalse(editedAlice.isSamePerson(ALICE));
-        assertFalse(ALICE.isSamePerson(editedAlice));
     }
 
     @Test

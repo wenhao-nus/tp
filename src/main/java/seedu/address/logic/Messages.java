@@ -21,6 +21,10 @@ public class Messages {
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
             "Multiple values specified for the following single-valued field(s): ";
+    public static final String MESSAGE_PREAMBLE_NOT_EMPTY =
+        "Unexpected text detected before prefixes. Please use the correct format. \n";
+    public static final String MESSAGE_INVALID_PREFIX =
+        "The prefix \"%1$s\" is not supported!\n%2$s";
     public static final String MESSAGE_TAG_NOTE =
             "\n"
                     + "Note: Tags are case-insensitive and duplicate tags will be automatically filtered "
@@ -49,7 +53,7 @@ public class Messages {
                 .append("; Phone: ")
                 .append(person.getDisplayPhone())
                 .append("; Email: ")
-                .append(person.getDisplayEmail())
+                .append(person.getEmail())
                 .append("; Telegram: ")
                 .append(person.getDisplayTelegram())
                 .append("; Address: ")

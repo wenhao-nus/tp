@@ -145,7 +145,7 @@ public class EditCommandTest {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         // edit second person to have same email as first person only
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
-                .withEmail(firstPerson.getEmail().get().toString()).build();
+                .withEmail(firstPerson.getEmail().toString()).build();
         EditCommand editCommand = new EditCommand(INDEX_SECOND_PERSON, descriptor);
 
         assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON);

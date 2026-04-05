@@ -30,7 +30,7 @@ public class JsonAdaptedPersonTest {
 
     private static final String VALID_NAME = BENSON.getName().toString();
     private static final String VALID_PHONE = BENSON.getDisplayPhone();
-    private static final String VALID_EMAIL = BENSON.getDisplayEmail();
+    private static final String VALID_EMAIL = BENSON.getEmail().toString();
     private static final String VALID_ADDRESS = BENSON.getDisplayAddress();
     private static final String VALID_TELEGRAM = BENSON.getDisplayTelegram();
     private static final List<JsonAdaptedTag> VALID_TAGS = BENSON.getTags().stream()
@@ -52,7 +52,7 @@ public class JsonAdaptedPersonTest {
                 new JsonAdaptedPerson(
                         VALID_NAME,
                         "-",
-                        "-",
+                        VALID_EMAIL,
                         "-",
                         "-",
                         VALID_TAGS,
@@ -61,7 +61,7 @@ public class JsonAdaptedPersonTest {
         Person modelPerson = person.toModelType();
         assertEquals(VALID_NAME, modelPerson.getName().fullName);
         assertEquals("-", modelPerson.getDisplayPhone());
-        assertEquals("-", modelPerson.getDisplayEmail());
+        assertEquals(VALID_EMAIL, modelPerson.getEmail().toString());
         assertEquals("-", modelPerson.getDisplayAddress());
         assertEquals("-", modelPerson.getDisplayTelegram());
     }

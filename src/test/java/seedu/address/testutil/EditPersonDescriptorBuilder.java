@@ -35,7 +35,7 @@ public class EditPersonDescriptorBuilder {
         descriptor = new EditPersonDescriptor();
         descriptor.setName(person.getName());
         descriptor.setPhone(person.getPhone().orElse(null));
-        descriptor.setEmail(person.getEmail().orElse(null));
+        descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress().orElse(null));
         descriptor.setTelegram(person.getTelegram().orElse(null));
         descriptor.setTags(person.getTags());
@@ -86,14 +86,6 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withoutPhone() {
         descriptor.setPhone(null);
-        return this;
-    }
-
-    /**
-     * Sets the {@code Email} of the {@code EditPersonDescriptor} to be missing.
-     */
-    public EditPersonDescriptorBuilder withoutEmail() {
-        descriptor.setEmail(null);
         return this;
     }
 
