@@ -349,9 +349,10 @@ Email is mandatory because every contact should have at least one way to be reac
 **A**: TAConnect considers a contact a duplicate if it shares an Email, Phone number, or Telegram handle with an existing contact. All other fields (Name, Address, Tags, Course codes, and Tutorial groups) do not need to be unique, so multiple contacts can share the same values for these.
 Additionally, if a field is absent on one or both contacts, it is never treated as a match, so two contacts without a phone number, for example, are not considered duplicates on that basis.
 
-**Q**: Why doesn't the scroll wheel work as expected over certain components?<br>
-**A**: TAConnect prioritises the scroll wheel for vertical scrolling on major components. For example, when hovering over a horizontally truncated subsection in the detailed contact panel, scrolling will move the major component vertically rather than scrolling that subsection horizontally.
-To scroll a smaller inner component, hover your cursor directly over its scrollbar and scroll from there. This ensures that smaller sections with overflow content don't interfere with navigating the larger panel, making navigation more user-friendly and predictable.
+**Q**: Why doesn't the scroll wheel work as expected over some parts of the app?<br>
+**A**: TAConnect prioritises the scroll wheel for scrolling the main content areas up and down. So in some cases, scrolling over a smaller section (e.g. a field that's cut off horizontally) will scroll the main panel instead of that specific section. 
+To scroll within a smaller section, drag the scrollbar directly instead. This ensures that smaller overflow sections don't get in the way of navigating the app smoothly.
+
 ---
 
 ## Known issues
