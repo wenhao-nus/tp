@@ -347,7 +347,7 @@ Email is mandatory because every contact should have at least one way to be reac
 
 **Q**: What are considered duplicate contacts?<br>
 **A**: TAConnect considers a contact a duplicate if it shares an Email, Phone number, or Telegram handle with an existing contact. All other fields (Name, Address, Tags, Course codes, and Tutorial groups) do not need to be unique, so multiple contacts can share the same values for these.
-Additionally, if a field is absent on one or both contacts, it is never treated as a match, so two contacts without a phone number, for example, are not considered duplicates on that basis.
+Additionally, if a field is absent on one or both contacts, it is never treated as a match, so two contacts without a phone number, for example, are not considered duplicates.
 
 **Q**: Why doesn't the scroll wheel work as expected over some parts of the app?<br>
 **A**: TAConnect prioritises the scroll wheel for scrolling the main content areas up and down. So in some cases, scrolling over a smaller section (e.g. a field that's cut off horizontally) will scroll the main panel instead of that specific section. 
