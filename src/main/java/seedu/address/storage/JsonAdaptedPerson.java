@@ -63,8 +63,8 @@ class JsonAdaptedPerson {
      */
     public JsonAdaptedPerson(Person source) {
         name = source.getName().fullName;
+        email = source.getEmail().toString();
         phone = source.getPhone().map(p -> p.value).orElse(EMPTY_FIELD_PLACEHOLDER);
-        email = source.getEmail().map(p -> p.value).orElse(EMPTY_FIELD_PLACEHOLDER);
         address = source.getAddress().map(p -> p.value).orElse(EMPTY_FIELD_PLACEHOLDER);
         telegram = source.getTelegram().map(p -> p.value).orElse(EMPTY_FIELD_PLACEHOLDER);
 
@@ -92,23 +92,41 @@ class JsonAdaptedPerson {
             personTutInfos.add(tutInfo.toModelType());
         }
 
-        if (name == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    Name.class.getSimpleName()));
-        }
-        if (!Name.isValidName(name)) {
-            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
-        }
-        final Name modelName = new Name(name);
-
+        final Name modelName = parseName(name);
         final Optional<Phone> modelPhone = parsePhone(phone);
-        final Optional<Email> modelEmail = parseEmail(email);
+        final Email modelEmail = parseEmail(email);
         final Optional<Address> modelAddress = parseAddress(address);
         final Optional<Telegram> modelTelegram = parseTelegram(telegram);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTelegram, modelTags, personTutInfos);
+    }
+
+    private Name parseName(String name) throws IllegalValueException {
+        if (name == null) {
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
+        }
+
+        if (!Name.isValidName(name)) {
+            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
+        }
+
+        return new Name(name);
+    }
+
+    private Email parseEmail(String email) throws IllegalValueException {
+        if (email == null) {
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
+        }
+
+        if (!Email.isValidEmail(email)) {
+            throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
+        }
+
+        return new Email(email);
     }
 
     private Optional<Phone> parsePhone(String phone) throws IllegalValueException {
@@ -126,23 +144,6 @@ class JsonAdaptedPerson {
         }
 
         return Optional.of(new Phone(phone));
-    }
-
-    private Optional<Email> parseEmail(String email) throws IllegalValueException {
-        if (email == null) {
-            throw new IllegalValueException(
-                    String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
-        }
-
-        if (email.equals(EMPTY_FIELD_PLACEHOLDER)) {
-            return Optional.empty();
-        }
-
-        if (!Email.isValidEmail(email)) {
-            throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
-        }
-
-        return Optional.of(new Email(email));
     }
 
     private Optional<Address> parseAddress(String address) throws IllegalValueException {

@@ -17,17 +17,17 @@ import seedu.address.testutil.PersonBuilder;
 public class MessagesTest {
 
     @Test
-    public void format_personWithNameOnly_success() {
+    public void format_personWithNameEmailOnly_success() {
         Person person = new PersonBuilder()
                 .withoutPhone()
-                .withoutEmail()
                 .withoutAddress()
                 .withoutTelegram()
                 .build();
 
         String expectedString = person.getName()
                 + "; Phone: -"
-                + "; Email: -"
+                + "; Email: "
+                + person.getEmail()
                 + "; Telegram: -"
                 + "; Address: -"
                 + "; Courses: "
@@ -45,7 +45,7 @@ public class MessagesTest {
 
         String expectedString = person.getName()
             + "; Phone: " + person.getDisplayPhone()
-            + "; Email: " + person.getDisplayEmail()
+            + "; Email: " + person.getEmail()
             + "; Telegram: " + person.getDisplayTelegram()
             + "; Address: " + person.getDisplayAddress()
             + "; Courses: [" + person.getTutInfos().get(0).toDisplayString() + "]"
@@ -70,7 +70,7 @@ public class MessagesTest {
 
         String expectedString = person.getName()
             + "; Phone: " + person.getDisplayPhone()
-            + "; Email: " + person.getDisplayEmail()
+            + "; Email: " + person.getEmail()
             + "; Telegram: " + person.getDisplayTelegram()
             + "; Address: " + person.getDisplayAddress()
             + "; Courses: [" + person.getTutInfos().get(0).toDisplayString() + "]"

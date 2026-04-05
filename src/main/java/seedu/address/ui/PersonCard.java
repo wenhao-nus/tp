@@ -4,6 +4,10 @@ import java.util.Comparator;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -28,29 +32,46 @@ public class PersonCard extends UiPart<Region> {
     public final Person person;
 
     @FXML
+    private ScrollPane contactInfoScrollPane;
+
+    @FXML
     private HBox cardPane;
+
     @FXML
     private Label name;
+
     @FXML
     private Label id;
+
     @FXML
     private VBox fieldsContainer;
+
     @FXML
     private FlowPane tags;
+
+    @FXML
+    private ScrollPane tutInfosScrollPane;
+
     @FXML
     private VBox tutInfosContainer;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
      */
-    public PersonCard(Person person, int displayedIndex) {
+    public PersonCard(Person person, int displayedIndex, ListView<Person> listView) {
         super(FXML);
         this.person = person;
+
+        assert listView != null : "ListView must not be null";
+
+        preventScrollPaneFocusing(listView);
+        preventVerticalScroll(contactInfoScrollPane);
+
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
 
         fieldsContainer.getChildren().addAll(
-                new PersonCardField("Email", person.getDisplayEmail()).getRoot(),
+                new PersonCardField("Email", person.getEmail().toString()).getRoot(),
                 new PersonCardField("Telegram", person.getDisplayTelegram()).getRoot(),
                 new PersonCardField("Phone", person.getDisplayPhone()).getRoot()
         );
@@ -65,4 +86,37 @@ public class PersonCard extends UiPart<Region> {
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
+
+    /**
+     * Maintains keyboard focus on the listview away from tutInfosScrollPane when it is clicked.
+     */
+    private void preventScrollPaneFocusing(ListView<Person> listView) {
+
+        tutInfosScrollPane.setFocusTraversable(false);
+        tutInfosContainer.setFocusTraversable(false);
+
+        tutInfosScrollPane.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+            event.consume();
+            listView.requestFocus();
+        });
+
+        contactInfoScrollPane.setFocusTraversable(false);
+        contactInfoScrollPane.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+            event.consume();
+            listView.requestFocus();
+        });
+    }
+
+    /**
+     * Prevents vertical scrolling of a ScrollPane by consuming vertical scroll events.
+     */
+    private void preventVerticalScroll(ScrollPane scrollPane) {
+        // Solution below inspired by https://stackoverflow.com/a/53991807
+        scrollPane.addEventFilter(ScrollEvent.SCROLL, event -> {
+            if (event.getDeltaY() != 0) {
+                event.consume();
+            }
+        });
+    }
+
 }

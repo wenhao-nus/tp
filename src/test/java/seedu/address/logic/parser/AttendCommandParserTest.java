@@ -9,6 +9,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.AttendCommand;
 
 public class AttendCommandParserTest {
@@ -26,25 +27,47 @@ public class AttendCommandParserTest {
 
     @Test
     public void parse_compulsoryFieldMissing_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AttendCommand.MESSAGE_USAGE);
+        String expectedGeneralMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AttendCommand.MESSAGE_USAGE);
+
+        String expectedInvalidIndexMessage = String.format(
+                MESSAGE_INVALID_COMMAND_FORMAT,
+                Messages.MESSAGE_INVALID_INDEX + "\n" + AttendCommand.MESSAGE_USAGE
+        );
 
         // missing course prefix
-        assertParseFailure(parser, " 1 " + PREFIX_WEEK + "1", expectedMessage);
+        assertParseFailure(parser, " 1 " + PREFIX_WEEK + "1", expectedGeneralMessage);
 
         // missing week prefix
-        assertParseFailure(parser, " 1 " + PREFIX_COURSE + "CS2103T", expectedMessage);
+        assertParseFailure(parser, " 1 " + PREFIX_COURSE + "CS2103T", expectedGeneralMessage);
 
         // missing index
-        assertParseFailure(parser, " " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK + "1", expectedMessage);
+        assertParseFailure(
+                parser,
+                " " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK + "1",
+                expectedInvalidIndexMessage
+        );
     }
 
     @Test
     public void parse_invalidValue_failure() {
         // invalid index
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AttendCommand.MESSAGE_USAGE);
-        assertParseFailure(parser, " a " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK + "1", expectedMessage);
-        assertParseFailure(parser, " 0 " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK + "1", expectedMessage);
-        assertParseFailure(parser, " -1 " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK + "1", expectedMessage);
+        String expectedInvalidIndexMessage = String.format(
+                MESSAGE_INVALID_COMMAND_FORMAT,
+                Messages.MESSAGE_INVALID_INDEX + "\n" + AttendCommand.MESSAGE_USAGE
+        );
+
+        assertParseFailure(
+                parser, " a " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK + "1",
+                expectedInvalidIndexMessage
+        );
+        assertParseFailure(
+                parser, " 0 " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK + "1",
+                expectedInvalidIndexMessage
+        );
+        assertParseFailure(
+                parser, " -1 " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK + "1",
+                expectedInvalidIndexMessage
+        );
 
         // invalid week
         assertParseFailure(parser, " 1 " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK
@@ -53,5 +76,16 @@ public class AttendCommandParserTest {
                 + PREFIX_WEEK + "14", "Week must be between 1 and 13");
         assertParseFailure(parser, " 1 " + PREFIX_COURSE + "CS2103T "
                 + PREFIX_WEEK + "abc", "Week must be a number.");
+    }
+
+    @Test
+    public void parse_duplicatePrefixes_failure() {
+        String expectedMessage = Messages.getErrorMessageForDuplicatePrefixes(PREFIX_WEEK);
+        assertParseFailure(parser, " 1 " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK + "1 "
+                + PREFIX_WEEK + "2", expectedMessage);
+
+        expectedMessage = Messages.getErrorMessageForDuplicatePrefixes(PREFIX_COURSE);
+        assertParseFailure(parser, " 1 " + PREFIX_COURSE + "CS2103T " + PREFIX_COURSE + "CS2101 "
+                + PREFIX_WEEK + "1", expectedMessage);
     }
 }

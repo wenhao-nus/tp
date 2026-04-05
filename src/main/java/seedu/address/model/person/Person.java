@@ -26,10 +26,10 @@ public class Person {
 
     // Mandatory field
     private final Name name;
+    private final Email email;
 
     // Optional fields
     private final Optional<Phone> phone;
-    private final Optional<Email> email;
     private final Optional<Address> address;
     private final Optional<Telegram> telegram;
 
@@ -39,9 +39,9 @@ public class Person {
 
     /**
      * Every field must be present and not null.
-     * Optional fields will be stored as Optional.empty() if no value is provided.
+     * Optional fields (phone, address, telegram) will be stored as Optional.empty() if no value is provided.
      */
-    public Person(Name name, Optional<Phone> phone, Optional<Email> email, Optional<Address> address,
+    public Person(Name name, Optional<Phone> phone, Email email, Optional<Address> address,
                 Optional<Telegram> telegram, Set<Tag> tags, List<TutInfo> tutInfos) {
 
         requireAllNonNull(name, phone, email, address, telegram, tags, tutInfos);
@@ -59,12 +59,12 @@ public class Person {
         return name;
     }
 
-    public Optional<Phone> getPhone() {
-        return phone;
+    public Email getEmail() {
+        return email;
     }
 
-    public Optional<Email> getEmail() {
-        return email;
+    public Optional<Phone> getPhone() {
+        return phone;
     }
 
     public Optional<Address> getAddress() {
@@ -81,14 +81,6 @@ public class Person {
      */
     public String getDisplayPhone() {
         return phone.map(Phone::toString).orElse(MISSING_OPTIONAL_FIELD_VALUE);
-    }
-
-    /**
-     * Returns a display-friendly string for the {@code Email}.
-     * Returns MISSING_OPTIONAL_FIELD_VALUE if the {@code Email} is missing.
-     */
-    public String getDisplayEmail() {
-        return email.map(Email::toString).orElse(MISSING_OPTIONAL_FIELD_VALUE);
     }
 
     /**
@@ -130,24 +122,53 @@ public class Person {
     }
 
     /**
-     * Returns true if both persons have the same email.
+     * Returns true if both persons have the same email/same telegram handle/same phone number.
      * This defines a weaker notion of equality between two persons.
-     * The missing emails are not considered unique.
      */
     public boolean isSamePerson(Person otherPerson) {
-        if (otherPerson == this) {
-            return true;
-        }
-
         if (otherPerson == null) {
             return false;
         }
 
-        if (getEmail().isEmpty() || otherPerson.getEmail().isEmpty()) {
-            return false;
+        if (otherPerson == this) {
+            return true;
         }
 
+        return isSameEmail(otherPerson) || isSameTelegram(otherPerson) || isSamePhone(otherPerson);
+    }
+
+    /**
+     * Returns true if both persons have the same email.
+     * This defines a weaker notion of equality between two emails.
+     */
+    public boolean isSameEmail(Person otherPerson) {
         return otherPerson.getEmail().equals(getEmail());
+    }
+
+    /**
+     * Returns true if both persons have the same Telegram handle.
+     * This defines a weaker notion of equality between two Telegram handles.
+     * The missing Telegram handles are not considered unique.
+     */
+    public boolean isSameTelegram(Person otherPerson) {
+        if (getTelegram().isEmpty() || otherPerson.getTelegram().isEmpty()) {
+            return false;
+        } else {
+            return otherPerson.getTelegram().equals(getTelegram());
+        }
+    }
+
+    /**
+     * Returns true if both persons have the same phone number.
+     * This defines a weaker notion of equality between two phone numbers.
+     * The missing phone numbers are not considered unique.
+     */
+    public boolean isSamePhone(Person otherPerson) {
+        if (getPhone().isEmpty() || otherPerson.getPhone().isEmpty()) {
+            return false;
+        } else {
+            return otherPerson.getPhone().equals(getPhone());
+        }
     }
 
     /**
@@ -215,7 +236,7 @@ public class Person {
      * Case-insensitive.
      */
     public boolean emailMatches(String keyword) {
-        return fieldMatches(email, keyword);
+        return StringUtil.containsIgnoreCase(email.toString(), keyword);
     }
 
     /**

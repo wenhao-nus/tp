@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -29,6 +30,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Telegram;
 import seedu.address.model.person.TutInfo;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -41,17 +43,17 @@ public class EditCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the displayed person list. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) " + "[" + PREFIX_NAME + "NAME] "
-            + "[" + PREFIX_PHONE + "PHONE] " + "[" + PREFIX_EMAIL + "EMAIL] " + "["
+            + "Parameters: INDEX (must be a positive integer) " + PREFIX_NAME + "NAME "
+            + PREFIX_EMAIL + "EMAIL " + "[" + PREFIX_PHONE + "PHONE] " + "["
             + PREFIX_ADDRESS + "ADDRESS] " + "[" + PREFIX_TELEGRAM + "TELEGRAM] "
             + "[" + PREFIX_TAG + "TAG]...\n" + "Example: "
-            + COMMAND_WORD + " 1 " + PREFIX_PHONE + "91234567 " + PREFIX_EMAIL
-            + "johndoe@example.com" + PREFIX_TELEGRAM + "johndoe_new";;
+            + COMMAND_WORD + " 1 " + PREFIX_EMAIL + "johndoe@example.com "
+            + PREFIX_PHONE + "91234567" + PREFIX_TELEGRAM + "johndoe_new";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "Email must be unique!"
-            + " This email already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "Email, Telegram handle, and phone number must be unique!"
+            + " A contact with the same email, phone number, or Telegram handle exists in the addressbook.";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -80,15 +82,17 @@ public class EditCommand extends Command {
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
-        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
+        try {
+            model.setPerson(personToEdit, editedPerson);
+        } catch (DuplicatePersonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
-        model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.setPersonToShow(editedPerson); // Always show the edited person
 
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson))
+                + Messages.MESSAGE_TAG_NOTE);
     }
 
     /**
@@ -99,9 +103,9 @@ public class EditCommand extends Command {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
+        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
 
         Optional<Phone> updatedPhone = editPersonDescriptor.getPhone().or(() -> personToEdit.getPhone());
-        Optional<Email> updatedEmail = editPersonDescriptor.getEmail().or(() -> personToEdit.getEmail());
         Optional<Address> updatedAddress = editPersonDescriptor.getAddress().or(() -> personToEdit.getAddress());
         Optional<Telegram> updatedTelegram = editPersonDescriptor.getTelegram().or(() -> personToEdit.getTelegram());
 
@@ -152,15 +156,16 @@ public class EditCommand extends Command {
         private Phone phone;
         private Email email;
         private Address address;
-        private Set<Tag> tags;
         private Telegram telegram;
+        private Set<Tag> tags;
+        private List<TutInfo> tutInfos;
 
         public EditPersonDescriptor() {
         }
 
         /**
          * Copy constructor.
-         * A defensive copy of {@code tags} is used internally.
+         * A defensive copy of {@code tags} and {@code tutInfos} are used internally.
          */
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             setName(toCopy.name);
@@ -168,6 +173,7 @@ public class EditCommand extends Command {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setTelegram(toCopy.telegram);
+            setTutInfos(toCopy.tutInfos);
             setTags(toCopy.tags);
         }
 
@@ -175,7 +181,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, telegram, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, telegram, tags, tutInfos);
         }
 
         public void setName(Name name) {
@@ -235,6 +241,23 @@ public class EditCommand extends Command {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
         }
 
+        /**
+         * Sets {@code tutInfos} to this object's {@code tutInfos}.
+         * A defensive copy of {@code tutInfos} is used internally.
+         */
+        public void setTutInfos(List<TutInfo> tutInfos) {
+            this.tutInfos = (tutInfos != null) ? new ArrayList<>(tutInfos) : null;
+        }
+
+        /**
+         * Returns an unmodifiable list of tut infos, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code tutInfos} is null.
+         */
+        public Optional<List<TutInfo>> getTutInfos() {
+            return (tutInfos != null) ? Optional.of(Collections.unmodifiableList(tutInfos)) : Optional.empty();
+        }
+
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -252,7 +275,8 @@ public class EditCommand extends Command {
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
                     && Objects.equals(telegram, otherEditPersonDescriptor.telegram)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags);
+                    && Objects.equals(tags, otherEditPersonDescriptor.tags)
+                    && Objects.equals(tutInfos, otherEditPersonDescriptor.tutInfos);
         }
 
         @Override
@@ -263,6 +287,7 @@ public class EditCommand extends Command {
                     .add("email", email)
                     .add("telegram", telegram)
                     .add("address", address)
+                    .add("tutInfos", tutInfos)
                     .add("tags", tags)
                     .toString();
         }

@@ -40,6 +40,14 @@ public class FindCommandParser implements Parser<FindCommand> {
         List<String> courseKeywords = argMultimap.getAllValues(PREFIX_COURSE);
         List<String> tutorialKeywords = argMultimap.getAllValues(PREFIX_TUTORIAL);
 
+        if (containsEmptyValue(nameKeywords) || containsEmptyValue(phoneKeywords) || containsEmptyValue(emailKeywords)
+                || containsEmptyValue(addressKeywords) || containsEmptyValue(tagKeywords)
+                || containsEmptyValue(telegramKeywords) || containsEmptyValue(courseKeywords)
+                || containsEmptyValue(tutorialKeywords)) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+
         if (nameKeywords.isEmpty() && phoneKeywords.isEmpty() && emailKeywords.isEmpty()
                 && addressKeywords.isEmpty() && tagKeywords.isEmpty() && telegramKeywords.isEmpty()
                 && courseKeywords.isEmpty() && tutorialKeywords.isEmpty()) {
@@ -54,5 +62,9 @@ public class FindCommandParser implements Parser<FindCommand> {
         return new FindCommand(new PersonMatchesKeywordsPredicate(
                 nameKeywords, phoneKeywords, emailKeywords, addressKeywords,
                 tagKeywords, telegramKeywords, tutorialKeywords, courseKeywords));
+    }
+
+    private static boolean containsEmptyValue(List<String> values) {
+        return values.stream().anyMatch(String::isEmpty);
     }
 }

@@ -38,7 +38,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Responsibilities: UI
 
 
-### Chen Guanhua 
+### Chen Guanhua
 
 <img src="images/e-hua.png" width="200px">
 
@@ -49,7 +49,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Responsibilities: DevOps + Data Model & Logic
 
 
-### Josiah Low 
+### Josiah Low
 
 <img src="images/josiah-low.png" width="200px">
 

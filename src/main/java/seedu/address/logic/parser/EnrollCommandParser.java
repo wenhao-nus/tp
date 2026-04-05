@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COURSE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL;
 
@@ -25,16 +26,24 @@ public class EnrollCommandParser implements Parser<EnrollCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_COURSE, PREFIX_TUTORIAL);
 
+        Index index;
+        try {
+            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+        } catch (ParseException pe) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    MESSAGE_INVALID_INDEX + "\n" + EnrollCommand.MESSAGE_USAGE), pe);
+        }
+
         if (!arePrefixesPresent(argMultimap, PREFIX_COURSE, PREFIX_TUTORIAL)
                 || argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EnrollCommand.MESSAGE_USAGE));
         }
 
-        Index index;
-        try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EnrollCommand.MESSAGE_USAGE), pe);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_COURSE, PREFIX_TUTORIAL);
+
+        if (!arePrefixesPresent(argMultimap, PREFIX_COURSE, PREFIX_TUTORIAL)
+                || argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EnrollCommand.MESSAGE_USAGE));
         }
 
         String course = ParserUtil.parseCourse(argMultimap.getValue(PREFIX_COURSE).get());

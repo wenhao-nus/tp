@@ -21,7 +21,6 @@ Class Phone
 Class Tag
 Class TutInfo
 Class Telegram
-Class ObjectProperty
 
 Class I #FFFFFF
 }
@@ -37,14 +36,15 @@ Model .left.> ReadOnlyAddressBook
 ModelManager -left-> "1" AddressBook
 ModelManager -right-> "1" UserPrefs
 UserPrefs .up.|> ReadOnlyUserPrefs
-ModelManager *--> ObjectProperty
-ObjectProperty --> Person
+ModelManager -right-> "0..1" Person : holds selected >
+ModelManager -left-> "~*" Person : stores filtered >
 
 AddressBook *--> "1" UniquePersonList
-UniquePersonList --> "~* all" Person
+UniquePersonList --> "~*" Person : stores all  >
+
 Person *--> "1" Name
+Person *--> "1" Email
 Person *--> "0..1" Phone
-Person *--> "0..1" Email
 Person *--> "0..1" Address
 Person *--> "*" Tag
 Person *--> "*" TutInfo
@@ -56,5 +56,5 @@ UniquePersonList -[hidden]right-> I
 Name -[hidden]right-> Phone
 Phone -[hidden]right-> Address
 Address -[hidden]right-> Email
-ModelManager --> "*" Person : filtered
+
 @enduml
