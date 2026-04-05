@@ -31,20 +31,27 @@ public class EnrollCommandParserTest {
 
     @Test
     public void parse_compulsoryFieldMissing_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EnrollCommand.MESSAGE_USAGE);
+        String expectedInvalidIndexMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                Messages.MESSAGE_INVALID_INDEX + "\n" + EnrollCommand.MESSAGE_USAGE);
 
-        assertParseFailure(parser, " 1 c/CS2103T", expectedMessage);
+        String expectedGeneralMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EnrollCommand.MESSAGE_USAGE);
 
-        assertParseFailure(parser, " 1 tut/T01", expectedMessage);
+        assertParseFailure(parser, " 1 c/CS2103T", expectedGeneralMessage);
 
-        assertParseFailure(parser, " c/CS2103T tut/T01", expectedMessage);
+        assertParseFailure(parser, " 1 tut/T01", expectedGeneralMessage);
+
+        assertParseFailure(parser, " c/CS2103T tut/T01", expectedInvalidIndexMessage);
     }
 
     @Test
     public void parse_invalidValue_failure() {
         assertParseFailure(parser, " 1 c/CS2103T! tut/T01", TutInfo.MESSAGE_CONSTRAINTS);
 
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EnrollCommand.MESSAGE_USAGE);
+        String expectedMessage = String.format(
+                MESSAGE_INVALID_COMMAND_FORMAT,
+                Messages.MESSAGE_INVALID_INDEX + "\n" + EnrollCommand.MESSAGE_USAGE
+        );
+
         assertParseFailure(parser, " a c/CS2103T tut/T01", expectedMessage);
         assertParseFailure(parser, " 0 c/CS2103T tut/T01", expectedMessage);
         assertParseFailure(parser, " -1 c/CS2103T tut/T01", expectedMessage);

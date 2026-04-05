@@ -27,25 +27,42 @@ public class UnattendCommandParserTest {
 
     @Test
     public void parse_compulsoryFieldMissing_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnattendCommand.MESSAGE_USAGE);
+        String expectedGeneralMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnattendCommand.MESSAGE_USAGE);
+
+        String expectedInvalidCommandMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                Messages.MESSAGE_INVALID_INDEX + "\n" + UnattendCommand.MESSAGE_USAGE);
 
         // missing course prefix
-        assertParseFailure(parser, " 1 " + PREFIX_WEEK + "1", expectedMessage);
+        assertParseFailure(parser, " 1 " + PREFIX_WEEK + "1", expectedGeneralMessage);
 
         // missing week prefix
-        assertParseFailure(parser, " 1 " + PREFIX_COURSE + "CS2103T", expectedMessage);
+        assertParseFailure(parser, " 1 " + PREFIX_COURSE + "CS2103T", expectedGeneralMessage);
 
         // missing index
-        assertParseFailure(parser, " " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK + "1", expectedMessage);
+        assertParseFailure(
+                parser,
+                " " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK + "1", expectedInvalidCommandMessage
+        );
     }
 
     @Test
     public void parse_invalidValue_failure() {
         // invalid index
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnattendCommand.MESSAGE_USAGE);
-        assertParseFailure(parser, " a " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK + "1", expectedMessage);
-        assertParseFailure(parser, " 0 " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK + "1", expectedMessage);
-        assertParseFailure(parser, " -1 " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK + "1", expectedMessage);
+        String expectedInvalidCommandMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                Messages.MESSAGE_INVALID_INDEX + "\n" + UnattendCommand.MESSAGE_USAGE);
+
+        assertParseFailure(
+                parser,
+                " a " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK + "1", expectedInvalidCommandMessage
+        );
+        assertParseFailure(
+                parser,
+                " 0 " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK + "1", expectedInvalidCommandMessage
+        );
+        assertParseFailure(
+                parser,
+                " -1 " + PREFIX_COURSE + "CS2103T " + PREFIX_WEEK + "1", expectedInvalidCommandMessage
+        );
 
         // invalid week
         assertParseFailure(parser, " 1 " + PREFIX_COURSE + "CS2103T "

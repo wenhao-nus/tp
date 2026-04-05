@@ -16,6 +16,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.UnsetCommand;
 
 public class UnsetCommandParserTest {
@@ -25,16 +26,19 @@ public class UnsetCommandParserTest {
     private static final String TELEGRAM_EMPTY = " " + PREFIX_TELEGRAM;
     private static final String TAG_EMPTY = " " + PREFIX_TAG;
 
-    private static final String MESSAGE_INVALID_FORMAT =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnsetCommand.MESSAGE_USAGE);
+    private static final String MESSAGE_INVALID_INDEX_FORMAT =
+            String.format(
+                    MESSAGE_INVALID_COMMAND_FORMAT,
+                    Messages.MESSAGE_INVALID_INDEX + "\n" + UnsetCommand.MESSAGE_USAGE
+            );
 
     private final UnsetCommandParser parser = new UnsetCommandParser();
 
     @Test
     public void parse_missingParts_failure() {
-        assertParseFailure(parser, TELEGRAM_EMPTY, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, TELEGRAM_EMPTY, MESSAGE_INVALID_INDEX_FORMAT);
         assertParseFailure(parser, "1", UnsetCommand.MESSAGE_NOT_UNSET);
-        assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "", MESSAGE_INVALID_INDEX_FORMAT);
     }
 
     @Test
@@ -47,9 +51,14 @@ public class UnsetCommandParserTest {
 
     @Test
     public void parse_invalidPreamble_failure() {
-        assertParseFailure(parser, "-1" + TELEGRAM_EMPTY, MESSAGE_INVALID_FORMAT);
-        assertParseFailure(parser, "0" + TELEGRAM_EMPTY, MESSAGE_INVALID_FORMAT);
-        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "-1" + TELEGRAM_EMPTY, MESSAGE_INVALID_INDEX_FORMAT);
+        assertParseFailure(parser, "0" + TELEGRAM_EMPTY, MESSAGE_INVALID_INDEX_FORMAT);
+        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_INDEX_FORMAT);
+        assertParseFailure(
+                parser,
+                "1 i/ string",
+                String.format(MESSAGE_INVALID_PREFIX, "i/", UnsetCommand.MESSAGE_USAGE)
+        );
     }
 
     @Test
