@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TELEGRAM_BOB;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
@@ -76,23 +77,46 @@ public class PersonTest {
                 .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
         assertTrue(ALICE.isSamePerson(editedAlice));
 
-        // different email, all other attributes same -> returns false
-        editedAlice = new PersonBuilder(ALICE).withEmail(VALID_EMAIL_BOB).build();
+        // same phone, all other attributes different -> returns true
+        editedAlice = new PersonBuilder(ALICE).withName(VALID_NAME_BOB).withEmail(VALID_EMAIL_BOB)
+                .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
+        assertTrue(ALICE.isSamePerson(editedAlice));
+
+        // same telegram, all other attributes different -> returns true
+        editedAlice = new PersonBuilder(ALICE).withName(VALID_NAME_BOB).withEmail(VALID_EMAIL_BOB)
+                .withPhone(VALID_PHONE_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
+        assertTrue(ALICE.isSamePerson(editedAlice));
+
+        // different email, different phone, different telegram -> returns false
+        editedAlice = new PersonBuilder(ALICE).withEmail(VALID_EMAIL_BOB).withPhone(VALID_PHONE_BOB)
+                .withTelegram(VALID_TELEGRAM_BOB).build();
         assertFalse(ALICE.isSamePerson(editedAlice));
 
-        // email differs in case, all other attributes same -> returns true
+        // email differs, all other attributes same -> returns true
         Person editedBob = new PersonBuilder(BOB).withEmail(VALID_EMAIL_BOB.toUpperCase()).build();
         assertTrue(BOB.isSamePerson(editedBob));
 
-        // email is missing, all other attributes same -> returns false
-        editedAlice = new PersonBuilder(ALICE).withoutEmail().build();
-        Person anotherEditedAlice = new PersonBuilder(ALICE).withoutEmail().build();
+        // telegram differs, all other attributes same -> returns true
+        editedBob = new PersonBuilder(BOB).withTelegram(VALID_TELEGRAM_BOB.toUpperCase()).build();
+        assertTrue(BOB.isSamePerson(editedBob));
+
+        // email, phone, telegram are missing on both -> returns false
+        editedAlice = new PersonBuilder(ALICE).withoutEmail().withoutPhone().withoutTelegram().build();
+        Person anotherEditedAlice = new PersonBuilder(ALICE).withoutEmail().withoutPhone().withoutTelegram().build();
         assertFalse(editedAlice.isSamePerson(anotherEditedAlice));
 
-        // first person email is missing, second person email is present -> returns false
-        assertFalse(editedAlice.isSamePerson(ALICE));
+        // email missing on both, but same phone -> returns true
+        editedAlice = new PersonBuilder(ALICE).withoutEmail().build();
+        Person anotherEditedAlice2 = new PersonBuilder(ALICE).withoutEmail().build();
+        assertTrue(editedAlice.isSamePerson(anotherEditedAlice2));
 
-        // first person email is present, second person email is missing -> returns false
+        // first person email missing, second has email and same phone -> returns true (phone matches)
+        assertFalse(editedAlice.isSamePerson(new PersonBuilder(ALICE).withoutEmail().withPhone(VALID_PHONE_BOB)
+                .withoutTelegram().build()));
+
+        // all unique identifiers missing on one side -> returns false
+        editedAlice = new PersonBuilder(ALICE).withoutEmail().withoutPhone().withoutTelegram().build();
+        assertFalse(editedAlice.isSamePerson(ALICE));
         assertFalse(ALICE.isSamePerson(editedAlice));
     }
 

@@ -326,6 +326,18 @@
     -fx-border-width: 4;
 }
 
+#scrollPane {
+    -fx-background-color: #cacaca;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+    -fx-background-radius: 14;
+}
+
+#scrollPane .viewport {
+    -fx-background-color: #cacaca;
+    -fx-background-radius: 14;
+}
+
 #commandTypeLabel {
     -fx-font-size: 11px;
     -fx-text-fill: #F70D1A;
