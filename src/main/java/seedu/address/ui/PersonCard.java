@@ -108,7 +108,7 @@ public class PersonCard extends UiPart<Region> {
     }
 
     /**
-     * Redirects vertical scrolling of a ScrollPane to a ListView<Person>.
+     * Redirects vertical scrolling of a ScrollPane to a ListView.
      */
     private void redirectVerticalScroll(ScrollPane scrollPane, ListView<Person> listView) {
         scrollPane.addEventFilter(ScrollEvent.SCROLL, event -> {
