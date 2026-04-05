@@ -140,14 +140,9 @@ public class Person {
     /**
      * Returns true if both persons have the same email.
      * This defines a weaker notion of equality between two emails.
-     * The missing emails are not considered unique.
      */
     public boolean isSameEmail(Person otherPerson) {
-        if (getEmail().isEmpty() || otherPerson.getEmail().isEmpty()) {
-            return false;
-        } else {
-            return otherPerson.getEmail().equals(getEmail());
-        }
+        return otherPerson.getEmail().equals(getEmail());
     }
 
   /**
