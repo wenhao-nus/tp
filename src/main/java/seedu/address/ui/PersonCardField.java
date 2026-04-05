@@ -29,6 +29,10 @@ public class PersonCardField extends UiPart<Region> {
         super(FXML);
         this.fieldType.setText(fieldType + ":");
         this.value.setText(formatValue(value));
+
+        this.value.setMinWidth(Region.USE_PREF_SIZE);
+        this.fieldType.setMinWidth(Region.USE_PREF_SIZE);
+
         if (value.equals("-")) {
             applyMissingFieldStyle();
         }

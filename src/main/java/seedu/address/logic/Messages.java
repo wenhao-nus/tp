@@ -24,6 +24,12 @@ public class Messages {
         "Unexpected text detected before prefixes. Please use the correct format. \n";
     public static final String MESSAGE_INVALID_PREFIX =
         "The prefix \"%1$s\" is not supported!\n%2$s";
+    public static final String MESSAGE_TAG_NOTE =
+            "\n"
+                    + "Note: Tags are case-insensitive and duplicate tags will be automatically filtered "
+                    + "(e.g., `t/friend t/Friend` will be treated as only one `friend` tag).\n"
+                    + "Refer to the User Guide for details: \n"
+            + "https://ay2526s2-cs2103t-t10-4.github.io/tp/UserGuide.html";
 
     /**
      * Returns an error message indicating the duplicate prefixes.

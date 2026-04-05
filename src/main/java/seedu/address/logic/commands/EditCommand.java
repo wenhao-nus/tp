@@ -30,6 +30,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Telegram;
 import seedu.address.model.person.TutInfo;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -51,8 +52,8 @@ public class EditCommand extends Command {
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "Email must be unique!"
-            + " This email already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "Email, Telegram handle, and phone number must be unique!"
+            + " A contact with the same email, phone number, or Telegram handle exists in the addressbook.";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -81,15 +82,17 @@ public class EditCommand extends Command {
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
-        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
+        try {
+            model.setPerson(personToEdit, editedPerson);
+        } catch (DuplicatePersonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
-        model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.setPersonToShow(editedPerson); // Always show the edited person
 
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson))
+                + Messages.MESSAGE_TAG_NOTE);
     }
 
     /**

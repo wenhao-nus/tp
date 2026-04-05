@@ -11,36 +11,46 @@
 
 <?import javafx.scene.control.ScrollPane?>
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
-  <GridPane HBox.hgrow="ALWAYS">
-    <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
-    </columnConstraints>
-    <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
-      <padding>
-        <Insets top="5" right="5" bottom="5" left="15" />
-      </padding>
-      <HBox spacing="0.5" alignment="CENTER_LEFT">
-        <Label fx:id="id" styleClass="cell_big_label">
-          <minWidth>
-            <!-- Ensures that the label text is never truncated -->
-            <Region fx:constant="USE_PREF_SIZE" />
-          </minWidth>
-        </Label>
-        <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
-      </HBox>
-      <FlowPane fx:id="tags" />
-      <VBox fx:id="fieldsContainer" />
-    </VBox>
-  </GridPane>
+    <GridPane HBox.hgrow="ALWAYS">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150"/>
+            <ColumnConstraints hgrow="NEVER" minWidth="10" prefWidth="130"/>
+        </columnConstraints>
 
-  <ScrollPane fx:id="tutInfosScrollPane" prefWidth="130" maxHeight="130" styleClass="tut-info-scroll">
-    <VBox>
-      <padding>
-        <Insets top="5" right="5" bottom="5" left="5" />
-      </padding>
-      <Label text="Classes:" styleClass="cell_big_label" />
-      <VBox fx:id="tutInfosContainer" />
-    </VBox>
-  </ScrollPane>
+        <ScrollPane id="scrollPane" fx:id="contactInfoScrollPane" vbarPolicy="NEVER" hbarPolicy="AS_NEEDED"
+                    GridPane.columnIndex="0" prefWidth="150" fitToWidth="false" fitToHeight="true">
+            <VBox alignment="CENTER_LEFT" prefWidth="130" prefHeight="105">
+                <padding>
+                    <Insets top="5" right="5" bottom="5" left="15"/>
+                </padding>
+                <HBox spacing="0.5" alignment="CENTER_LEFT">
+                    <Label fx:id="id" styleClass="cell_big_label">
+                        <minWidth>
+                            <!-- Ensures that the label text is never truncated -->
+                            <Region fx:constant="USE_PREF_SIZE"/>
+                        </minWidth>
+                    </Label>
+                    <Label fx:id="name" text="\$first" styleClass="cell_big_label">
+                        <minWidth>
+                            <Region fx:constant="USE_PREF_SIZE"/>
+                        </minWidth>
+                    </Label>
+                </HBox>
+                <FlowPane fx:id="tags"/>
+                <VBox fx:id="fieldsContainer"/>
+            </VBox>
+        </ScrollPane>
 
+        <ScrollPane fx:id="tutInfosScrollPane" prefWidth="130" maxHeight="130" styleClass="tut-info-scroll"
+                    GridPane.columnIndex="1">
+            <VBox>
+                <padding>
+                    <Insets top="5" right="5" bottom="5" left="5"/>
+                </padding>
+                <Label text="Classes:" styleClass="cell_big_label"/>
+                <VBox fx:id="tutInfosContainer"/>
+            </VBox>
+        </ScrollPane>
+
+    </GridPane>
 </HBox>

@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -29,6 +30,9 @@ public class PersonCard extends UiPart<Region> {
      */
 
     public final Person person;
+
+    @FXML
+    private ScrollPane contactInfoScrollPane;
 
     @FXML
     private HBox cardPane;
@@ -61,6 +65,7 @@ public class PersonCard extends UiPart<Region> {
         assert listView != null : "ListView must not be null";
 
         preventScrollPaneFocusing(listView);
+        preventVerticalScroll(contactInfoScrollPane);
 
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
@@ -95,5 +100,23 @@ public class PersonCard extends UiPart<Region> {
             listView.requestFocus();
         });
 
+        contactInfoScrollPane.setFocusTraversable(false);
+        contactInfoScrollPane.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+            event.consume();
+            listView.requestFocus();
+        });
     }
+
+    /**
+     * Prevents vertical scrolling of a ScrollPane by consuming vertical scroll events.
+     */
+    private void preventVerticalScroll(ScrollPane scrollPane) {
+        // Solution below inspired by https://stackoverflow.com/a/53991807
+        scrollPane.addEventFilter(ScrollEvent.SCROLL, event -> {
+            if (event.getDeltaY() != 0) {
+                event.consume();
+            }
+        });
+    }
+
 }

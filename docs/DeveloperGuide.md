@@ -240,7 +240,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. TA requests to add a contact with a name and any optional details (phone number, email, address, Telegram handle, tags).
+1. TA requests to add a contact with a name and email, along with any optional details (phone number, address, Telegram handle, tags).
 2. TAConnect validates the input.
 3. TAConnect adds the contact, displays a success message, and shows the updated contact list with the new contact's details.
 
@@ -248,8 +248,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-- 2a. TAConnect detects invalid input.
-  - 2a1. TAConnect informs TA of invalid input and displays the correct format with an example.
+- 1a. TAConnect detects invalid input.
+  - 1a1. TAConnect informs TA of invalid input and displays the correct format with an example.
+
+    Use case ends.
+
+- 2a. TAConnect detects duplicate contact (i.e. new contact to add has one or more of the same following fields as an existing contact: email, Telegram handle, phone number)
+  - 2a1. TAConnect informs TA that a contact with the same email, phone number, or Telegram handle already exists.
 
     Use case ends.
 
@@ -303,6 +308,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   - 1b1. TAConnect informs TA of the invalid input and displays the correct format with an example.
 
     Use case ends.
+  
+- 2a. TAConnect detects duplicate contact (i.e. edited contact has one or more of the same following fields as an existing contact: email, Telegram handle, phone number)
+    - 2a1. TAConnect informs TA that a contact with the same email, phone number, or Telegram handle already exists.
+
+      Use case ends.
 
 <ins>**Use case: UC05 - Search/Filter Contacts**<ins>
 
