@@ -130,24 +130,58 @@ public class Person {
     }
 
     /**
-     * Returns true if both persons have the same email.
+     * Returns true if both persons have the same email/same telegram handle/same phone number.
      * This defines a weaker notion of equality between two persons.
-     * The missing emails are not considered unique.
      */
     public boolean isSamePerson(Person otherPerson) {
-        if (otherPerson == this) {
-            return true;
-        }
-
         if (otherPerson == null) {
             return false;
         }
 
-        if (getEmail().isEmpty() || otherPerson.getEmail().isEmpty()) {
-            return false;
+        if (otherPerson == this) {
+            return true;
         }
 
-        return otherPerson.getEmail().equals(getEmail());
+        return isSameEmail(otherPerson) || isSameTelegram(otherPerson) || isSamePhone(otherPerson);
+    }
+
+    /**
+     * Returns true if both persons have the same email.
+     * This defines a weaker notion of equality between two emails.
+     * The missing emails are not considered unique.
+     */
+    public boolean isSameEmail(Person otherPerson) {
+        if (getEmail().isEmpty() || otherPerson.getEmail().isEmpty()) {
+            return false;
+        } else {
+            return otherPerson.getEmail().equals(getEmail());
+        }
+    }
+
+    /**
+     * Returns true if both persons have the same Telegram handle.
+     * This defines a weaker notion of equality between two Telegram handles.
+     * The missing Telegram handles are not considered unique.
+     */
+    public boolean isSameTelegram(Person otherPerson) {
+        if (getTelegram().isEmpty() || otherPerson.getTelegram().isEmpty()) {
+            return false;
+        } else {
+            return otherPerson.getTelegram().equals(getTelegram());
+        }
+    }
+
+    /**
+     * Returns true if both persons have the same phone number.
+     * This defines a weaker notion of equality between two phone numbers.
+     * The missing phone numbers are not considered unique.
+     */
+    public boolean isSamePhone(Person otherPerson) {
+        if (getPhone().isEmpty() || otherPerson.getPhone().isEmpty()) {
+            return false;
+        } else {
+            return otherPerson.getPhone().equals(getPhone());
+        }
     }
 
     /**

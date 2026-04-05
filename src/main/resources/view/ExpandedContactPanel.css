@@ -15,7 +15,7 @@
 .name-label {
     -fx-text-fill: #342a01;
     -fx-font-weight: bold;
-    -fx-font-size: 24px;
+    -fx-font-size: 22px;
 }
 
 .shared-scroll-pane {

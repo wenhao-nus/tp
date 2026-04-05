@@ -26,6 +26,13 @@ public class EnrollCommandParser implements Parser<EnrollCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_COURSE, PREFIX_TUTORIAL);
 
+        if (!arePrefixesPresent(argMultimap, PREFIX_COURSE, PREFIX_TUTORIAL)
+                || argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EnrollCommand.MESSAGE_USAGE));
+        }
+
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_COURSE, PREFIX_TUTORIAL);
+
         Index index;
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());

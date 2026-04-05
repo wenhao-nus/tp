@@ -3,7 +3,7 @@ layout: page
 title: Developer Guide
 ---
 
-- Table of Contents
+* Table of Contents
   {:toc}
 
 ---
@@ -127,7 +127,8 @@ How the parsing works:
 The `Model` component,
 
 - stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
-- stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+- stores the currently 'filtered' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+- stores the Person object that is currently selected to be shown in the detailed view as an `ObjectProperty<Person>`. This property is observable so that the UI can automatically update when the selected person changes.
 - stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 - does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
@@ -191,7 +192,7 @@ TODO: Add the implementations of some of our features here
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: 
+**Value proposition**:
 This product aims to streamline communication from TAs‘ to their students, other TAs, teaching staff,and professors. It achieves this by organizing contacts into courses, tutorial groups and tags. It supports custom contact categories (e.g., Telegram handles), and more searching functionality (e.g., by groups and/or by email etc.). It also makes contacts storing more flexible by only making names mandatory. 
 
 ### User stories
@@ -240,7 +241,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. TA requests to add a contact with a name and any optional details (phone number, email, address, Telegram handle, tags).
+1. TA requests to add a contact with a name and email, along with any optional details (phone number, address, Telegram handle, tags).
 2. TAConnect validates the input.
 3. TAConnect adds the contact, displays a success message, and shows the updated contact list with the new contact's details.
 
@@ -248,8 +249,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-- 2a. TAConnect detects invalid input.
-  - 2a1. TAConnect informs TA of invalid input and displays the correct format with an example.
+- 1a. TAConnect detects invalid input.
+  - 1a1. TAConnect informs TA of invalid input and displays the correct format with an example.
+
+    Use case ends.
+
+- 2a. TAConnect detects duplicate contact (i.e. new contact to add has one or more of the same following fields as an existing contact: email, Telegram handle, phone number)
+  - 2a1. TAConnect informs TA that a contact with the same email, phone number, or Telegram handle already exists.
 
     Use case ends.
 
@@ -303,6 +309,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   - 1b1. TAConnect informs TA of the invalid input and displays the correct format with an example.
 
     Use case ends.
+  
+- 2a. TAConnect detects duplicate contact (i.e. edited contact has one or more of the same following fields as an existing contact: email, Telegram handle, phone number)
+    - 2a1. TAConnect informs TA that a contact with the same email, phone number, or Telegram handle already exists.
+
+      Use case ends.
 
 <ins>**Use case: UC05 - Search/Filter Contacts**<ins>
 
@@ -485,18 +496,20 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Non-Functional Requirements
 
-1. All commands should have a response within 500ms.
-2. All contact information should be stored locally.
-3. Whenever a typo or mistake is made there is a message instead of a crash.
-4. The software should be able to host at least 100 students in total.
-5. The software should take no more than 200MB of space.
-6. Exported files for backup should be stored in a user-editable format (e.g., a JSON file).
-7. The software should be platform-independent, supporting all Windows, macOS and Linux.
-8. The software should not require any installers and should be able to be packaged into a single JAR file.
-9. The software should not depend on any remote server.
-10. GUI should provide visual feedback, but input is primarily text-based.
-11. The software should be able to handle corrupted and missing files.
-12. The software should be single-user based only.
+1. The application should run on Windows, Linux, and macOS with Java `17` installed.
+2. The system should respond to all user commands and update the GUI within 2 seconds.
+3. The application should launch and display the GUI with loaded contact data within 5 seconds.
+4. The system should support up to 250 contacts without violating performance requirements defined by response time of at most 2 seconds.
+5. The software should take no more than 50MB of space.
+6. The application should function without an internet connection and external servers.
+7. The system should handle invalid inputs gracefully by displaying clear error messages instead of crashing.
+8. The application should be usable directly via the provided single JAR file without requiring an installer.
+9. All application data should be stored locally in a human-editable JSON file.
+10. The system should prevent corruption of data through modifications done using the application with commands. Any corrupted files or data loss caused by manual edits of the JSON files are outside of the scope of this requirement.
+11. All changes to the addressbook should be automatically saved to the JSON file immediately after commands that modifies data.
+12. GUI should allow full functionality at standard screen resolution defined as 1920×1080 and higher, at 100% and 125% display scale.
+13. The application should allow users with above average typing speed for regular English text (52 words per minute) to complete supported tasks using CLI quicker than using the GUI or mouse.
+14. The application should be single-user based and not support concurrent multi-user access.
 
 ### Glossary
 
@@ -536,29 +549,79 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tg/@johndoe t/student`<br>
       Expected: A new contact with the specified details is added to the list. Details of the newly added contact shown in the status message.
 
-1. Adding a new person with only mandatory fields
-   1. Test case: `add n/Alex Yeoh`<br>
-      Expected: A new contact with the name "Alex Yeoh" is added to the list. Details of the newly added contact shown in the status message.
+2. Adding a new person with only mandatory fields
+   1. Test case: `add n/Alex Yeoh e/alexyeoh@example.com`<br>
+      Expected: A new contact with the name `Alex Yeoh` and email of `alexyeoh@example.com` is added to the list. Details of the newly added contact shown in the status message.
 
-1. Adding a person with missing mandatory fields
-   1. Test case: `add p/98765432 e/johnd@example.com`<br>
-      Expected: No person is added. Error details indicating the missing name and the correct command format are shown in the status message.
+3. Adding a person with missing mandatory fields
+   1. Test case: `add p/98765432 tg/@johndoe`<br>
+      Expected: No person is added. Error details indicating the name is missing and the correct command format are shown in the status message.
+
+4. Adding a person that duplicates an existing contact
+   1. Prerequisites: A person with either the same email, Telegram handle, or phone number already exists in the address book. <br>
+      e.g. `add n/Peter Tan p/98765432 e/peter@example.com`
+
+   2. Test case: `add n/peter e/peter@example.com tg/@peter_1011`<br>
+      Expected: No new person is added. Error details shown in the status message indicating that a person with the same email already exists.
 
 ### Deleting a person
 
 1. Deleting a person while all persons are being shown
    1. Prerequisites: List all persons using the `list` command. Multiple persons are displayed.
 
-   1. Test case: `delete 1`<br>
+   2. Test case: `delete 1`<br>
       Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message.
 
-   1. Test case: `delete 0`<br>
+   3. Test case: `delete 0`<br>
       Expected: No person is deleted. Error details shown in the status message.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+   4. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+      Expected: Similar to previous (i.e. 3rd test case above).
+
+### Editing a person
+
+1. Editing a person while all persons are being shown
+   1. Prerequisites: List all persons using the `list` command, and at least one person exists in the addressbook.
+
+   2. Test case: `edit 1 a/Blk 400, Tampines Street 4, #12-28`<br>
+      Expected: The first contact in the list is updated successfully. Details of the edited contact with the updated address are shown in the status message.
+
+   3. Test case: `edit 1 t/`<br>
+      Expected: No changes are made. Error details of tag cannot be empty is shown in the status message.
+
+2. Editing a person in a filtered list
+   1. Prerequisites: A person with the name `Bernice` exists. Filter the list using `find n/bernice`.
+
+   2. Test case: `edit 1 t/friend`<br>
+      Expected: The first person in the filtered list is updated successfully with a single new tag `friend`. After editing, the full original person list is displayed again.
+
+### Enrolling a person
+
+1. Enrolling a person into a course with tutorial class
+
+    1. Prerequisites:
+    - The first person in the contact list is enrolled in the course `CS2103T` and tutorial class `T11`.
+    - If the first person is enrolled in `CS2103T` but in different tutorial class, unenroll the person first using `unenroll 1 c/CS2103T` then followed by `enroll 1 c/CS2103T t/T11`.
+    - If not enrolled into any tutorials of `CS2103T`, enroll the first person using `enroll 1 c/CS2103T t/T11`
+
+    2. Test case: `enroll 1 CS2103T T19`<br>
+       Expected: The first person is not enrolled into `CS2103T T19`. Error details is shown in the status message indicating that the student is already enrolled in `CS2103T`.
+
+    3. Test case: `enroll 1 CS2109S T06`<br>
+       Expected: The student is successfully enrolled in course `CS2109S` with tutorial `T06`. The status message shows the student details with the updated course and tutorial enrollment.
 
 ### Saving data
 
-1. Dealing with missing/corrupted data files
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+1. Dealing with missing data files
+   1. Test case: Delete the `addressbook.json` file from `[JAR file location]/data/` if present. Launch the application.<br>
+      Expected:
+      - The application detects that the data file is missing and launches without any crashes.
+      - A default sample contact list containing 6 persons is automatically loaded.
+
+2. Dealing with corrupted data files
+   1. Prerequisites: A save file exists at `[JAR file location]/data/addressbook.json`.
+   2. Test case: Open `addressbook.json` and corrupt the save file by modifying the first person’s name entry from <br>
+        `"name" : "Alex Yeoh"`  to  `"name" : "-"` and launch the application.<br>
+      Expected:
+      - The application detects that the data file is corrupted and launches without crashing.
+      - The application is loaded with an empty contact list.

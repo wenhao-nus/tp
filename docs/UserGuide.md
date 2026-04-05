@@ -3,17 +3,22 @@ layout: page
 title: User Guide
 ---
 
-**TAConnect** is a **desktop app for managing contacts, optimized for use via a Command Line Interface (CLI)** while still providing the benefits of a Graphical User Interface (GUI). It helps users quickly organize contacts into tutorial groups, tags, and custom fields (e.g., Telegram handles), with only names being mandatory. Fast CLI commands allow adding, viewing, editing, and searching contacts efficiently, while the GUI displays full details and organized lists.
+# TAConnect
+
+**TAConnect** is a **desktop app for managing contacts, designed for NUS Computer Science Teaching Assistants and optimised for use via a Command Line Interface (CLI)** while still providing the benefits of a Graphical User Interface (GUI).
+
+This app enables TAs to **quickly and efficiently** organise contacts into courses, tutorial groups, and additional fields such as Telegram handles, with only names and email addresses being mandatory. Its fast CLI commands support **intuitive data editing and retrieval**, while the GUI presents **neatly organised lists, detailed contact information, and visualisations of student attendance.**
 
 **Target Users:** NUS Computer Science TAs
 
-**Assumptions:** Users have basic computer literacy and are familiar with command-line operations.
+**Assumptions:**
+* Users have basic computer literacy
+* Users are familiar with command-line operations
 
-- Table of Contents
-  {:toc}
+* Table of Contents
+{:toc}
 
 ---
-
 ## Quick start
 
 1. Ensure you have Java `17` or above installed in your Computer.<br>
@@ -55,6 +60,10 @@ title: User Guide
 
 **:information_source: Notes about the command format:**<br>
 
+- Always separate the `command word`, the `INDEX`, and each `field` (if required) with at least one space.<br>
+  Multiple spaces are allowed, but do not attach them directly to each other.<br>
+  e.g. `enroll1c/CS2103Ttut/T01` is incorrect usage.
+
 - Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
   e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 
@@ -63,6 +72,9 @@ title: User Guide
 
 - Items with `…`​ after them can be used multiple times including zero times.<br>
   e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+
+- Commands that require an INDEX must specify the index immediately after the command word, **before** any other parameters.<br>
+  e.g. `edit 1 n/John Doe`, `unset 2 tg/`, `enroll 1 c/CS2103T tut/T01`
 
 - Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -86,10 +98,14 @@ Format: `help`
 
 Adds a person to the address book.
 
-Format: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [tg/TELEGRAM_HANDLE] [t/TAG]…​`
+Format: `add n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [tg/TELEGRAM_HANDLE] [t/TAG]…​`
+
+- You must provide both the person’s `NAME` and `EMAIL` when adding a new contact.
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A person can have any number of tags (including 0)
+A person can have any number of tags (including 0). 
+Tags are case-insensitive and duplicate tags will be automatically filtered 
+(e.g., `t/friend t/Friend` will be treated as only one `friend` tag).
 </div>
 
 Examples:
@@ -98,6 +114,21 @@ Examples:
 - `add n/Alex Yeoh`
 - `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 tg/@betsycrowe t/criminal`
 - `add n/David Li tg/davidli`
+
+### Deleting a person : `delete`
+
+Deletes the specified person from the address book.
+
+Format: `delete INDEX`
+
+- Deletes the person at the specified `INDEX`.
+- The `INDEX` refers to the index number shown in the displayed person list.
+- The `INDEX` **must be a positive integer** 1, 2, 3, …​
+
+Examples:
+
+- `list` followed by `delete 2` deletes the 2nd person in the address book.
+- `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
 ### Listing all persons : `list`
 
@@ -111,33 +142,48 @@ Edits an existing person in the address book.
 
 Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [tg/TELEGRAM_HANDLE] [t/TAG]…​`
 
-- Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+- Edits the person at the specified `INDEX`.
+- The `INDEX` refers to the index number shown in the displayed person list.
+- The `INDEX` **must be a positive integer** 1, 2, 3, …​
 - At least one of the optional fields must be provided.
 - Existing values will be updated to the input values.
-- When editing tags, the existing tags of the person will be replaced.
+- Fields cannot be edited to empty values.
+- When editing tags, the existing tags of the person will be replaced. (i.e., new tags will overwrite existing ones, not be added to them).
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+Fields cannot be edited to empty values and tags cannot be left empty. Please use the `unset` command instead.
+</div>
 
 Examples:
 
-- `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+- `edit 1 p/91234567 e/johndoe@example.com`<br>
+  Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 
 ### Unsetting a field : `unset`
 
-Unsets exactly one optional field of an existing person in the address book.
+Removes exactly one optional field of an existing person in the address book.
 
 Format: `unset INDEX FIELD_PREFIX`
 
-- Unsets the optional field identified by `FIELD_PREFIX` for the person at the specified `INDEX`.
-- The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
-- `FIELD_PREFIX` must be exactly one of `p/`, `e/`, `a/`, `tg/`, or `t/`.
+- Removes the optional field identified by `FIELD_PREFIX` for the person at the specified `INDEX`.
+- After `unset` command, the optional field will be **empty**.
+- The `INDEX` refers to the index number shown in the displayed person list.
+- The `INDEX` **must be a positive integer** 1, 2, 3, …​
+- `FIELD_PREFIX` must be exactly one of `p/`, `a/`, `tg/`, or `t/`.
 - The prefix must be provided without any value after it. For example, use `unset 1 tg/`, not `unset 1 tg/@johndoe`.
-- `n/` is not allowed because a person's name cannot be unset.
+- `n/` and `e/` are not allowed because a person's name and email **cannot** be unset.
 - `unset INDEX t/` removes all existing tags from the person.
-- You cannot unset a field that is already missing.
+- `unset` cannot remove a student’s enrollment in a course or tutorial. Use `unenroll` for that purpose.
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tips:**<br>
+- If the field is already empty, the command does not change anything.
+- Instead, The app will notify the user that the field is already empty, while still displaying the person’s details.
+</div>
 
 Examples:
 
 - `unset 1 tg/` Unsets the Telegram handle of the 1st person.
-- `unset 2 e/` Unsets the email address of the 2nd person.
+- `unset 2 a/` Unsets the address of the 2nd person.
 - `unset 3 t/` Removes all tags from the 3rd person.
 
 ### Enrolling a person : `enroll`
@@ -147,12 +193,19 @@ Enrolls a student into a specific course and tutorial group.
 Format: `enroll INDEX c/COURSE_CODE tut/TUTORIAL_GROUP`
 
 - Enrolls the student at the specified `INDEX` into the `COURSE_CODE` and `TUTORIAL_GROUP`.
-- The index refers to the index number shown in the displayed person list.
-- The index **must be a positive integer** (e.g., 1, 2, 3, …).
+- The `INDEX` refers to the index number shown in the displayed person list.
+- The `INDEX` **must be a positive integer** (e.g., 1, 2, 3, …).
 
 Examples:
 
 - `enroll 1 c/CS2103T tut/T01` enrolls the 1st student into CS2103T tutorial group T01.
+
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tips:**<br>
+
+- Before proceeding to the next commands, please do **not** include `c/COURSE_CODE` in `unenroll`, `attend`, and `unattend`.<br>
+- Each student is associated with **exactly** one tutorial per course, so the tutorial code is handled automatically.
+</div>
 
 ### Unenrolling a person : `unenroll`
 
@@ -160,9 +213,9 @@ Unenrolls a student from a specific course.
 
 Format: `unenroll INDEX c/COURSE_CODE`
 
-- Unenrolls the student at the specified `INDEX` from the `COURSE_CODE`.
-- The index refers to the index number shown in the displayed person list.
-- The index **must be a positive integer** (e.g., 1, 2, 3, …).
+- Removes the student’s enrollment at the specified `INDEX` from the `COURSE_CODE`.
+- The `INDEX` refers to the index number shown in the displayed person list.
+- The `INDEX` **must be a positive integer** (e.g., 1, 2, 3, …).
 
 Examples:
 
@@ -175,8 +228,8 @@ Marks a student's attendance for a specific course and week.
 Format: `attend INDEX c/COURSE_CODE w/WEEK`
 
 - Marks the attendance for the student at the specified `INDEX`.
-- The index refers to the index number shown in the displayed person list.
-- The index **must be a positive integer** (e.g., 1, 2, 3, …).
+- The `INDEX` refers to the index number shown in the displayed person list.
+- The `INDEX` **must be a positive integer** (e.g., 1, 2, 3, …).
 - `COURSE_CODE` must be a course the student is currently enrolled in.
 - `WEEK` must be a number from 1 to 13 (inclusive).
 
@@ -191,15 +244,15 @@ Unmarks a student's attendance for a specific course and week.
 
 Format: `unattend INDEX c/COURSE_CODE w/WEEK`
 
-- Unmarks the attendance for the student at the specified `INDEX`.
-- The index refers to the index number shown in the displayed person list.
-- The index **must be a positive integer** (e.g., 1, 2, 3, …).
+- Sets the attendance of the student at the specified `INDEX` to absent.
+- The `INDEX` refers to the index number shown in the displayed person list.
+- The `INDEX` **must be a positive integer** (e.g., 1, 2, 3, …).
 - `COURSE_CODE` must be a course the student is currently enrolled in.
 - `WEEK` must be a number from 1 to 13 (inclusive).
 
 Examples:
 
-- `unattend 1 c/CS2103T w/1` unmarks the attendance of the 1st student for CS2103T in Week 1.
+- `unattend 1 c/CS2103T w/1` sets the attendance of the 1st student in CS2103T for Week 1 to absent.
 
 ### Locating contacts: `find`
 
@@ -240,21 +293,6 @@ Examples:
 
   ![result for 'find n/alex n/david'](images/findAlexDavidResult.png)
 
-### Deleting a person : `delete`
-
-Deletes the specified person from the address book.
-
-Format: `delete INDEX`
-
-- Deletes the person at the specified `INDEX`.
-- The index refers to the index number shown in the displayed person list.
-- The index **must be a positive integer** 1, 2, 3, …​
-
-Examples:
-
-- `list` followed by `delete 2` deletes the 2nd person in the address book.
-- `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
-
 ### Viewing a contact : `view`
 
 Displays full details of a contact in TAConnect.
@@ -263,7 +301,7 @@ Format: `view INDEX`
 
 - Views **all available information** of the contact at the specified `INDEX`.
 - `INDEX` refers to the position of the contact in the currently displayed list.
-- The index **must be a positive integer** (1, 2, 3, …​) corresponding to an existing contact.
+- The `INDEX` **must be a positive integer** (1, 2, 3, …​) corresponding to an existing contact.
 - Does **not** modify any data with only display updates.
 
 Examples:
@@ -291,15 +329,12 @@ TAConnect data are saved in the hard disk automatically after any command that c
 TAConnect data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-If your changes to the data file makes its format invalid, TAConnect will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
+If your changes to the data file makes its format invalid or contains duplicate/corrupted person entries, 
+TAConnect will discard all data and start with an empty data file at the next run. 
+This will effectively clear the whole JSON file. 
+Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause the TAConnect to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
-
-### Archiving data files `[coming in v2.0]`
-
-_Details coming soon ..._
-
----
 
 ## FAQ
 
@@ -319,17 +354,17 @@ _Details coming soon ..._
 
 | Action       | Format, Examples                                                                                                                                                                                                |
 | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Add**      | `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [tg/TELEGRAM_HANDLE] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 tg/JamesHo0318 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` |
-| **Clear**    | `clear`                                                                                                                                                                                                         |
-| **Delete**   | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                                                             |
-| **Edit**     | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [tg/TELEGRAM_HANDLE] [t/TAG]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com`                                                               |
-| **Unset**    | `unset INDEX FIELD_PREFIX`<br> `FIELD_PREFIX` must be exactly one of `p/`, `e/`, `a/`, `tg/`, or `t/`.<br> e.g., `unset 1 tg/`                                                                                  |
-| **Find**     | `find [n/NAME]… [p/PHONE_NUMBER]… [e/EMAIL]… [a/ADDRESS]… [tg/TELEGRAM_HANDLE]… [t/TAG]… [c/COURSE_CODE]… [tut/TUTORIAL_GROUP]…` <br> e.g., `find p/807 e/alex`                                                 |
-| **View**     | `view INDEX`<br> e.g., `view 1`                                                                                                                                                                                 |
-| **List**     | `list`                                                                                                                                                                                                          |
-| **Help**     | `help`                                                                                                                                                                                                          |
-| **Enroll**   | `enroll INDEX c/COURSE_CODE tut/TUTORIAL_GROUP` <br> e.g., `enroll 1 c/CS2103T tut/T01`                                                                                                                         |
-| **Unenroll** | `unenroll INDEX c/COURSE_CODE` <br> e.g., `unenroll 1 c/CS2103T`                                                                                                                                                |
-| **Attend**   | `attend INDEX c/COURSE_CODE w/WEEK` <br> e.g., `attend 1 c/CS2103T w/1`                                                                                                                                         |
-| **Unattend** | `unattend INDEX c/COURSE_CODE w/WEEK` <br> e.g., `unattend 1 c/CS2103T w/1`                                                                                                                                     |
-| **Exit**     | `exit`                                                                                                                                                                                                          |
+| **Add**      | `add n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [tg/TELEGRAM_HANDLE] [t/TAG]…​` <br> e.g., `add n/James Ho e/jamesho@example.com p/22224444 tg/JamesHo0318 a/123, Clementi Rd, 1234665 t/friend t/colleague` |
+| **Delete**   | `delete INDEX`<br> e.g., `delete 3` |
+| **List**     | `list`   |
+| **Edit**     | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [tg/TELEGRAM_HANDLE] [t/TAG]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com` |
+| **Unset**    | `unset INDEX FIELD_PREFIX`<br> `FIELD_PREFIX` must be exactly one of `p/`, `a/`, `tg/`, or `t/`.<br> e.g., `unset 1 tg/` |
+| **Enroll**   | `enroll INDEX c/COURSE_CODE tut/TUTORIAL_GROUP` <br> e.g., `enroll 1 c/CS2103T tut/T01` |
+| **Unenroll** | `unenroll INDEX c/COURSE_CODE` <br> e.g., `unenroll 1 c/CS2103T`  |
+| **Attend**   | `attend INDEX c/COURSE_CODE w/WEEK` <br> e.g., `attend 1 c/CS2103T w/1` |
+| **Unattend** | `unattend INDEX c/COURSE_CODE w/WEEK` <br> e.g., `unattend 1 c/CS2103T w/1` |
+| **Find**     | `find [n/NAME]… [p/PHONE_NUMBER]… [e/EMAIL]… [a/ADDRESS]… [tg/TELEGRAM_HANDLE]… [t/TAG]… [c/COURSE_CODE]… [tut/TUTORIAL_GROUP]…` <br> e.g., `find p/807 e/alex`       |
+| **View**     | `view INDEX`<br> e.g., `view 1`   |
+| **Help**     | `help`   |
+| **Clear**     | `clear`   |
+| **Exit**     | `exit` |
