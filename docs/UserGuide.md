@@ -176,7 +176,8 @@ Format: `unset INDEX FIELD_PREFIX`
 - `unset` cannot remove a student’s enrollment in a course or tutorial. Use `unenroll` for that purpose.
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tips:**<br>
-- If the field is already empty, the command does not change anything.
+
+- If the field is already empty, the command does not change anything. <br>
 - Instead, The app will notify the user that the field is already empty, while still displaying the person’s details.
 </div>
 
@@ -201,10 +202,9 @@ Examples:
 - `enroll 1 c/CS2103T tut/T01` enrolls the 1st student into CS2103T tutorial group T01.
 
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tips:**<br>
+<div markdown="span" class="alert alert-primary">:bulb: **Note:**<br>
 
-- Before proceeding to the next commands, please do **not** include `c/COURSE_CODE` in `unenroll`, `attend`, and `unattend`.<br>
-- Each student is associated with **exactly** one tutorial per course, so the tutorial code is handled automatically.
+- Remember not to include tut/TUTORIAL_GROUP in unenroll, attend, and unattend (since each student is associated with exactly one tutorial per course, the tutorial code is handled automatically).
 </div>
 
 ### Unenrolling a person : `unenroll`
@@ -328,7 +328,7 @@ TAConnect data are saved in the hard disk automatically after any command that c
 
 TAConnect data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
-<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
+<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**<br>
 If your changes to the data file makes its format invalid or contains duplicate/corrupted person entries, 
 TAConnect will discard all data and start with an empty data file at the next run. 
 This will effectively clear the whole JSON file. 
