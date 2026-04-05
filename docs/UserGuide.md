@@ -341,6 +341,17 @@ Furthermore, certain edits can cause the TAConnect to behave in unexpected ways 
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous TAConnect home folder.
 
+**Q**: Why are only the Name and Email fields mandatory for a contact?<br>
+**A**:A: TAConnect requires only Name and Email when adding a contact, leaving other fields (Phone number, Address, Telegram handle) optional. This keeps the process convenient as TAs can add a contact quickly even without having all their details on hand.
+Email is mandatory because every contact should have at least one way to be reached, and email is typically the most formal and reliable channel for a TA to communicate with a student.
+
+**Q**: What are considered duplicate contacts?<br>
+**A**: TAConnect considers a contact a duplicate if it shares an Email, Phone number, or Telegram handle with an existing contact. All other fields (Name, Address, Tags, Course codes, and Tutorial groups) do not need to be unique, so multiple contacts can share the same values for these.
+Additionally, if a field is absent on one or both contacts, it is never treated as a match, so two contacts without a phone number, for example, are not considered duplicates on that basis.
+
+**Q**: Why doesn't the scroll wheel work as expected over certain components?<br>
+**A**: TAConnect prioritises the scroll wheel for vertical scrolling on major components. For example, when hovering over a horizontally truncated subsection in the detailed contact panel, scrolling will move the major component vertically rather than scrolling that subsection horizontally.
+To scroll a smaller inner component, hover your cursor directly over its scrollbar and scroll from there. This ensures that smaller sections with overflow content don't interfere with navigating the larger panel, making navigation more user-friendly and predictable.
 ---
 
 ## Known issues
