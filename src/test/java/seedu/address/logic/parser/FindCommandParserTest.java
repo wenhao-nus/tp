@@ -92,7 +92,9 @@ public class FindCommandParserTest {
 
     @Test
     public void parse_tutorialWithoutCourse_throwsParseException() {
-        assertParseFailure(parser, " " + PREFIX_TUTORIAL + "T01", FindCommand.MESSAGE_TUTORIAL_REQUIRES_COURSE);
+        assertParseFailure(parser, " " + PREFIX_TUTORIAL + "T01",
+                "At least one course code must be provided when searching by tutorial group "
+                        + "(e.g., find c/CS2103T tut/T01 tut/T02).");
     }
 
     @Test

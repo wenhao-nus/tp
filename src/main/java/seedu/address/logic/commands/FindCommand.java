@@ -35,7 +35,8 @@ public class FindCommand extends Command {
             + "Example: " + COMMAND_WORD + " " + PREFIX_COURSE + "CS2103T " + PREFIX_NAME + "Alice";
 
     public static final String MESSAGE_TUTORIAL_REQUIRES_COURSE =
-            "To search by tutorial group, you must also provide a course code (e.g., c/CS2103T tg/T01).";
+            "At least one course code must be provided when searching by tutorial group "
+                    + "(e.g., find c/CS2103T tut/T01 tut/T02).";
 
     private final PersonMatchesKeywordsPredicate predicate;
 
