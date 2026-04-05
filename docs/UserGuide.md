@@ -176,7 +176,8 @@ Format: `unset INDEX FIELD_PREFIX`
 - `unset` cannot remove a student’s enrollment in a course or tutorial. Use `unenroll` for that purpose.
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tips:**<br>
-- If the field is already empty, the command does not change anything.
+
+- If the field is already empty, the command does not change anything. <br>
 - Instead, The app will notify the user that the field is already empty, while still displaying the person’s details.
 </div>
 
