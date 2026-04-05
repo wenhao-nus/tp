@@ -61,7 +61,11 @@ public class UniquePersonList implements Iterable<Person> {
             throw new PersonNotFoundException();
         }
 
-        if (!target.isSamePerson(editedPerson) && contains(editedPerson)) {
+        boolean hasDuplicate = internalList.stream()
+                .filter(p -> !p.equals(target))
+                .anyMatch(editedPerson::isSamePerson);
+
+        if (hasDuplicate) {
             throw new DuplicatePersonException();
         }
 

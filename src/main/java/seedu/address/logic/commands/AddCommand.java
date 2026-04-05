@@ -39,8 +39,8 @@ public class AddCommand extends Command {
             + PREFIX_TAG + "owesMoney";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "Email must be unique!"
-            + " This email already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "Email, Telegram handle, and phone number must be unique!"
+            + " A contact with the same email, phone number, or Telegram handle already exists in the addressbook.";
 
     private final Person toAdd;
 
