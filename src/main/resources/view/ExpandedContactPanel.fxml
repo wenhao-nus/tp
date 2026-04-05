@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-    fx:id="detailsContainer" stylesheets="@ExpandedContactPanel.css" styleClass="expanded-panel" spacing="5">
-</VBox>
+<ScrollPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+    fx:id="expandedContactScrollPane" fitToWidth="true" fitToHeight="false" 
+    hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" stylesheets="@ExpandedContactPanel.css">
+
+  <VBox fx:id="detailsContainer" styleClass="expanded-panel" spacing="5" />
+
+</ScrollPane>

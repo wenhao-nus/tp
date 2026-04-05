@@ -1,15 +1,23 @@
 .expanded-panel {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+#expandedContactScrollPane {
     -fx-background-color: #cacaca;
-    -fx-background-radius: 14;
     -fx-border-color: #818181;
-    -fx-border-radius: 10;
-    -fx-border-width: 4;
+    -fx-border-width: 6;
     -fx-padding: 15 18 12 26;
 }
 
-.expanded-panel.contact-selected {
-    -fx-border-color:derive(#342a01, 70%);
-    -fx-border-width: 6;
+#expandedContactScrollPane.contact-selected {
+    -fx-border-color: derive(#342a01, 70%);
+    -fx-border-width: 8;
+}
+
+#expandedContactScrollPane .viewport {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
 }
 
 .name-label {

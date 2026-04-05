@@ -28,6 +28,8 @@ public class ExpandedContactPanel extends UiPart<Region> {
      */
     public ExpandedContactPanel() {
         super(FXML);
+        getRoot().setPickOnBounds(false);
+        getRoot().setMouseTransparent(false);
         showDefaultDetails();
     }
 
@@ -39,7 +41,7 @@ public class ExpandedContactPanel extends UiPart<Region> {
      * @param selectedPerson The person who is currently selected in the contact list.
      */
     public void setSelectedPerson(Person selectedPerson) {
-        detailsContainer.getStyleClass().remove("contact-selected");
+        getRoot().getStyleClass().remove("contact-selected"); 
 
         if (selectedPerson == null) {
             logger.fine("Displaying default details due to no contact selected");
@@ -51,7 +53,7 @@ public class ExpandedContactPanel extends UiPart<Region> {
             showPersonDetails(selectedPerson);
             showAttendanceSection(selectedPerson);
 
-            detailsContainer.getStyleClass().add("contact-selected");
+            getRoot().getStyleClass().add("contact-selected");
         }
     }
 

@@ -4,9 +4,8 @@ import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.TutInfo;
@@ -24,7 +23,7 @@ public class AttendanceListPanel extends UiPart<Region> {
     private final Person person;
 
     @FXML
-    private ListView<TutInfo> tutInfoListView;
+    private VBox attendanceContainer;
 
     /**
      * Creates an {@code AttendancePanel} showing the attendance record.
@@ -34,24 +33,24 @@ public class AttendanceListPanel extends UiPart<Region> {
     public AttendanceListPanel(Person person) {
         super(FXML);
         this.person = person;
-        tutInfoListView.setPlaceholder(new Label(NO_CLASSES_PLACEHOLDER));
-        tutInfoListView.getItems().setAll(person.getObservableTutInfos());
-        tutInfoListView.setCellFactory(listView -> new TutInfoListViewCell());
+        populateAttendance();
     }
 
-    /**
-     * Custom {@code ListCell} that displays the graphics of a {@code TutInfo} using a {@code AttendanceCard}.
-     */
-    class TutInfoListViewCell extends ListCell<TutInfo> {
-        @Override
-        protected void updateItem(TutInfo tutInfo, boolean empty) {
-            super.updateItem(tutInfo, empty);
-            if (empty || tutInfo == null) {
-                setGraphic(null);
-                setText(null);
-            } else {
-                setGraphic(new AttendanceCard(tutInfo).getRoot());
-            }
+    private void populateAttendance() {
+        attendanceContainer.getChildren().clear();
+
+        if (person.getObservableTutInfos().isEmpty()) {
+            logger.fine("No attendance records to display for " + person.getName().fullName);
+
+            attendanceContainer.getChildren().add(new Label(NO_CLASSES_PLACEHOLDER));
+            return;
+        }
+
+        logger.fine("Displaying " + person.getObservableTutInfos().size()
+                + " attendance records for " + person.getName().fullName);
+
+        for (TutInfo tutInfo : person.getObservableTutInfos()) {
+            attendanceContainer.getChildren().add(new AttendanceCard(tutInfo).getRoot());
         }
     }
 }
