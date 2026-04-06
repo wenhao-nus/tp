@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_PARTIAL_MATCHING_COMMAND;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COURSE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -176,6 +177,14 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_unknownCommand_throwsParseException() {
         assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () -> parser.parseCommand("unknownCommand"));
+        assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () -> parser.parseCommand("aded"));
+    }
+
+    @Test
+    public void parseCommand_partialMatchingCommand_throwsParseException() {
+        String expectedMessage = String.format(MESSAGE_PARTIAL_MATCHING_COMMAND, "add");
+        assertThrows(ParseException.class, expectedMessage, () -> parser.parseCommand("addn/"));
+        assertThrows(ParseException.class, expectedMessage, () -> parser.parseCommand("add4"));
     }
 
     @Test
