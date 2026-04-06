@@ -13,11 +13,13 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.UnsetCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -103,14 +105,20 @@ public class UnsetCommandParser implements Parser<UnsetCommand> {
      */
     private void checkUnsupportedPrefixes(String args) throws ParseException {
         List<String> tokens = List.of(args.trim().split("\\s+"));
+        List<String> invalidPrefixes = new ArrayList<>();
 
         for (String token : tokens) {
             if (token.matches("[a-zA-Z]+/.*") && !isSupportedPrefix(token)) {
                 String prefix = token.substring(0, token.indexOf('/') + 1);
-
-                throw new ParseException(String.format(MESSAGE_INVALID_PREFIX, prefix,
-                        UnsetCommand.COMMAND_WORD, UnsetCommand.MESSAGE_USAGE));
+                invalidPrefixes.add(prefix);
             }
+        }
+
+        if (!(invalidPrefixes.isEmpty())) {
+            String invalidPrefixesString = String.join(" ", invalidPrefixes);
+            System.out.println(invalidPrefixesString);
+            throw new ParseException(String.format(MESSAGE_INVALID_PREFIX, invalidPrefixesString,
+                    EditCommand.COMMAND_WORD, EditCommand.MESSAGE_USAGE));
         }
     }
 

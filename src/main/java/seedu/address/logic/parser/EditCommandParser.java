@@ -11,6 +11,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -88,14 +89,20 @@ public class EditCommandParser implements Parser<EditCommand> {
      */
     private void checkUnsupportedPrefixes(String args) throws ParseException {
         List<String> tokens = List.of(args.trim().split("\\s+"));
+        List<String> invalidPrefixes = new ArrayList<>();
 
         for (String token : tokens) {
             if (token.matches("[a-zA-Z]+/.*") && !isSupportedPrefix(token)) {
                 String prefix = token.substring(0, token.indexOf('/') + 1);
-
-                throw new ParseException(String.format(MESSAGE_INVALID_PREFIX, prefix,
-                        EditCommand.COMMAND_WORD, EditCommand.MESSAGE_USAGE));
+                invalidPrefixes.add(prefix);
             }
+        }
+
+        if (!(invalidPrefixes.isEmpty())) {
+            String invalidPrefixesString = String.join(" ", invalidPrefixes);
+            System.out.println(invalidPrefixesString);
+            throw new ParseException(String.format(MESSAGE_INVALID_PREFIX, invalidPrefixesString,
+                    EditCommand.COMMAND_WORD, EditCommand.MESSAGE_USAGE));
         }
     }
 
