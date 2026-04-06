@@ -15,6 +15,6 @@ public class InvalidIndexMessages {
     public static final String MESSAGE_INDEX_UNEXPECTED_PREFIX =
             "The slash for prefix \"/\" is not needed in this command! Please remove it.";
     public static final String MESSAGE_INDEX_INVALID_SIGN =
-            "Plus sign or minus sign detected in index and rejected.";
+           "'+' or '-' sign detected in index and rejected.";
 
 }

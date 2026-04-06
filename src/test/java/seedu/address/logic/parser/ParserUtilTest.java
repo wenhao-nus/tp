@@ -56,17 +56,33 @@ public class ParserUtilTest {
     }
 
     @Test
+    public void parseIndex_unexpectedPrefix_throwsParseException() {
+        String expectedMessage = InvalidIndexMessages.MESSAGE_INDEX_UNEXPECTED_PREFIX;
+
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("1  /"));
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("/1"));
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("1 / 2"));
+    }
+
+    @Test
     public void parseIndex_multipleIndices_throwsParseException() {
         String expectedMessage = InvalidIndexMessages.MESSAGE_MULTIPLE_INDICES;
 
         assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("1 3"));
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("1 a"));
     }
 
     @Test
-    public void parseIndex_nonIntegerIndex_throwsParseException() {
-        String expectedMessage = InvalidIndexMessages.MESSAGE_INDEX_NON_INTEGER;
+    public void parseIndex_invalidSigns_throwsParseException() {
+        String expectedMessage = InvalidIndexMessages.MESSAGE_INDEX_INVALID_SIGN;
 
-        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("2.5"));
+        // Contains plus sign
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("+2"));
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("1+2"));
+
+        // Contains minus sign except the first character
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("--2"));
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("2-"));
     }
 
     @Test
@@ -75,6 +91,16 @@ public class ParserUtilTest {
 
         assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("abc"));
         assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("1a"));
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("1.0.1"));
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("10_2"));
+    }
+
+    @Test
+    public void parseIndex_nonIntegerIndex_throwsParseException() {
+        String expectedMessage = InvalidIndexMessages.MESSAGE_INDEX_NON_INTEGER;
+
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex(".5"));
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("2.5"));
     }
 
     @Test
@@ -90,6 +116,7 @@ public class ParserUtilTest {
         String expectedMessage = InvalidIndexMessages.MESSAGE_INDEX_ZERO;
 
         assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("0"));
+        assertThrows(ParseException.class, expectedMessage, () -> ParserUtil.parseIndex("00"));
     }
 
     @Test
