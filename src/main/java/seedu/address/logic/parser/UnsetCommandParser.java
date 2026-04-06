@@ -35,33 +35,15 @@ public class UnsetCommandParser implements Parser<UnsetCommand> {
     public UnsetCommand parse(String args) throws ParseException {
         requireNonNull(args);
 
-        if (args.trim().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    UnsetCommand.MESSAGE_INDEX_AND_PREFIX_MISSING + "\n" + UnsetCommand.MESSAGE_USAGE));
-        }
+        checkEmptyArgs(args);
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
                 args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TELEGRAM,
                 PREFIX_TAG, PREFIX_COURSE, PREFIX_TUTORIAL);
 
-        // Check for any unsupported prefixes
-        List<String> tokens = List.of(args.trim().split("\\s+"));
-        for (String token : tokens) {
-            if (token.matches("[a-zA-Z]+/.*") && !isSupportedPrefix(token)) {
-                String prefix = token.substring(0, token.indexOf('/') + 1);
+        checkUnsupportedPrefixes(args);
 
-                throw new ParseException(String.format(MESSAGE_INVALID_PREFIX, prefix,
-                        UnsetCommand.COMMAND_WORD, UnsetCommand.MESSAGE_USAGE));
-            }
-        }
-
-        Index index;
-        try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    MESSAGE_INVALID_INDEX + "\n" + UnsetCommand.MESSAGE_USAGE), pe);
-        }
+        Index index = checkAndParseIndex(argMultimap.getPreamble());
 
         argMultimap.verifyNoDuplicatePrefixesFor(
                 PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TELEGRAM, PREFIX_TAG);
@@ -100,6 +82,50 @@ public class UnsetCommandParser implements Parser<UnsetCommand> {
         }
 
         return new UnsetCommand(index, fieldPrefix);
+    }
+
+    /**
+     * Checks if the arguments are empty or contain only whitespace.
+     *
+     * @throws ParseException if no input is provided.
+     */
+    private void checkEmptyArgs(String args) throws ParseException {
+        if (args.trim().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    UnsetCommand.MESSAGE_INDEX_AND_PREFIX_MISSING + "\n" + UnsetCommand.MESSAGE_USAGE));
+        }
+    }
+
+    /**
+     * Checks for unsupported prefixes are present in the arguments.
+     *
+     * @throws ParseException if any unsupported prefix is found.
+     */
+    private void checkUnsupportedPrefixes(String args) throws ParseException {
+        List<String> tokens = List.of(args.trim().split("\\s+"));
+
+        for (String token : tokens) {
+            if (token.matches("[a-zA-Z]+/.*") && !isSupportedPrefix(token)) {
+                String prefix = token.substring(0, token.indexOf('/') + 1);
+
+                throw new ParseException(String.format(MESSAGE_INVALID_PREFIX, prefix,
+                        UnsetCommand.COMMAND_WORD, UnsetCommand.MESSAGE_USAGE));
+            }
+        }
+    }
+
+    /**
+     * Checks and parses the preamble string into an index.
+     *
+     * @throws ParseException if the index is missing or invalid.
+     */
+    private Index checkAndParseIndex(String preamble) throws ParseException {
+        try {
+            return ParserUtil.parseIndex(preamble);
+        } catch (ParseException pe) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    MESSAGE_INVALID_INDEX + "\n" + UnsetCommand.MESSAGE_USAGE), pe);
+        }
     }
 
     /**
