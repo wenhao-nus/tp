@@ -40,35 +40,59 @@ public class AddCommandParser implements Parser<AddCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
                         PREFIX_ADDRESS, PREFIX_TAG, PREFIX_TELEGRAM);
-        
+
         // Checks if there're any unsupported prefixes.
         checkUnsupportedPrefixes(args);
-        
-        // Checks if there is extra text before first valid prefix.
+
+        // Checks if there is extra text before first valid prefix, if any.
         if (!argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_PREAMBLE_NOT_EMPTY, AddCommand.MESSAGE_USAGE));
         }
 
-        // Checks if any of the mandatory fields: name and email are absent.
-        List<String> missingFields = new ArrayList<>();
+        // Checks for any missing mandatory fields.
+        checkMissingMandatoryFields(argMultimap);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME)) {
-            missingFields.add("Name starting with prefix n/");
-        }
-
-        if (!arePrefixesPresent(argMultimap, PREFIX_EMAIL)) {
-            missingFields.add("Email starting with prefix e/");
-        }
-
-        if (!missingFields.isEmpty()) {
-            String message = "Missing parameter currently to add a person: "
-                    + String.join(" and ", missingFields);
-            throw new ParseException(message);
-        }
-
+        // Checks if any duplicate valid prefixes are present.
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
                 PREFIX_ADDRESS, PREFIX_TELEGRAM);
 
+        Person person = createPersonToAdd(argMultimap);
+        return new AddCommand(person);
+    }
+
+    /**
+     * Checks if any mandatory fields for {@code AddCommand}, i.e. {@code Name} and {@code Email} are missing.
+     */
+    private void checkMissingMandatoryFields(ArgumentMultimap argMultimap) throws ParseException {
+        List<String> missingFields = new ArrayList<>();
+
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME)) {
+            missingFields.add(AddCommand.MESSAGE_MISSING_NAME);
+        }
+        if (!arePrefixesPresent(argMultimap, PREFIX_EMAIL)) {
+            missingFields.add(AddCommand.MESSAGE_MISSING_EMAIL);
+        }
+
+        if (!(missingFields.isEmpty())) {
+            String missingFieldsString = AddCommand.MESSAGE_MISSING_PARAMS
+                    + String.join(" and ", missingFields)
+                    + "\n" + AddCommand.MESSAGE_USAGE;
+            throw new ParseException(missingFieldsString);
+        }
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+    /**
+     * Parses all fields from {@code ArgumentMultimap} and creates a {@code Person} to be added.
+     */
+    private Person createPersonToAdd(ArgumentMultimap argMultimap) throws ParseException {
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
 
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
@@ -87,17 +111,7 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        Person person = new Person(name, phone, email, address, telegram, tagList, new ArrayList<>());
-
-        return new AddCommand(person);
-    }
-
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+        return new Person(name, phone, email, address, telegram, tagList, new ArrayList<>());
     }
 
     /**

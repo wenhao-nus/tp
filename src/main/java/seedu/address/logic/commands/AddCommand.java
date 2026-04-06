@@ -39,13 +39,13 @@ public class AddCommand extends Command {
             + PREFIX_TAG + "owesMoney";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
-    public static final String MESSAGE_MISSING_NAME =
-            "Name is required and must start with the prefix (n/) for adding a person\n" + MESSAGE_USAGE;
-
-    public static final String MESSAGE_MISSING_EMAIL =
-            "Email is required and must start with the prefix (e/) for adding a person\n" + MESSAGE_USAGE;
     public static final String MESSAGE_DUPLICATE_PERSON = "Email, Telegram handle, and phone number must be unique!"
             + " A contact with the same email, phone number, or Telegram handle already exists in the addressbook.";
+
+    public static final String MESSAGE_MISSING_PARAMS = "Currently missing parameter(s) for adding a person: ";
+    public static final String MESSAGE_MISSING_NAME = "Name with prefix n/";
+    public static final String MESSAGE_MISSING_EMAIL = "Email with prefix e/";
+
 
     private final Person toAdd;
 
