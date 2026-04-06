@@ -46,7 +46,7 @@ public class TagNaturalOrderComparatorTest {
         // For tags with same prefix, shorter tags would come first
         assertTrue(comparator.compare(shortTag, longTag) < 0);
         assertTrue(comparator.compare(longTag, shortTag) > 0);
-        assertTrue(comparator.compare(sameShortTag, shortTag) > 0);
+        assertTrue(comparator.compare(sameShortTag, shortTag) == 0);
     }
 
     @Test
