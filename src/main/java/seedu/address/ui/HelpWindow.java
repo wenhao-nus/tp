@@ -32,7 +32,8 @@ public class HelpWindow extends UiPart<Stage> {
             + "View: view INDEX\n"
             + "Help: help\n"
             + "Clear: clear\n"
-            + "Exit: exit";
+            + "Exit: exit\n\n"
+            + "Refer to the user guide for detailed examples: " + USERGUIDE_URL;
 
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
     private static final String FXML = "HelpWindow.fxml";
