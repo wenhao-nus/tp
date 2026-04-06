@@ -100,10 +100,12 @@ Format: `add n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [tg/TELEGRAM_HANDLE] [t
 
 - You must provide both the person’s `NAME` and `EMAIL` when adding a new contact.
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A person can have any number of tags (including 0). 
+<div markdown="span" class="alert alert-primary">:bulb: **Tips:**<br>
+
+- A person can have any number of tags (including 0). 
 Tags are case-insensitive and duplicate tags will be automatically filtered 
-(e.g., `t/friend t/Friend` will be treated as only one `friend` tag).
+(e.g., `t/friend t/Friend` will be treated as only one `friend` tag).<br>
+- Tags are sorted and displayed alphabetically, with numbers in tags in numerical order.
 </div>
 
 Examples:
