@@ -177,7 +177,7 @@ public class PersonListPanel extends UiPart<Region> {
      */
     public void clearSelection() {
         personListView.getSelectionModel().clearSelection();
-        personListView.scrollTo(Math.max(Math.min(lastShownIndex, 0), personListView.getItems().size() -1));
+        personListView.scrollTo(Math.max(Math.min(lastShownIndex, 0), personListView.getItems().size() - 1));
 
 
 
