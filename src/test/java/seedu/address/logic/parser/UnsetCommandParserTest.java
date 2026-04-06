@@ -44,9 +44,12 @@ public class UnsetCommandParserTest {
     @Test
     public void parse_unsupportedPrefixes_failure() {
         assertParseFailure(parser, "1 o/",
-                String.format(MESSAGE_INVALID_PREFIX, "o/", UnsetCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_PREFIX, "o/",
+                UnsetCommand.COMMAND_WORD, UnsetCommand.MESSAGE_USAGE));
+
         assertParseFailure(parser, "1 cs/",
-                String.format(MESSAGE_INVALID_PREFIX, "cs/", UnsetCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_PREFIX, "cs/",
+                UnsetCommand.COMMAND_WORD, UnsetCommand.MESSAGE_USAGE));
     }
 
     @Test
@@ -54,11 +57,10 @@ public class UnsetCommandParserTest {
         assertParseFailure(parser, "-1" + TELEGRAM_EMPTY, MESSAGE_INVALID_INDEX_FORMAT);
         assertParseFailure(parser, "0" + TELEGRAM_EMPTY, MESSAGE_INVALID_INDEX_FORMAT);
         assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_INDEX_FORMAT);
-        assertParseFailure(
-                parser,
-                "1 i/ string",
-                String.format(MESSAGE_INVALID_PREFIX, "i/", UnsetCommand.MESSAGE_USAGE)
-        );
+
+        assertParseFailure(parser, "1 i/ string",
+                String.format(MESSAGE_INVALID_PREFIX, "i/",
+                UnsetCommand.COMMAND_WORD, UnsetCommand.MESSAGE_USAGE));
     }
 
     @Test

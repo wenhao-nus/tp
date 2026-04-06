@@ -44,7 +44,7 @@ public class UnsetCommandParser implements Parser<UnsetCommand> {
         for (String token : tokens) {
             if (token.matches("[a-zA-Z]+/.*") && !isSupportedPrefix(token)) {
                 throw new ParseException(String.format(MESSAGE_INVALID_PREFIX, token,
-                        UnsetCommand.MESSAGE_USAGE));
+                        UnsetCommand.COMMAND_WORD ,UnsetCommand.MESSAGE_USAGE));
             }
         }
 
