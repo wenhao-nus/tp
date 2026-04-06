@@ -112,10 +112,10 @@ public class Person {
     }
 
     /**
-     * Returns an immutable list of the Person's {@code tags}, sorted in natural order.
+     * Returns an immutable list of the Person's {@code tags}, sorted based on {@code TagNaturalOrderComparator}.
      * Any attempt to modify this unmodifiable returned list will throw {@code UnsupportedOperationException}.
      *
-     * @return An unmodifiable, naturally sorted list of {@code Tags}.
+     * @return An unmodifiable, sorted list of {@code Tags}.
      */
     public List<Tag> getSortedTags() {
         List<Tag> sorted = tags.stream()
