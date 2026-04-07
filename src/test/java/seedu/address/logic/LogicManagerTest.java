@@ -65,7 +65,7 @@ public class LogicManagerTest {
     public void execute_commandExecutionError_throwsCommandException() {
         String deleteCommand = "delete 9";
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_INDEX_ERROR
-                                        + Messages.MESSAGE_INDEX_OUT_OF_BOUNDS + "\n%s", DeleteCommand.MESSAGE_USAGE);
+                + Messages.MESSAGE_EMPTY_DISPLAYED_LIST, DeleteCommand.MESSAGE_USAGE);
         assertCommandException(deleteCommand, expectedMessage);
     }
 

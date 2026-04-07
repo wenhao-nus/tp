@@ -100,9 +100,26 @@ public class ViewCommandTest {
         ViewCommand viewCommand = new ViewCommand(INDEX_FIRST_PERSON);
 
         String expectedMessage = String.format(ViewCommand.MESSAGE_VIEW_INDEX_ERROR
-                + Messages.MESSAGE_INDEX_OUT_OF_BOUNDS + "\n%s", ViewCommand.MESSAGE_USAGE);
+                + Messages.MESSAGE_EMPTY_DISPLAYED_LIST, ViewCommand.MESSAGE_USAGE);
 
         assertCommandFailure(viewCommand, model, expectedMessage);
+    }
+
+    @Test
+    public void execute_viewingSamePerson_showsSamePersonMessage() {
+        Person personToView = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        model.setPersonToShow(personToView); // Person with first index is currently viewed
+
+        ViewCommand viewCommand = new ViewCommand(INDEX_FIRST_PERSON); // The same person is being viewed again
+
+        String expectedMessage = String.format(ViewCommand.MESSAGE_VIEW_SAME_PERSON_SUCCESS,
+                Messages.format(personToView));
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.setPersonToShow(personToView);
+
+        assertCommandSuccess(viewCommand, model, expectedMessage, expectedModel);
+        assertEquals(personToView, model.getPersonToShow());
     }
 
     @Test
