@@ -30,7 +30,7 @@ import seedu.address.model.tag.Tag;
  */
 public class AddCommandParser implements Parser<AddCommand> {
 
-    private static final Set<Prefix> SUPPORTED_PREFIXES = Set.of(
+    private static final Set<Prefix> VALID_PREFIXES = Set.of(
             PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TELEGRAM, PREFIX_TAG
     );
 
@@ -43,18 +43,15 @@ public class AddCommandParser implements Parser<AddCommand> {
         requireNonNull(args);
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
-                args, SUPPORTED_PREFIXES.toArray(Prefix[]::new));
-
-        // Checks if there're any unsupported prefixes.
-        checkUnsupportedPrefixes(args);
+                args, VALID_PREFIXES.toArray(Prefix[]::new));
+        
+        // Checks for any missing mandatory fields.
+        checkMissingMandatoryFields(argMultimap);
 
         // Checks if there is extra text before first valid prefix, if any.
         if (!argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_PREAMBLE_NOT_EMPTY, AddCommand.MESSAGE_USAGE));
         }
-
-        // Checks for any missing mandatory fields.
-        checkMissingMandatoryFields(argMultimap);
 
         // Checks if any duplicate valid prefixes are present.
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
@@ -91,16 +88,6 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
-    }
-
-    /**
-     * Checks whether any unsupported prefixes are present in the arguments.
-     *
-     * @throws ParseException if any unsupported prefix is found.
-     */
-    private void checkUnsupportedPrefixes(String args) throws ParseException {
-        PrefixUtil.checkUnsupportedPrefixes(args, SUPPORTED_PREFIXES,
-                AddCommand.COMMAND_WORD, AddCommand.MESSAGE_USAGE);
     }
 
     /**

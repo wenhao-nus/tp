@@ -1,6 +1,5 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.logic.Messages.MESSAGE_INVALID_PREFIX;
 import static seedu.address.logic.Messages.MESSAGE_PREAMBLE_NOT_EMPTY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
@@ -143,27 +142,6 @@ public class AddCommandParserTest {
         String userInput = NAME_DESC_AMY + EMAIL_DESC_AMY;
         assertParseSuccess(parser, userInput,
                 new AddCommand(expectedPerson));
-    }
-
-    @Test
-    public void parse_unsupportedPrefixes_throwsParseException() {
-        // single unsupported prefix
-        String input1 = "n/James Ho e/james@example.com tele/@JamesHo";
-        String expectedMessageSingle = String.format(MESSAGE_INVALID_PREFIX, "tele/",
-                AddCommand.COMMAND_WORD, AddCommand.MESSAGE_USAGE);
-        assertParseFailure(parser, input1, expectedMessageSingle);
-
-        // multiple unsupported prefixes
-        String input2 = "n/John e/john@example.com w/2 L/label";
-        String expectedMessageMultiple = String.format(MESSAGE_INVALID_PREFIX, "w/ L/",
-                AddCommand.COMMAND_WORD, AddCommand.MESSAGE_USAGE);
-        assertParseFailure(parser, input2, expectedMessageMultiple);
-
-        // duplicate unsupported prefix
-        String input3 = "n/James Ho e/james@example.com c/course_1 c/course_2";
-        String expectedMessageDuplicate = String.format(MESSAGE_INVALID_PREFIX, "c/",
-                AddCommand.COMMAND_WORD, AddCommand.MESSAGE_USAGE);
-        assertParseFailure(parser, input3, expectedMessageDuplicate);
     }
 
     @Test

@@ -27,9 +27,9 @@ public class Messages {
     public static final String MESSAGE_DUPLICATE_FIELDS =
             "Multiple values specified for the following single-valued field(s): ";
     public static final String MESSAGE_PREAMBLE_NOT_EMPTY =
-            "Unexpected text detected before any prefixes, if present.\n"
+            "Unexpected text or unsupported prefixes detected before valid prefixes.\n"
             + "Please refer to the command format and example below. "
-            + "Do not supply index or values without prefix or special characters.\n%s";
+            + "Do not supply index, values without prefix or special characters.\n%s";
     public static final String MESSAGE_INVALID_PREFIX =
             "For the %2$s command, the following prefix(es) are not supported: %1$s\n%3$s";
     public static final String MESSAGE_TAG_NOTE =
