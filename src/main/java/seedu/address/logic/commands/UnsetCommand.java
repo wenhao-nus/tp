@@ -72,8 +72,15 @@ public class UnsetCommand extends Command {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INDEX_OUT_OF_BOUNDS);
+        // Handles case of empty current displayed list
+        if (lastShownList.isEmpty()) {
+            throw new CommandException(String.format(
+                    Messages.MESSAGE_EMPTY_DISPLAYED_LIST, MESSAGE_USAGE));
+        }
+
+        if (isIndexOutOfBounds(lastShownList)) {
+            throw new CommandException(String.format(
+                    Messages.MESSAGE_INDEX_OUT_OF_BOUNDS + "\n%s", MESSAGE_USAGE));
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
@@ -115,6 +122,13 @@ public class UnsetCommand extends Command {
                 .add("index", index)
                 .add("fieldPrefix", fieldPrefix)
                 .toString();
+    }
+
+    /**
+    * Returns true if the target index is outside the range of the displayed person list.
+    */
+    private boolean isIndexOutOfBounds(List<Person> list) {
+        return index.getZeroBased() >= list.size();
     }
 
     /**

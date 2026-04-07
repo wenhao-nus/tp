@@ -14,6 +14,7 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.Messages;
 import seedu.address.logic.parser.CliSyntax;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.AddressBook;
@@ -27,6 +28,8 @@ import seedu.address.testutil.PersonBuilder;
  * Contains integration tests (interaction with the Model) and unit tests for {@code UnsetCommand}.
  */
 public class UnsetCommandTest {
+    private static final String INDEX_OUT_OF_BOUNDS_MESSAGES = String.format(
+                    Messages.MESSAGE_INDEX_OUT_OF_BOUNDS + "\n%s", UnsetCommand.MESSAGE_USAGE);
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -199,7 +202,7 @@ public class UnsetCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         UnsetCommand unsetCommand = new UnsetCommand(outOfBoundIndex, CliSyntax.PREFIX_EMAIL);
 
-        assertCommandFailure(unsetCommand, model, seedu.address.logic.Messages.MESSAGE_INDEX_OUT_OF_BOUNDS);
+        assertCommandFailure(unsetCommand, model, INDEX_OUT_OF_BOUNDS_MESSAGES);
     }
 
     @Test
@@ -208,6 +211,15 @@ public class UnsetCommandTest {
 
         assertThrows(IllegalArgumentException.class, "Unsupported unset field prefix: x/", () ->
                 unsetCommand.execute(model));
+    }
+
+    @Test
+    public void execute_emptyList_failure() {
+        model.updateFilteredPersonList(p -> false);
+        UnsetCommand unsetCommand = new UnsetCommand(INDEX_FIRST_PERSON, new Prefix("p/"));
+
+        assertCommandFailure(unsetCommand, model,
+                String.format(Messages.MESSAGE_EMPTY_DISPLAYED_LIST, UnsetCommand.MESSAGE_USAGE));
     }
 
     @Test
