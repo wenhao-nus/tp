@@ -20,12 +20,16 @@ public class ViewCommand extends Command {
     public static final String COMMAND_WORD = "view";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Displays the full details of the person identified "
-            + "by the index number used in the displayed person list.\n"
+            + ": Displays the full details of the contact identified "
+            + "by the index number in the displayed contact list.\n"
             + "Parameters: INDEX (must be a positive integer). "
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_VIEW_PERSON_SUCCESS = "Currently viewing contact:\n%1$s";
+    public static final String MESSAGE_VIEW_PERSON_SUCCESS =
+            "Currently viewing the following full contact details:\n%1$s";
+
+    public static final String MESSAGE_VIEW_SAME_PERSON_SUCCESS =
+            "You are already viewing the following full contact details:\n%1$s";
 
     public static final String MESSAGE_VIEW_INDEX_ERROR = "Error viewing contact: ";
 
@@ -46,14 +50,28 @@ public class ViewCommand extends Command {
 
         List<Person> lastShownList = model.getFilteredPersonList();
 
+        // Handles case of empty current displayed list for more specific error message
+        if (lastShownList.isEmpty()) {
+            throw new CommandException(String.format(
+                    MESSAGE_VIEW_INDEX_ERROR + Messages.MESSAGE_EMPTY_DISPLAYED_LIST,
+                    MESSAGE_USAGE));
+        }
+
+        // Handles cases of index exceeds number of contacts displayed
         if (isIndexOutOfBounds(lastShownList)) {
             throw new CommandException(String.format(
                     MESSAGE_VIEW_INDEX_ERROR + Messages.MESSAGE_INDEX_OUT_OF_BOUNDS + "\n%s",
-                    ViewCommand.MESSAGE_USAGE));
+                    MESSAGE_USAGE));
         }
 
+        Person currentlyShown = model.getPersonToShow();
         Person personToView = lastShownList.get(targetIndex.getZeroBased());
+
         model.setPersonToShow(personToView);
+
+        if (currentlyShown != null && currentlyShown.equals(personToView)) {
+            return new CommandResult(String.format(MESSAGE_VIEW_SAME_PERSON_SUCCESS, Messages.format(personToView)));
+        }
 
         return new CommandResult(String.format(MESSAGE_VIEW_PERSON_SUCCESS, Messages.format(personToView)));
     }

@@ -59,6 +59,29 @@ public class TagTest {
     }
 
     @Test
+    public void equalsCaseSensitive() {
+        Tag tag = new Tag("Friend");
+
+        // same values -> returns true
+        assertTrue(tag.equalsCaseSensitive(new Tag("Friend")));
+
+        // same values different case -> returns false
+        assertFalse(tag.equalsCaseSensitive(new Tag("friend")));
+
+        // same object -> returns true
+        assertTrue(tag.equalsCaseSensitive(tag));
+
+        // null -> returns false
+        assertFalse(tag.equalsCaseSensitive(null));
+
+        // different types -> returns false
+        assertFalse(tag.equalsCaseSensitive(5.0f));
+
+        // different values -> returns false
+        assertFalse(tag.equalsCaseSensitive(new Tag("Family")));
+    }
+
+    @Test
     public void hashCode_sameValues_returnsSameHashCode() {
         Tag tag = new Tag("Friend");
 

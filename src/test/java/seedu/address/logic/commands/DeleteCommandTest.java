@@ -99,6 +99,18 @@ public class DeleteCommandTest {
     }
 
     @Test
+    public void execute_emptyFilteredList_throwsCommandException() {
+        model.updateFilteredPersonList(p -> false); // Empty filtered list
+
+        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_PERSON);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_INDEX_ERROR
+                + Messages.MESSAGE_EMPTY_DISPLAYED_LIST, DeleteCommand.MESSAGE_USAGE);
+
+        assertCommandFailure(deleteCommand, model, expectedMessage);
+    }
+
+    @Test
     public void equals() {
         DeleteCommand deleteFirstCommand = new DeleteCommand(INDEX_FIRST_PERSON);
         DeleteCommand deleteSecondCommand = new DeleteCommand(INDEX_SECOND_PERSON);

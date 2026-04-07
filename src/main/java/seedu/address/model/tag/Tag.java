@@ -55,6 +55,23 @@ public class Tag {
         return tagName.equalsIgnoreCase(otherTag.tagName);
     }
 
+    /**
+     * Checks if the tag name are the same under case-sensitive settings.
+     */
+    public boolean equalsCaseSensitive(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof Tag)) {
+            return false;
+        }
+
+        Tag otherTag = (Tag) other;
+        return tagName.equals(otherTag.tagName);
+    }
+
     @Override
     public int hashCode() {
         return tagName.toLowerCase().hashCode();
