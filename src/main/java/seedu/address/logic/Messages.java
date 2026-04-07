@@ -17,8 +17,8 @@ public class Messages {
     public static final String MESSAGE_UNKNOWN_COMMAND = "Unknown command";
     public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format! \n%1$s";
     public static final String MESSAGE_INVALID_INDEX = "Index is required and must be a positive integer.";
-    public static final String MESSAGE_EMPTY_DISPLAYED_LIST = "The current displayed contact list is empty.";
-    public static final String MESSAGE_INDEX_OUT_OF_BOUNDS = "Index exceeds the number of contacts displayed currently.\n%s";
+    public static final String MESSAGE_EMPTY_DISPLAYED_LIST = "The current displayed contact list is empty.\n%s";
+    public static final String MESSAGE_INDEX_OUT_OF_BOUNDS = "Index exceeds the number of contacts displayed currently.";
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
             "Multiple values specified for the following single-valued field(s): ";

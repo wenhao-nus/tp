@@ -25,7 +25,11 @@ public class ViewCommand extends Command {
             + "Parameters: INDEX (must be a positive integer). "
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_VIEW_PERSON_SUCCESS = "Currently viewing full contact details:\n%1$s";
+    public static final String MESSAGE_VIEW_PERSON_SUCCESS =
+            "Currently viewing the following full contact details:\n%1$s";
+    
+    public static final String MESSAGE_VIEW_SAME_PERSON_SUCCESS =
+            "You are already viewing the following full contact details:\n%1$s";
 
     public static final String MESSAGE_VIEW_INDEX_ERROR = "Error viewing contact: ";
 
@@ -50,18 +54,24 @@ public class ViewCommand extends Command {
         if (lastShownList.isEmpty()) {
             throw new CommandException(String.format(
                     MESSAGE_VIEW_INDEX_ERROR + Messages.MESSAGE_EMPTY_DISPLAYED_LIST,
-                    ViewCommand.MESSAGE_USAGE));
+                    MESSAGE_USAGE));
         }
 
         // Handles cases of index exceeds number of contacts displayed
         if (isIndexOutOfBounds(lastShownList)) {
             throw new CommandException(String.format(
                     MESSAGE_VIEW_INDEX_ERROR + Messages.MESSAGE_INDEX_OUT_OF_BOUNDS + "\n%s",
-                    ViewCommand.MESSAGE_USAGE));
+                    MESSAGE_USAGE));
         }
 
+        Person currentlyShown = model.getPersonToShow();
         Person personToView = lastShownList.get(targetIndex.getZeroBased());
+
         model.setPersonToShow(personToView);
+
+        if (currentlyShown != null && currentlyShown.equals(personToView)) {
+            return new CommandResult(String.format(MESSAGE_VIEW_SAME_PERSON_SUCCESS, Messages.format(personToView)));
+        }
 
         return new CommandResult(String.format(MESSAGE_VIEW_PERSON_SUCCESS, Messages.format(personToView)));
     }
