@@ -21,6 +21,7 @@ import seedu.address.model.person.TutInfo;
  */
 public class PersonDetailsPanel extends UiPart<Region> {
 
+    public static final String MISSING_FIELD_VALUE = "-";
     public static final String MISSING_FIELD_DISPLAY = "---";
 
     private static final String FXML = "PersonDetailsPanel.fxml";
@@ -226,7 +227,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
     * @return true if the value is missing, false otherwise.
     */
     private boolean isMissingValue(String value) {
-        return (value.isEmpty() || value.equals("-"));
+        return (value.isEmpty() || value.equals(MISSING_FIELD_VALUE));
     }
 
     /**
