@@ -27,7 +27,7 @@ public class ViewCommand extends Command {
 
     public static final String MESSAGE_VIEW_PERSON_SUCCESS =
             "Currently viewing the following full contact details:\n%1$s";
-    
+
     public static final String MESSAGE_VIEW_SAME_PERSON_SUCCESS =
             "You are already viewing the following full contact details:\n%1$s";
 
