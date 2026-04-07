@@ -1,15 +1,22 @@
-.expanded-panel {
+#expandedContactScrollPane {
     -fx-background-color: #cacaca;
-    -fx-background-radius: 14;
     -fx-border-color: #818181;
-    -fx-border-radius: 10;
-    -fx-border-width: 4;
-    -fx-padding: 15 18 12 26;
+    -fx-border-width: 6;
+    -fx-padding: 15 18 12 22;
 }
 
-.expanded-panel.contact-selected {
-    -fx-border-color:derive(#342a01, 70%);
-    -fx-border-width: 6;
+#expandedContactScrollPane.contact-selected {
+    -fx-border-color: derive(#342a01, 70%);
+    -fx-border-width: 8;
+}
+
+#expandedContactScrollPane .viewport {
+    -fx-background-color: transparent;
+}
+
+.expanded-panel {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
 }
 
 .name-label {
@@ -28,13 +35,13 @@
 
 .shared-scroll-pane .scroll-bar {
     -fx-background-color: #cacaca;
-    -fx-pref-height: 11;
-    -fx-pref-width: 11;
+    -fx-pref-height: 14;
+    -fx-pref-width: 14;
 }
 
 .shared-scroll-pane .thumb {
     -fx-background-color: derive(#cacaca, -40%);
-    -fx-background-insets: 1;
+    -fx-background-insets: 2;
 }
 
 .shared-scroll-pane .increment-button,
@@ -60,19 +67,17 @@
     -fx-font-size: 14px;
 }
 
-.fields-container {
-    -fx-padding: 6 0 4 0;
-}
-
 .field-names-column .label {
     -fx-text-fill: #1d1d1d;
     -fx-font-weight: bold;
     -fx-font-size: 16px;
+    -fx-padding: 0 4 0 0;
 }
 
 .field-values-column .label {
     -fx-text-fill: derive(#1d1d1d, 20%);
     -fx-font-size: 16px;
+    -fx-padding: 0 4 0 0;
 }
 
 .field-names-column .label.missing-field,
@@ -82,14 +87,16 @@
 }
 
 .tags-scroll-pane {
-    -fx-padding: 0 0 3 0;
+    -fx-padding: 4 0 4 0;
 }
 
-#tags .label {
+.tags-flow-pane .label {
     -fx-background-color: #775500ca;
     -fx-padding: 3 6 3 6;
     -fx-background-radius: 4;
     -fx-font-size: 13px;
+    -fx-text-fill: white;
+    -fx-wrap-text: true;
 }
 
 .separating-line {

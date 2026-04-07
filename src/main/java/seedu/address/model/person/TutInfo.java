@@ -83,12 +83,12 @@ public class TutInfo {
     }
 
     /**
-     * Formats and returns the course code and tutorial code separated by a space.
+     * Formats and returns the course code and tutorial code separated by 2 spaces.
      *
      * @return A formatted string representation of the course and tutorial codes for display.
      */
     public String toDisplayString() {
-        return courseCode + " " + tutorialCode;
+        return courseCode + "  " + tutorialCode;
     }
 
     @Override

@@ -172,7 +172,8 @@
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: white;
     -fx-padding: 4px;
-    -fx-pref-height: 30px;
+    -fx-font-size: 11pt;
+    -fx-pref-height: 20px;
 }
 
 .status-bar-with-border {
@@ -204,11 +205,14 @@
 }
 
 .menu-bar {
+    -fx-min-height: 28px;
+    -fx-pref-height: 28px;
+    -fx-max-height: 28px;
     -fx-background-color: derive(#1d1d1d, 20%);
 }
 
 .menu-bar .label {
-    -fx-font-size: 14pt;
+    -fx-font-size: 12pt;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: white;
     -fx-opacity: 0.9;
@@ -293,7 +297,7 @@
 }
 
 .scroll-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: transparent
 }
 
 .scroll-bar .thumb {
@@ -404,19 +408,19 @@
 }
 
 .tut-info-scroll .scroll-bar:vertical {
-    -fx-pref-width: 12;
+    -fx-pref-width: 14;
 }
 
-.list-cell .label.attended {
-     -fx-text-fill: #1a6b3c;
-     -fx-background-color: #d4edda;
-     -fx-padding: 1 6 1 6;
-     -fx-background-radius: 20;
-     -fx-font-size: 14;
-     -fx-font-family: "Segoe UI Semibold";
+.label.attended {
+    -fx-text-fill: #1a6b3c;
+    -fx-background-color: #d4edda;
+    -fx-padding: 1 6 1 6;
+    -fx-background-radius: 20;
+    -fx-font-size: 14;
+    -fx-font-family: "Segoe UI Semibold";
 }
 
-.list-cell .label.unattended {
+.label.unattended {
     -fx-text-fill: #888888;
     -fx-background-color: #dbd9d9;
     -fx-padding: 1 10 1 10;
@@ -444,12 +448,8 @@
     -fx-font-size: 14;
 }
 
-.attendance-list .list-view,
-.attendance-list .list-cell,
-.attendance-list .list-cell:filled:even,
-.attendance-list .list-cell:filled:odd,
-.attendance-list .list-cell:filled:selected {
-    -fx-background-color: transparent;
+.attendance-list {
+    -fx-padding: 0 0 6 0;
 }
 
 .attendance-list .label {
@@ -462,4 +462,9 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.8), 10, 0, 0, 4);
     -fx-border-radius: 10;
     -fx-border-width: 4;
+}
+
+.label.no-classes-label {
+    -fx-font-size: 16px;
+    -fx-font-style: italic;
 }

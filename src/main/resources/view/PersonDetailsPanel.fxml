@@ -27,10 +27,7 @@
     </ScrollPane>
   </HBox>
 
-  <ScrollPane fx:id="tagsScrollPane" styleClass="shared-scroll-pane, tags-scroll-pane"
-      fitToWidth="true" fitToHeight="false" hbarPolicy="AS_NEEDED" vbarPolicy="AS_NEEDED" minHeight="40">
-    <FlowPane fx:id="tags" styleClass="tags-flow-pane" />
-  </ScrollPane>
+  <FlowPane fx:id="tagsFlowPane" styleClass="tags-flow-pane" hgap="8" vgap="6" />
 
   <Separator styleClass="separating-line" />
 </VBox>

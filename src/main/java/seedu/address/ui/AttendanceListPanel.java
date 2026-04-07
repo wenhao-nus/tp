@@ -1,12 +1,13 @@
 package seedu.address.ui;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.TutInfo;
@@ -24,7 +25,7 @@ public class AttendanceListPanel extends UiPart<Region> {
     private final Person person;
 
     @FXML
-    private ListView<TutInfo> tutInfoListView;
+    private VBox attendanceContainer;
 
     /**
      * Creates an {@code AttendancePanel} showing the attendance record.
@@ -33,25 +34,40 @@ public class AttendanceListPanel extends UiPart<Region> {
      */
     public AttendanceListPanel(Person person) {
         super(FXML);
+
+        assert person != null : "Person whose attendance details to be shown cannot be null.";
         this.person = person;
-        tutInfoListView.setPlaceholder(new Label(NO_CLASSES_PLACEHOLDER));
-        tutInfoListView.getItems().setAll(person.getObservableTutInfos());
-        tutInfoListView.setCellFactory(listView -> new TutInfoListViewCell());
+
+        updateAttendancePanel();
     }
 
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code TutInfo} using a {@code AttendanceCard}.
+     * Updates the attendance panel with the {@code TutInfos} of the {@code Person}.
      */
-    class TutInfoListViewCell extends ListCell<TutInfo> {
-        @Override
-        protected void updateItem(TutInfo tutInfo, boolean empty) {
-            super.updateItem(tutInfo, empty);
-            if (empty || tutInfo == null) {
-                setGraphic(null);
-                setText(null);
-            } else {
-                setGraphic(new AttendanceCard(tutInfo).getRoot());
-            }
+    private void updateAttendancePanel() {
+        attendanceContainer.getChildren().clear();
+
+        // Display placeholder message if there are no tutorials enrolled for this person
+        if (person.getObservableTutInfos().isEmpty()) {
+            logger.fine("No attendance records to display for " + person.getName().fullName);
+
+            Label placeholder = new Label(NO_CLASSES_PLACEHOLDER);
+            placeholder.getStyleClass().add("no-classes-label");
+            attendanceContainer.getChildren().add(placeholder);
+            return;
+        }
+
+        // Sort tutorials first by course code, then by tutorial code alphabetically
+        List<TutInfo> sortedTutInfos = person.getObservableTutInfos().stream()
+                .sorted(Comparator.comparing(TutInfo::getCourseCode).thenComparing(TutInfo::getTutorialCode))
+                .toList();
+
+        logger.fine("Displaying " + person.getObservableTutInfos().size()
+                + " attendance records for " + person.getName().fullName);
+
+        for (TutInfo tutInfo : sortedTutInfos) {
+            assert tutInfo != null : "TutInfo cannot be null.";
+            attendanceContainer.getChildren().add(new AttendanceCard(tutInfo).getRoot());
         }
     }
 }
