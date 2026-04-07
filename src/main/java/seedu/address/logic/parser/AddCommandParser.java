@@ -48,7 +48,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         // Checks for any missing mandatory fields.
         checkMissingMandatoryFields(argMultimap);
 
-        // Checks if there is extra text before first valid prefix, if any.
+        // Checks if there is extra text before first valid prefix.
         if (!argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_PREAMBLE_NOT_EMPTY, AddCommand.MESSAGE_USAGE));
         }
