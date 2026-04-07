@@ -123,7 +123,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
 
     /**
     * Displays the tags of a {@code person} in the panel.
-    * Sorts the tags by tag name and hides the tags section from UI if the person has no tags.
+    * Sorts the tags by natural order of the tag name and hides the tags section from UI if the person has none.
     */
     private void displayTags() {
         assert person.getTags() != null : "Tags of the person must not be null";
@@ -141,9 +141,8 @@ public class PersonDetailsPanel extends UiPart<Region> {
 
         logger.fine("Displaying " + person.getTags().size() + " tags for " + person.getName().fullName);
 
-        person.getTags().stream()
-                .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getSortedTags().forEach(tag ->
+            tags.getChildren().add(new Label(tag.getTagName())));
     }
 
     /**

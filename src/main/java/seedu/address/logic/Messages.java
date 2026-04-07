@@ -67,10 +67,8 @@ public class Messages {
 
         builder.append("; Tags: ");
 
-        // Sorting by tagName alphabetically (case-sensitive)
-        person.getTags().stream()
-                .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(builder::append);
+        // Display tags in natural alphanumeric order (case insensitive and numbers compared numerically)
+        person.getSortedTags().forEach(builder::append);
 
         return builder.toString();
     }

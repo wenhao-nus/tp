@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 public class PersonTest {
@@ -53,6 +54,29 @@ public class PersonTest {
 
         Person personWithoutTelegram = new PersonBuilder().withoutTelegram().build();
         assertEquals(Person.MISSING_OPTIONAL_FIELD_VALUE, personWithoutTelegram.getDisplayTelegram());
+    }
+
+    @Test
+    public void getSortedTags_modifyList_throwsUnsupportedOperationException() {
+        Person person = new PersonBuilder().withTags("friend", "buddy").build();
+        List<Tag> sortedTags = person.getSortedTags();
+
+        assertThrows(UnsupportedOperationException.class, () -> sortedTags.add(new Tag("newtag")));
+    }
+
+    @Test
+    public void getSortedTags_returnsTagsInNaturalOrder() {
+        Person person = new PersonBuilder()
+                .withTags("tag2", "tag02", "atag", "tag11", "Tag3")
+                .build();
+
+        List<Tag> sortedTags = person.getSortedTags();
+
+        String[] expectedOrder = {"atag", "tag02", "tag2", "Tag3", "tag11"};
+
+        for (int i = 0; i < expectedOrder.length; i++) {
+            assertEquals(expectedOrder[i], sortedTags.get(i).getTagName());
+        }
     }
 
     @Test

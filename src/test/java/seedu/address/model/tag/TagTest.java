@@ -27,6 +27,15 @@ public class TagTest {
     }
 
     @Test
+    public void getTagName() {
+        Tag tag1 = new Tag("Friend");
+        assertEquals("Friend", tag1.getTagName());
+
+        Tag tag2 = new Tag("friend");
+        assertEquals("friend", tag2.getTagName());
+    }
+
+    @Test
     public void equals() {
         Tag tag = new Tag("Friend");
 

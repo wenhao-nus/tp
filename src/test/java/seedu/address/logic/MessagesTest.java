@@ -50,7 +50,7 @@ public class MessagesTest {
             + "; Address: " + person.getDisplayAddress()
             + "; Courses: [" + person.getTutInfos().get(0).toDisplayString() + "]"
             + "[" + person.getTutInfos().get(1).toDisplayString() + "]"
-            + "; Tags: " + person.getTags().toArray()[0];
+            + "; Tags: [" + person.getSortedTags().get(0).getTagName() + "]";
 
         assertEquals(expectedString.toString(), Messages.format(person));
     }
@@ -62,10 +62,8 @@ public class MessagesTest {
                 .withTutInfos(List.of(new TutInfo("CS2101", "t10"), new TutInfo("CS2103T", "t01")))
                 .build();
 
-        String expectedTagString = person.getTags().stream()
-                .map(tag -> tag.tagName)
-                .sorted()
-                .map(tagName -> "[" + tagName + "]")
+        String expectedTagString = person.getSortedTags().stream()
+                .map(tag -> "[" + tag.getTagName() + "]")
                 .collect(Collectors.joining());
 
         String expectedString = person.getName()

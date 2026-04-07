@@ -82,9 +82,9 @@ public class PersonCard extends UiPart<Region> {
                         .getChildren().add(
                                 new TutInfoField(tutInfo.getCourseCode(), tutInfo.getTutorialCode()).getRoot()));
 
-        person.getTags().stream()
-                .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        // Displays tags in natural alphanumeric order (case-insensitive, numbers sorted numerically)
+        person.getSortedTags().forEach(tag ->
+            tags.getChildren().add(new Label(tag.getTagName())));
     }
 
     /**

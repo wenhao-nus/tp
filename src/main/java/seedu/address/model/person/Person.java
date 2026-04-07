@@ -9,10 +9,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.commons.util.TagNaturalOrderComparator;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.Tag;
 
@@ -107,6 +109,20 @@ public class Person {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
+    }
+
+    /**
+     * Returns an immutable list of the Person's {@code tags}, sorted based on {@code TagNaturalOrderComparator}.
+     * Any attempt to modify this unmodifiable returned list will throw {@code UnsupportedOperationException}.
+     *
+     * @return An unmodifiable, sorted list of {@code Tags}.
+     */
+    public List<Tag> getSortedTags() {
+        List<Tag> sorted = tags.stream()
+                .sorted(new TagNaturalOrderComparator())
+                .collect(Collectors.toList());
+
+        return Collections.unmodifiableList(sorted);
     }
 
     /**

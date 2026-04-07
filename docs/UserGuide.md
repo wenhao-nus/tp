@@ -3,8 +3,6 @@ layout: page
 title: User Guide
 ---
 
-# TAConnect
-
 **TAConnect** is a **desktop app for managing contacts, designed for NUS Computer Science Teaching Assistants and optimised for use via a Command Line Interface (CLI)** while still providing the benefits of a Graphical User Interface (GUI).
 
 This app enables TAs to **quickly and efficiently** organise contacts into courses, tutorial groups, and additional fields such as Telegram handles, with only names and email addresses being mandatory. Its fast CLI commands support **intuitive data editing and retrieval**, while the GUI presents **neatly organised lists, detailed contact information, and visualisations of student attendance.**
@@ -21,7 +19,7 @@ This app enables TAs to **quickly and efficiently** organise contacts into cours
 ---
 ## Quick start
 
-1. Ensure you have Java `17` or above installed in your Computer.<br>
+1. Ensure you have Java `17` or above installed on your computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
 1. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103T-T10-4/tp/releases).
@@ -102,18 +100,19 @@ Format: `add n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [tg/TELEGRAM_HANDLE] [t
 
 - You must provide both the person’s `NAME` and `EMAIL` when adding a new contact.
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A person can have any number of tags (including 0). 
+<div markdown="span" class="alert alert-primary">:bulb: **Tips:**<br>
+
+- A person can have any number of tags (including 0). 
 Tags are case-insensitive and duplicate tags will be automatically filtered 
-(e.g., `t/friend t/Friend` will be treated as only one `friend` tag).
+(e.g., `t/friend t/Friend` will be treated as only one `friend` tag).<br>
+- Tags are sorted and displayed alphabetically, with numbers in tags in numerical order.
 </div>
 
 Examples:
 
 - `add n/John Doe e/johnd@example.com a/John street, block 123, #01-01`
-- `add n/Alex Yeoh`
 - `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 tg/@betsycrowe t/criminal`
-- `add n/David Li tg/davidli`
+- `add n/David Li tg/davidli e/davidli@example.com`
 
 ### Deleting a person : `delete`
 
@@ -178,7 +177,7 @@ Format: `unset INDEX FIELD_PREFIX`
 <div markdown="span" class="alert alert-primary">:bulb: **Tips:**<br>
 
 - If the field is already empty, the command does not change anything. <br>
-- Instead, The app will notify the user that the field is already empty, while still displaying the person’s details.
+- Instead, the app will notify the user that the field is already empty, while still displaying the person’s details.
 </div>
 
 Examples:
@@ -256,7 +255,7 @@ Examples:
 
 ### Locating contacts: `find`
 
-Finds persons whose attributes matches at least one of the given keywords for every field specified in the command flags.
+Finds persons whose attributes match at least one of the given keywords for every field specified in the command flags.
 
 Format: `find [n/NAME]… [p/PHONE_NUMBER]… [e/EMAIL]… [a/ADDRESS]… [tg/TELEGRAM_HANDLE]… [t/TAG]… [c/COURSE_CODE]… [tut/TUTORIAL_GROUP]…`
 
@@ -264,7 +263,7 @@ Format: `find [n/NAME]… [p/PHONE_NUMBER]… [e/EMAIL]… [a/ADDRESS]… [tg/TE
 - Persons matching at least one keyword for a given field will be returned
   (i.e., `OR` search **within** a single field).
   e.g., `find n/alex n/david` will return `Alex Yeoh`, `David Li`.
-- Multiple fields can be specified here; persons must match all specifie field predicates to be returned
+- Multiple fields can be specified here; persons must match all specified field predicates to be returned
   (i.e., `AND` search **across** different fields).
   e.g., `find n/John c/CS2103T` will return persons with "John" in their name **AND** enrolled in "CS2103T".
 - The search is case-insensitive. e.g `n/hans` will match `Hans`
@@ -275,7 +274,7 @@ Format: `find [n/NAME]… [p/PHONE_NUMBER]… [e/EMAIL]… [a/ADDRESS]… [tg/TE
 - Exact matching is used for shorter fields (i.e. Tag, Course code, and Tutorial group).
   e.g. `c/CS210` won't match `CS2103T`
 - To search by tutorial group, you must also provide at least one course code (e.g., `c/CS2103T tut/T01 tut/T02 tut/T03`).
-  Which means commands like `find tut/T01` won't work.
+  This means commands like `find tut/T01` won't work.
 - Multiple course codes and/or tutorial groups can be provided together. The standard `AND`/`OR` rules still apply:
   - Multiple course codes (e.g., `c/CS2103T c/CS2101`) will match contacts in _either_ course (`OR` search).
   - Multiple tutorial groups (e.g., `tut/T01 tut/T02`) will match contacts in _either_ tutorial group (`OR` search).
@@ -302,7 +301,7 @@ Format: `view INDEX`
 - Views **all available information** of the contact at the specified `INDEX`.
 - `INDEX` refers to the position of the contact in the currently displayed list.
 - The `INDEX` **must be a positive integer** (1, 2, 3, …​) corresponding to an existing contact.
-- Does **not** modify any data with only display updates.
+- Does **not** modify any data as the `view` command only updates the UI display.
 
 Examples:
 
@@ -329,17 +328,17 @@ TAConnect data are saved in the hard disk automatically after any command that c
 TAConnect data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**<br>
-If your changes to the data file makes its format invalid or contains duplicate/corrupted person entries, 
+If your changes to the data file make its format invalid or contains duplicate/corrupted person entries, 
 TAConnect will discard all data and start with an empty data file at the next run. 
 This will effectively clear the whole JSON file. 
 Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the TAConnect to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+Furthermore, certain edits can cause TAConnect to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
 ## FAQ
 
-**Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous TAConnect home folder.
+**Q**: How do I transfer my data to another computer?<br>
+**A**: Install the app on the other computer and overwrite the empty data file it creates with the file that contains the data of your previous TAConnect home folder.
 
 ---
 

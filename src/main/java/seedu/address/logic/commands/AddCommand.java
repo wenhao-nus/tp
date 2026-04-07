@@ -44,7 +44,7 @@ public class AddCommand extends Command {
 
     public static final String MESSAGE_MISSING_EMAIL =
             "Email is required and must start with the prefix (e/) for adding a person\n" + MESSAGE_USAGE;
-    public static final String MESSAGE_DUPLICATE_PERSON = "Email, Telegram handle, and phone number must be unique!"
+    public static final String MESSAGE_DUPLICATE_PERSON = "Email, Telegram handle, and phone number must be unique!\n"
             + " A contact with the same email, phone number, or Telegram handle already exists in the addressbook.";
 
     private final Person toAdd;
