@@ -123,9 +123,9 @@ public class UnsetCommandParserTest {
     @Test
     public void parse_multipleFieldsWithNameOrEmail_failure() {
         assertParseFailure(parser, "1 " + PREFIX_NAME + " " + PHONE_EMPTY,
-                UnsetCommand.MESSAGE_NAME_CANNOT_BE_UNSET);
+                UnsetCommand.MESSAGE_MULTIPLE_FIELDS);
         assertParseFailure(parser, "1 " + PREFIX_EMAIL + " " + PHONE_EMPTY,
-                UnsetCommand.MESSAGE_EMAIL_CANNOT_BE_UNSET);
+                UnsetCommand.MESSAGE_MULTIPLE_FIELDS);
     }
 
     @Test

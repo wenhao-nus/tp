@@ -58,6 +58,10 @@ public class UnsetCommandParser implements Parser<UnsetCommand> {
             throw new ParseException(UnsetCommand.MESSAGE_NOT_UNSET);
         }
 
+        if (presentPrefixes.size() > 1) {
+            throw new ParseException(UnsetCommand.MESSAGE_MULTIPLE_FIELDS);
+        }
+
         for (Prefix prefix : presentPrefixes) {
             if (PREFIX_NAME.equals(prefix)) {
                 throw new ParseException(UnsetCommand.MESSAGE_NAME_CANNOT_BE_UNSET);
@@ -68,10 +72,6 @@ public class UnsetCommandParser implements Parser<UnsetCommand> {
             if (PREFIX_COURSE.equals(prefix) || PREFIX_TUTORIAL.equals(prefix)) {
                 throw new ParseException(UnsetCommand.MESSAGE_TUTINFO_CANNOT_BE_UNSET);
             }
-        }
-
-        if (presentPrefixes.size() > 1) {
-            throw new ParseException(UnsetCommand.MESSAGE_MULTIPLE_FIELDS);
         }
 
         Prefix fieldPrefix = presentPrefixes.get(0);
