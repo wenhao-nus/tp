@@ -3,7 +3,6 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_INDEX;
-import static seedu.address.logic.Messages.MESSAGE_INVALID_PREFIX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COURSE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -13,11 +12,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL;
 
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.UnsetCommand;
@@ -28,6 +25,11 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class UnsetCommandParser implements Parser<UnsetCommand> {
 
+    private static final Set<Prefix> SUPPORTED_PREFIXES = Set.of(
+            PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
+            PREFIX_TELEGRAM, PREFIX_TAG, PREFIX_COURSE, PREFIX_TUTORIAL
+    );
+
     /**
      * Parses the given {@code String} of arguments in the context of the UnsetCommand
      * and returns an UnsetCommand object for execution.
@@ -36,12 +38,10 @@ public class UnsetCommandParser implements Parser<UnsetCommand> {
      */
     public UnsetCommand parse(String args) throws ParseException {
         requireNonNull(args);
-
         checkEmptyArgs(args);
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
-                args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TELEGRAM,
-                PREFIX_TAG, PREFIX_COURSE, PREFIX_TUTORIAL);
+                args, SUPPORTED_PREFIXES.toArray(Prefix[]::new));
 
         checkUnsupportedPrefixes(args);
 
@@ -50,9 +50,7 @@ public class UnsetCommandParser implements Parser<UnsetCommand> {
         argMultimap.verifyNoDuplicatePrefixesFor(
                 PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TELEGRAM, PREFIX_TAG);
 
-        List<Prefix> presentPrefixes = Stream.of(
-                        PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_TELEGRAM, PREFIX_TAG, PREFIX_COURSE, PREFIX_TUTORIAL)
+        List<Prefix> presentPrefixes = SUPPORTED_PREFIXES.stream()
                 .filter(prefix -> argMultimap.getValue(prefix).isPresent())
                 .toList();
 
@@ -77,7 +75,6 @@ public class UnsetCommandParser implements Parser<UnsetCommand> {
         }
 
         Prefix fieldPrefix = presentPrefixes.get(0);
-
         Optional<String> fieldValue = argMultimap.getValue(fieldPrefix);
         if (fieldValue.isPresent() && !fieldValue.get().isEmpty()) {
             throw new ParseException(UnsetCommand.MESSAGE_FIELD_VALUE_NOT_ALLOWED);
@@ -99,26 +96,13 @@ public class UnsetCommandParser implements Parser<UnsetCommand> {
     }
 
     /**
-     * Checks for unsupported prefixes are present in the arguments.
+     * Checks whether any unsupported prefixes are present in the arguments.
      *
      * @throws ParseException if any unsupported prefix is found.
      */
     private void checkUnsupportedPrefixes(String args) throws ParseException {
-        List<String> tokens = List.of(args.trim().split("\\s+"));
-        Set<String> invalidPrefixes = new LinkedHashSet<>();
-
-        for (String token : tokens) {
-            if (token.matches("[a-zA-Z]+/.*") && !isSupportedPrefix(token)) {
-                String prefix = token.substring(0, token.indexOf('/') + 1);
-                invalidPrefixes.add(prefix);
-            }
-        }
-
-        if (!(invalidPrefixes.isEmpty())) {
-            String invalidPrefixesString = String.join(" ", invalidPrefixes);
-            throw new ParseException(String.format(MESSAGE_INVALID_PREFIX, invalidPrefixesString,
-                    UnsetCommand.COMMAND_WORD, UnsetCommand.MESSAGE_USAGE));
-        }
+        PrefixUtil.checkUnsupportedPrefixes(args, SUPPORTED_PREFIXES,
+                UnsetCommand.COMMAND_WORD, UnsetCommand.MESSAGE_USAGE);
     }
 
     /**
@@ -135,17 +119,4 @@ public class UnsetCommandParser implements Parser<UnsetCommand> {
         }
     }
 
-    /**
-     * Returns true if the token matches one of the supported prefixes.
-     */
-    private boolean isSupportedPrefix(String token) {
-        return (token.startsWith(PREFIX_NAME.getPrefix()))
-                || (token.startsWith(PREFIX_PHONE.getPrefix()))
-                || (token.startsWith(PREFIX_EMAIL.getPrefix()))
-                || (token.startsWith(PREFIX_ADDRESS.getPrefix()))
-                || (token.startsWith(PREFIX_TELEGRAM.getPrefix()))
-                || (token.startsWith(PREFIX_TAG.getPrefix()))
-                || (token.startsWith(PREFIX_COURSE.getPrefix()))
-                || (token.startsWith(PREFIX_TUTORIAL.getPrefix()));
-    }
 }
