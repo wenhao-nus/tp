@@ -45,6 +45,7 @@ public class MainApp extends Application {
     protected Storage storage;
     protected Model model;
     protected Config config;
+    private String startupMessage;
 
     @Override
     public void init() throws Exception {
@@ -64,7 +65,7 @@ public class MainApp extends Application {
 
         logic = new LogicManager(model, storage);
 
-        ui = new UiManager(logic);
+        ui = new UiManager(logic, startupMessage);
     }
 
     /**
@@ -85,8 +86,9 @@ public class MainApp extends Application {
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
         } catch (DataLoadingException e) {
-            logger.warning("Data file at " + storage.getAddressBookFilePath() + " could not be loaded."
-                    + " Will be starting with an empty AddressBook.");
+            startupMessage = "Data file at " + storage.getAddressBookFilePath() + " could not be loaded."
+                    + " Starting with an empty AddressBook.";
+            logger.warning(startupMessage);
             initialData = new AddressBook();
         }
 

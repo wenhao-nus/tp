@@ -30,6 +30,7 @@ public class MainWindow extends UiPart<Stage> {
     private Stage primaryStage;
 
     private Logic logic;
+    private final String startupMessage;
 
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
@@ -58,12 +59,13 @@ public class MainWindow extends UiPart<Stage> {
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
      */
-    public MainWindow(Stage primaryStage, Logic logic) {
+    public MainWindow(Stage primaryStage, Logic logic, String startupMessage) {
         super(FXML, primaryStage);
 
         // Set dependencies
         this.primaryStage = primaryStage;
         this.logic = logic;
+        this.startupMessage = startupMessage;
 
         // Configure the UI
         setWindowDefaultSize(logic.getGuiSettings());
@@ -122,6 +124,9 @@ public class MainWindow extends UiPart<Stage> {
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+        if (startupMessage != null) {
+            resultDisplay.setFeedbackToUser(startupMessage);
+        }
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
