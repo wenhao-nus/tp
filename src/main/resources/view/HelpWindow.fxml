@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.stage.Stage?>
 
 <fx:root resizable="false" title="Help" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
@@ -19,19 +20,25 @@
         <URL value="@HelpWindow.css" />
       </stylesheets>
 
-      <HBox alignment="CENTER" fx:id="helpMessageContainer">
+      <HBox fx:id="helpMessageContainer">
         <children>
-          <Label fx:id="helpMessage" text="Label">
+          <Label fx:id="helpMessage" text="Label" HBox.hgrow="ALWAYS">
             <HBox.margin>
               <Insets right="5.0" />
             </HBox.margin>
           </Label>
-          <Button fx:id="copyButton" mnemonicParsing="false" onAction="#copyUrl" text="Copy URL">
-            <HBox.margin>
-              <Insets left="5.0" />
-            </HBox.margin>
-          </Button>
+
+          <VBox alignment="BOTTOM_RIGHT">
+            <children>
+              <Button fx:id="copyButton" mnemonicParsing="false" onAction="#copyUrl" text="Copy URL">
+                <VBox.margin>
+                  <Insets left="5.0" />
+                </VBox.margin>
+              </Button>
+            </children>
+          </VBox>
         </children>
+
         <opaqueInsets>
           <Insets bottom="10.0" left="5.0" right="10.0" top="5.0" />
         </opaqueInsets>
