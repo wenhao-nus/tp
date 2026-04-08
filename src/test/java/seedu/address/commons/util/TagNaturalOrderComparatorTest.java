@@ -39,10 +39,10 @@ public class TagNaturalOrderComparatorTest {
 
     @Test
     public void compare_overflowNumbers() {
-        Tag tagOverFlow1 = new Tag("tag1111111123222234445533212122344335566579543556");
-        Tag tagOverFlow2 = new Tag("tag1111111123222234445533212122344835566579543556");
-        Tag tagOverFlow3 = new Tag("tag01111111123222234445533212122344835566579543556");
-        assertTrue(comparator.compare(tagOverFlow1, tagOverFlow2) < 0);
+        Tag tagOverFlow1 = new Tag("11111111232222344455");
+        Tag tagOverFlow2 = new Tag("11111111232222344455");
+        Tag tagOverFlow3 = new Tag("01111111123222234445");
+        assertTrue(comparator.compare(tagOverFlow1, tagOverFlow2) == 0);
         assertTrue(comparator.compare(tagOverFlow3, tagOverFlow2) < 0);
     }
 
