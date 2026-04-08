@@ -55,6 +55,10 @@ public class EditCommand extends Command {
                 + "must be provided to edit a person.";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
+    public static final String MESSAGE_EDIT_NO_CHANGES =
+            "Note: The changes you entered are the same as the current information of the person below. "
+            + "So, nothing has been updated.\n%s";
+
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "Email, Telegram handle, and phone number must be unique!\n"
             + " A contact with the same email, phone number, or Telegram handle exists in the addressbook.";
@@ -101,6 +105,10 @@ public class EditCommand extends Command {
 
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.setPersonToShow(editedPerson); // Always show the edited person
+
+        if (editedPerson != null && personToEdit.equals(editedPerson)) {
+            return new CommandResult(String.format(MESSAGE_EDIT_NO_CHANGES, Messages.format(editedPerson)));
+        }
 
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson))
                 + Messages.MESSAGE_TAG_NOTE);

@@ -84,13 +84,11 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_noFieldSpecifiedUnfilteredList_success() {
+    public void execute_editingPersonWithNoChanges_success() {
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
         Person editedPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson))
-                + Messages.MESSAGE_TAG_NOTE;
-
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_NO_CHANGES, Messages.format(editedPerson));
         model.setPersonToShow(null);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());

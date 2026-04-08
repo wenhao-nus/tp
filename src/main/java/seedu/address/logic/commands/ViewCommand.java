@@ -70,7 +70,8 @@ public class ViewCommand extends Command {
         model.setPersonToShow(personToView);
 
         if (currentlyShown != null && currentlyShown.equals(personToView)) {
-            return new CommandResult(String.format(MESSAGE_VIEW_SAME_PERSON_SUCCESS, Messages.format(personToView)));
+            return new CommandResult(
+                    String.format(MESSAGE_VIEW_SAME_PERSON_SUCCESS, Messages.format(personToView)));
         }
 
         return new CommandResult(String.format(MESSAGE_VIEW_PERSON_SUCCESS, Messages.format(personToView)));
