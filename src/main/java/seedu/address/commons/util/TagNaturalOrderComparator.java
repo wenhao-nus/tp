@@ -1,3 +1,8 @@
+/**
+ * Solution below adapted from NaturalOrderComparator.java by Pierre-Luc Paour.
+ * https://github.com/paour/natorder/blob/master/NaturalOrderComparator.java
+ * It is simplified for Tag which accepts alphanumeric names and comparing case-insensitively.
+ */
 package seedu.address.commons.util;
 
 import java.util.Comparator;
