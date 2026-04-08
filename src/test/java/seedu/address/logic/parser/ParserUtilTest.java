@@ -33,6 +33,7 @@ public class ParserUtilTest {
     private static final String INVALID_WEEK = "W4";
 
     private static final String VALID_NAME = "Rachel Walker";
+    private static final String VALID_NAME_WITH_ALLOWED_SYMBOLS = "Jean-Luc O'Neil, Jr. (TA)[A]{1}_Lead/2";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
@@ -46,6 +47,8 @@ public class ParserUtilTest {
 
     private static final String VALID_NAME_WITH_EXTRA_INTERNAL_WHITESPACES = "Rachel        Walker";
     private static final String VALID_NAME_WITH_INTERNAL_TAB = "Rachel\tWalker";
+    private static final String VALID_NAME_WITH_ALLOWED_SYMBOLS_AND_WHITESPACE =
+            " \t Jean-Luc   O'Neil,  Jr. \t (TA)[A]{1}_Lead/2 \n";
 
     @Test
     public void parseIndex_missingIndex_throwsParseException() {
@@ -159,6 +162,12 @@ public class ParserUtilTest {
         String nameWithWhitespace = WHITESPACE + VALID_NAME + WHITESPACE;
         Name expectedName = new Name(VALID_NAME);
         assertEquals(expectedName, ParserUtil.parseName(nameWithWhitespace));
+    }
+
+    @Test
+    public void parseName_validValueWithAllowedSymbols_returnsName() throws Exception {
+        Name expectedName = new Name(VALID_NAME_WITH_ALLOWED_SYMBOLS);
+        assertEquals(expectedName, ParserUtil.parseName(VALID_NAME_WITH_ALLOWED_SYMBOLS));
     }
 
     @Test
@@ -314,6 +323,15 @@ public class ParserUtilTest {
         assertEquals(expectedName.hashCode(),
                 ParserUtil.parseName(VALID_NAME_WITH_EXTRA_INTERNAL_WHITESPACES).hashCode());
         assertEquals(expectedName.hashCode(), ParserUtil.parseName(VALID_NAME_WITH_INTERNAL_TAB).hashCode());
+    }
+
+    @Test
+    public void parseName_validValueWithAllowedSymbolsAndWhitespace_returnsSanitizedName() throws Exception {
+        Name expectedName = new Name(VALID_NAME_WITH_ALLOWED_SYMBOLS);
+
+        assertEquals(expectedName, ParserUtil.parseName(VALID_NAME_WITH_ALLOWED_SYMBOLS_AND_WHITESPACE));
+        assertEquals(expectedName.hashCode(),
+                ParserUtil.parseName(VALID_NAME_WITH_ALLOWED_SYMBOLS_AND_WHITESPACE).hashCode());
     }
 
     @Test

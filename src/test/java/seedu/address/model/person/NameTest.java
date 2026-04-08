@@ -29,6 +29,8 @@ public class NameTest {
         assertFalse(Name.isValidName(" ")); // spaces only
         assertFalse(Name.isValidName("^")); // only non-alphanumeric characters
         assertFalse(Name.isValidName("peter*")); // contains non-alphanumeric characters
+        assertFalse(Name.isValidName("---")); // punctuation only
+        assertFalse(Name.isValidName("[]{}_")); // punctuation only
         assertFalse(
                 Name.isValidName("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")); // longer than 50 characters
 
@@ -38,6 +40,8 @@ public class NameTest {
         assertTrue(Name.isValidName("peter the 2nd")); // alphanumeric characters
         assertTrue(Name.isValidName("Capital Tan")); // with capital letters
         assertTrue(Name.isValidName("David Roger Jackson Ray Jr 2nd")); // long names
+        assertTrue(Name.isValidName("Jean-Luc O'Neil, Jr. (TA)[A]{1}_Lead/2")); // allowed punctuation
+        assertTrue(Name.isValidName("(CS2103) Tan")); // brackets are allowed
         assertTrue(Name.isValidName("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")); // 50 characters long
     }
 

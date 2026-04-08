@@ -45,6 +45,8 @@ import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandParserTest {
+    private static final String VALID_NAME_WITH_ALLOWED_SYMBOLS = "Jean-Luc O'Neil, Jr. (TA)[A]{1}_Lead/2";
+
     private AddCommandParser parser = new AddCommandParser();
 
     @Test
@@ -142,6 +144,20 @@ public class AddCommandParserTest {
         String userInput = NAME_DESC_AMY + EMAIL_DESC_AMY;
         assertParseSuccess(parser, userInput,
                 new AddCommand(expectedPerson));
+    }
+
+    @Test
+    public void parse_nameWithAllowedSymbols_success() {
+        Person expectedPerson = new PersonBuilder(BOB)
+                .withName(VALID_NAME_WITH_ALLOWED_SYMBOLS)
+                .withTelegram(VALID_TELEGRAM_BOB)
+                .withTags(VALID_TAG_FRIEND)
+                .build();
+
+        String userInput = " " + PREFIX_NAME + VALID_NAME_WITH_ALLOWED_SYMBOLS
+                + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TELEGRAM_DESC_BOB + TAG_DESC_FRIEND;
+
+        assertParseSuccess(parser, userInput, new AddCommand(expectedPerson));
     }
 
     @Test
