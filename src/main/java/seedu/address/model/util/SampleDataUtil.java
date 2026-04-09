@@ -24,25 +24,28 @@ public class SampleDataUtil {
     public static Person[] getSamplePersons() {
         return new Person[] {
             createPerson("Alex Yeoh", "87438807", "alexyeoh@example.com", "Blk 30 Geylang Street 29, #06-40",
-                    "@AlexYeoh1230", getTagSet("friends"),
+                    "@AlexYeoh1230", getTagSet("needsHelp"),
                     createTutInfoList(new String[]{"CS2103T", "T21"}, new String[]{"CS2101", "T02"})),
 
-            createPerson("Bernice Yu", null, "berniceyu3@gmail.com", "Blk 30 Lorong 3 Serangoon Gardens, #07-18",
-                    null, getTagSet("colleagues", "friends"),
-                    createTutInfoList(new String[]{"CS2103T", "T21"})),
+            createPerson("Bernice Yu", null, "berniceyu3@gmail.com",
+                    "Residential College 4, Block B, #05-67, 6 College Avenue East, Singapore 138614", null,
+                    getTagSet("Responsive", "submissionOnTime"), createTutInfoList(new String[]{"CS2103T", "T21"})),
 
             createPerson("Charlotte Oliveiro", "93210283", "charlotte@example.com", null,
-                    "Charlotte_Here", getTagSet("neighbours"), createTutInfoList()),
+                    "Charlotte_Here", getTagSet("inactive"), createTutInfoList(new String[]{"CS2100", "T23"})),
 
-            createPerson("David Li", "91031282", "lidavid@example.com", null,
-                    null, getTagSet("family"),
-                    createTutInfoList(new String[]{"CS2103T", "T01"}, new String[]{"CS2101", "T02"})),
+            createPerson("David Li", "91031282", "lidavid@example.com",
+                "Kent Ridge Hall, Block C, #03-45, 10 Heng Mui Keng Terrace, Singapore 119617", null,
+                getTagSet(), createTutInfoList(new String[]{"CS2101", "T02"})),
 
             createPerson("Irfan Ibrahim", null, "irfan@example.com", "Blk 47 Tampines Street 20, #17-35",
                     "Irfan_Ibrahim_1", getTagSet(), createTutInfoList()),
 
-            createPerson("Roy Balakrishnan", "92624417", "royb@example.com", "Blk 45 Aljunied Street 85, #11-31",
-                    null, getTagSet("colleagues"), createTutInfoList())
+            createPerson("Roy Balakrishnan", "92624417", "royb@example.com", null,
+                    null, getTagSet("lowAttendance"), createTutInfoList(new String[]{"CS2101", "T02"})),
+            
+            createPerson("Alicia Tan Ai Ling", null, "alicia.tan@u.nus.edu", null,
+            "@aliciatl", getTagSet("ActiveParticipant"), createTutInfoList(new String[]{"CS2103T", "T03"}))
         };
     }
 
