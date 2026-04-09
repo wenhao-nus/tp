@@ -26,7 +26,10 @@ This app enables TAs to **quickly and efficiently** organise contacts into cours
 
 1. Copy the file to the folder you want to use as the _home folder_ for your TAConnect.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar TAConnect.jar` command to run the application.
+1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar TAConnect.jar` command to run the application.<br>
+   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.
+
+   ![Ui](images/Ui.png)
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
@@ -57,6 +60,9 @@ This app enables TAs to **quickly and efficiently** organise contacts into cours
 <div markdown="block" class="alert alert-info">
 
 **:information_source: Notes about the command format:**<br>
+
+- Command words and prefixes are case-insensitive.<br>
+  e.g. `EDIT 2 n/John` or `edit 2 N/John` are both valid.
 
 - Always separate the `command word`, the `INDEX`, and each `field` (if required) with at least one space.<br>
   Multiple spaces are allowed, but do not attach them directly to each other.<br>
@@ -182,8 +188,12 @@ Format: `unset INDEX FIELD_PREFIX`
 Examples:
 
 - `unset 1 tg/` Unsets the Telegram handle of the 1st person.
-- `unset 2 a/` Unsets the address of the 2nd person.
 - `unset 3 t/` Removes all tags from the 3rd person.
+
+
+Screenshot below illustrates that `unset 3 p/` command successfully removed the phone number of the contact at index 3 (Charlotte Oliveiro). The UI confirms that the field is now empty.
+
+![result for 'unset 3 p/'](images/UnsetResult.png)
 
 ### Enrolling a person : `enroll`
 
@@ -235,6 +245,10 @@ Examples:
 
 - `attend 1 c/CS2103T w/1` marks the attendance of the 1st student for CS2103T in Week 1.
 - `attend 2 c/CS2101 w/10` marks the attendance of the 2nd student for CS2101 in Week 10.
+
+
+Screenshot below: The UI shows that the student’s attendance for Weeks 5 and 6 has been successfully marked.
+![result for attending for week 5 and 6](images/AttendResult.png)
 
 ### Unmarking attendance : `unattend`
 
@@ -344,7 +358,7 @@ Furthermore, certain edits can cause TAConnect to behave in unexpected ways (e.g
 Email is mandatory because every contact should have at least one way to be reached, and email is typically the most formal and reliable channel for a TA to communicate with a student.
 
 **Q**: What are considered duplicate contacts?<br>
-**A**: TAConnect considers a contact a duplicate if it shares an Email, Phone number, or Telegram handle with an existing contact. All other fields (Name, Address, Tags, Course codes, and Tutorial groups) do not need to be unique, so multiple contacts can share the same values for these.
+**A**: TAConnect considers a contact a duplicate if it shares an Email, Phone number, or Telegram handle with an existing contact. Email and Telegram comparisons are case-insensitive. <br>All other fields (Name, Address, Tags, Course codes, and Tutorial groups) do not need to be unique, so multiple contacts can share the same values for these.
 Additionally, if a field is absent on one or both contacts, it is never treated as a match, so two contacts without a phone number, for example, are not considered duplicates.
 
 **Q**: Why doesn't the scroll wheel work as expected over some parts of the app?<br>
@@ -356,7 +370,7 @@ To scroll within a smaller section, drag the scrollbar directly instead. This en
 ## Known issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
+2. **If you minimise the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimised, and no new Help Window will appear. The remedy is to manually restore the minimised Help Window.
 
 ---
 

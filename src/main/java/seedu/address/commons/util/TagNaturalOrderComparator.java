@@ -1,3 +1,8 @@
+/**
+ * Solution below adapted from NaturalOrderComparator.java by Pierre-Luc Paour.
+ * https://github.com/paour/natorder/blob/master/NaturalOrderComparator.java
+ * It is simplified for Tag which accepts alphanumeric names and comparing case-insensitively.
+ */
 package seedu.address.commons.util;
 
 import java.util.Comparator;
@@ -62,13 +67,27 @@ public class TagNaturalOrderComparator implements Comparator<Tag> {
         String num1 = extractNumber(s1, startIndex1);
         String num2 = extractNumber(s2, startIndex2);
 
-        int int1 = Integer.parseInt(num1);
-        int int2 = Integer.parseInt(num2);
+        String trimmed1 = num1.replaceFirst("^0+", "");
+        String trimmed2 = num2.replaceFirst("^0+", "");
 
-        if (int1 != int2) {
-            return Integer.compare(int1, int2);
+        if (trimmed1.isEmpty()) {
+            trimmed1 = "0";
+        }
+        if (trimmed2.isEmpty()) {
+            trimmed2 = "0";
         }
 
+        // Longer length would means larger number
+        if (trimmed1.length() != trimmed2.length()) {
+            return Integer.compare(trimmed1.length(), trimmed2.length());
+        }
+
+        int comparisonResult = trimmed1.compareTo(trimmed2);
+        if (comparisonResult != 0) {
+            return comparisonResult;
+        }
+
+        // Compares number of leading zeros since the numbers are equals.
         return Integer.compare(num2.length(), num1.length());
     }
 

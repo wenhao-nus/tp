@@ -38,6 +38,22 @@ public class TagNaturalOrderComparatorTest {
     }
 
     @Test
+    public void compare_zeros() {
+        Tag tagZero = new Tag("tag0");
+        Tag tagMultipleZeros = new Tag("tag00");
+        assertTrue(comparator.compare(tagZero, tagMultipleZeros) > 0);
+    }
+
+    @Test
+    public void compare_overflowNumbers() {
+        Tag tagOverFlow1 = new Tag("11111111232222344455");
+        Tag tagOverFlow2 = new Tag("11111111232222344455");
+        Tag tagOverFlow3 = new Tag("01111111123222234445");
+        assertTrue(comparator.compare(tagOverFlow1, tagOverFlow2) == 0);
+        assertTrue(comparator.compare(tagOverFlow3, tagOverFlow2) < 0);
+    }
+
+    @Test
     public void compare_remainingLength() {
         Tag shortTag = new Tag("tag");
         Tag longTag = new Tag("tagLong");

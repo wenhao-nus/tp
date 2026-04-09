@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
  * 2. Leading and trailing whitespaces of an argument value will be discarded.<br>
  * 3. An argument may be repeated and all its values will be accumulated e.g. the value of {@code t/}
  *    in the above example.<br>
+ * 4. Prefix matching is case-insensitive.
  */
 public class ArgumentTokenizer {
 
@@ -58,7 +59,7 @@ public class ArgumentTokenizer {
     }
 
     /**
-     * Returns the index of the first occurrence of {@code prefix} in
+     * Returns the index of the first occurrence of {@code prefix} case-insensitvely in
      * {@code argsString} starting from index {@code fromIndex}. An occurrence
      * is valid if there is a whitespace before {@code prefix}. Returns -1 if no
      * such occurrence can be found.
@@ -70,8 +71,12 @@ public class ArgumentTokenizer {
      * {@code fromIndex} = 0, this method returns 5.
      */
     private static int findPrefixPosition(String argsString, String prefix, int fromIndex) {
-        int prefixIndex = argsString.indexOf(" " + prefix, fromIndex);
-        return prefixIndex == -1 ? -1
+        String lowerCaseArgs = argsString.toLowerCase();
+        String lowerCasePrefix = prefix.toLowerCase();
+
+        int prefixIndex = lowerCaseArgs.indexOf(" " + lowerCasePrefix, fromIndex);
+        return (prefixIndex == -1)
+                ? -1
                 : prefixIndex + 1; // +1 as offset for whitespace
     }
 

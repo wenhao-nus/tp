@@ -98,15 +98,15 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
 
-        Optional<Phone> phone = argMultimap.getValue(PREFIX_PHONE).isPresent()
+        Optional<Phone> phone = (argMultimap.getValue(PREFIX_PHONE).isPresent())
                 ? Optional.of(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()))
                 : Optional.empty();
 
-        Optional<Address> address = argMultimap.getValue(PREFIX_ADDRESS).isPresent()
+        Optional<Address> address = (argMultimap.getValue(PREFIX_ADDRESS).isPresent())
                 ? Optional.of(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()))
                 : Optional.empty();
 
-        Optional<Telegram> telegram = argMultimap.getValue(PREFIX_TELEGRAM).isPresent()
+        Optional<Telegram> telegram = (argMultimap.getValue(PREFIX_TELEGRAM).isPresent())
                 ? Optional.of(ParserUtil.parseTelegram(argMultimap.getValue(PREFIX_TELEGRAM).get()))
                 : Optional.empty();
 

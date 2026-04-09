@@ -55,6 +55,10 @@ public class EditCommand extends Command {
                 + "must be provided to edit a person.";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
+    public static final String MESSAGE_EDIT_NO_CHANGES =
+            "Note: The changes you entered are the same as the current information of the person below. "
+            + "So, nothing has been updated.\n%s";
+
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "Email, Telegram handle, and phone number must be unique!\n"
             + " A contact with the same email, phone number, or Telegram handle exists in the addressbook.";
@@ -79,8 +83,15 @@ public class EditCommand extends Command {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INDEX_OUT_OF_BOUNDS);
+        // Handles case of empty current displayed list
+        if (lastShownList.isEmpty()) {
+            throw new CommandException(String.format(
+                    Messages.MESSAGE_EMPTY_DISPLAYED_LIST, MESSAGE_USAGE));
+        }
+
+        if (isIndexOutOfBounds(lastShownList)) {
+            throw new CommandException(String.format(
+                    Messages.MESSAGE_INDEX_OUT_OF_BOUNDS + "\n%s", MESSAGE_USAGE));
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
@@ -94,6 +105,10 @@ public class EditCommand extends Command {
 
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.setPersonToShow(editedPerson); // Always show the edited person
+
+        if (editedPerson != null && personToEdit.equals(editedPerson)) {
+            return new CommandResult(String.format(MESSAGE_EDIT_NO_CHANGES, Messages.format(editedPerson)));
+        }
 
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson))
                 + Messages.MESSAGE_TAG_NOTE);
@@ -149,6 +164,13 @@ public class EditCommand extends Command {
                 .add("index", index)
                 .add("editPersonDescriptor", editPersonDescriptor)
                 .toString();
+    }
+
+    /**
+    * Returns true if the target index is outside the range of the displayed person list.
+    */
+    private boolean isIndexOutOfBounds(List<Person> list) {
+        return index.getZeroBased() >= list.size();
     }
 
     /**

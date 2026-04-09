@@ -33,6 +33,9 @@ import seedu.address.testutil.PersonBuilder;
  */
 public class EditCommandTest {
 
+    private static final String INDEX_OUT_OF_BOUNDS_MESSAGES = String.format(
+                    Messages.MESSAGE_INDEX_OUT_OF_BOUNDS + "\n%s", EditCommand.MESSAGE_USAGE);
+
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
@@ -81,13 +84,11 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_noFieldSpecifiedUnfilteredList_success() {
+    public void execute_editingPersonWithNoChanges_success() {
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
         Person editedPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson))
-                + Messages.MESSAGE_TAG_NOTE;
-
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_NO_CHANGES, Messages.format(editedPerson));
         model.setPersonToShow(null);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
@@ -180,7 +181,7 @@ public class EditCommandTest {
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build();
         EditCommand editCommand = new EditCommand(outOfBoundIndex, descriptor);
 
-        assertCommandFailure(editCommand, model, Messages.MESSAGE_INDEX_OUT_OF_BOUNDS);
+        assertCommandFailure(editCommand, model, INDEX_OUT_OF_BOUNDS_MESSAGES);
     }
 
     /**
@@ -197,7 +198,18 @@ public class EditCommandTest {
         EditCommand editCommand = new EditCommand(outOfBoundIndex,
                 new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
-        assertCommandFailure(editCommand, model, Messages.MESSAGE_INDEX_OUT_OF_BOUNDS);
+        assertCommandFailure(editCommand, model, INDEX_OUT_OF_BOUNDS_MESSAGES);
+    }
+
+    @Test
+    public void execute_emptyList_failure() {
+        model.updateFilteredPersonList(p -> false);
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withName(VALID_NAME_BOB).build();
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+
+        assertCommandFailure(editCommand, model,
+                String.format(Messages.MESSAGE_EMPTY_DISPLAYED_LIST, EditCommand.MESSAGE_USAGE));
     }
 
     @Test

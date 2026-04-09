@@ -103,6 +103,7 @@ public class PersonListPanel extends UiPart<Region> {
      * Only the keys that can change the selected person will update isManualSelection to true.
      */
     private void trackKeyboardPresses() {
+        // Solution below inspired by the discussion from https://stackoverflow.com/q/60613425.
         personListView.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
 
             int listSize = personListView.getItems().size();
@@ -177,12 +178,11 @@ public class PersonListPanel extends UiPart<Region> {
      */
     public void clearSelection() {
         personListView.getSelectionModel().clearSelection();
-        personListView.scrollTo(Math.max(Math.min(lastShownIndex, 0), personListView.getItems().size() - 1));
-
-
+        int scrollIndex = Math.max(Math.min(lastShownIndex, 0), personListView.getItems().size() - 1);
+        personListView.scrollTo(scrollIndex);
 
         logger.fine("Cleared person selection successfully and "
-                + "scrolled to last shown index of " + lastShownIndex);
+                + "scrolled to last shown index of " + scrollIndex);
     }
 
     /**

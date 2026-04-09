@@ -47,7 +47,7 @@
           </padding>
         </StackPane>
 
-        <HBox styleClass="pane-with-border" VBox.vgrow="ALWAYS" spacing="20">
+        <HBox styleClass="pane-with-border" VBox.vgrow="ALWAYS" spacing="10">
           <padding>
             <Insets top="5" right="10" bottom="5" left="10" />
           </padding>

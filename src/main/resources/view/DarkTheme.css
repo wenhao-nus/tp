@@ -93,6 +93,10 @@
     -fx-background-color: derive(#1d1d1d, 20%);
 }
 
+.list-view .corner {
+    -fx-background-color: transparent;
+}
+
 .list-cell {
     -fx-label-padding: 0 0 0 0;
     -fx-graphic-text-gap : 0;

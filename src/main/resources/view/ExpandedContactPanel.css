@@ -1,8 +1,8 @@
 #expandedContactScrollPane {
     -fx-background-color: #cacaca;
     -fx-border-color: #818181;
-    -fx-border-width: 6;
-    -fx-padding: 15 18 12 22;
+    -fx-border-width: 5;
+    -fx-padding: 15 14 15 14;
 }
 
 #expandedContactScrollPane.contact-selected {
@@ -23,6 +23,7 @@
     -fx-text-fill: #342a01;
     -fx-font-weight: bold;
     -fx-font-size: 22px;
+    -fx-padding: 0 5 0 0;
 }
 
 .shared-scroll-pane {
@@ -71,7 +72,7 @@
     -fx-text-fill: #1d1d1d;
     -fx-font-weight: bold;
     -fx-font-size: 16px;
-    -fx-padding: 0 4 0 0;
+    -fx-padding: 0 5 0 0;
 }
 
 .field-values-column .label {
@@ -92,9 +93,9 @@
 
 .tags-flow-pane .label {
     -fx-background-color: #775500ca;
-    -fx-padding: 3 6 3 6;
-    -fx-background-radius: 4;
-    -fx-font-size: 13px;
+    -fx-padding: 3 3 3 3;
+    -fx-background-radius: 3;
+    -fx-font-size: 12px;
     -fx-text-fill: white;
     -fx-wrap-text: true;
 }

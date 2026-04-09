@@ -15,7 +15,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class PrefixUtil {
 
     /**
-     * Checks for unsupported prefixes in the given argument string.
+     * Checks for unsupported prefixes in the given argument string case-insensitively.
      *
      * @param args the input arguments string.
      * @param supportedPrefixes the set of supported prefixes for the command.
@@ -45,9 +45,11 @@ public class PrefixUtil {
     }
 
     /**
-     * Returns true if the token starts with one of the supported prefixes.
+     * Returns true if the token starts with one of the supported prefixes (case-insensitive).
      */
     private static boolean isSupportedPrefix(String token, Set<Prefix> supportedPrefixes) {
-        return supportedPrefixes.stream().anyMatch(p -> token.startsWith(p.getPrefix()));
+        String lowerCaseToken = token.toLowerCase();
+        return supportedPrefixes.stream()
+                .anyMatch(p -> lowerCaseToken.startsWith(p.getPrefix().toLowerCase()));
     }
 }

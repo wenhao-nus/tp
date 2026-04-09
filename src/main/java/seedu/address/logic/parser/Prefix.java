@@ -22,9 +22,12 @@ public class Prefix {
 
     @Override
     public int hashCode() {
-        return prefix == null ? 0 : prefix.hashCode();
+        return (prefix == null) ? 0 : prefix.toLowerCase().hashCode();
     }
 
+    /**
+     * Compares prefixes case-insensitively (e.g. N/ is equals to n/).
+     */
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -37,6 +40,6 @@ public class Prefix {
         }
 
         Prefix otherPrefix = (Prefix) other;
-        return prefix.equals(otherPrefix.prefix);
+        return prefix.equalsIgnoreCase(otherPrefix.prefix);
     }
 }
