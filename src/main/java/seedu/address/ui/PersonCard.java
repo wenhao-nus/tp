@@ -65,7 +65,7 @@ public class PersonCard extends UiPart<Region> {
         assert listView != null : "ListView must not be null";
 
         preventScrollPaneFocusing(listView);
-        preventVerticalScroll(contactInfoScrollPane);
+        forwardVerticalScrollUp(contactInfoScrollPane);
 
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
@@ -108,14 +108,17 @@ public class PersonCard extends UiPart<Region> {
     }
 
     /**
-     * Prevents vertical scrolling of a ScrollPane by consuming vertical scroll events.
+     * Prevents vertical scrolling in the {@code ScrollPane} and forwards it to the parent.
      */
-    private void preventVerticalScroll(ScrollPane scrollPane) {
-        // Solution below inspired by https://stackoverflow.com/a/53991807
+    private void forwardVerticalScrollUp(ScrollPane scrollPane) {
         scrollPane.addEventFilter(ScrollEvent.SCROLL, event -> {
-            if (event.getDeltaY() != 0) {
-                event.consume();
+            if (event.getDeltaY() == 0) {
+                return;
             }
+
+            ScrollEvent e = event.copyFor(scrollPane.getParent(), scrollPane.getParent());
+            scrollPane.getParent().fireEvent(e);
+            event.consume();
         });
     }
 
