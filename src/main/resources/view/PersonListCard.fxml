@@ -10,16 +10,20 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
     <GridPane HBox.hgrow="ALWAYS">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150"/>
             <ColumnConstraints hgrow="NEVER" minWidth="10" prefWidth="130"/>
         </columnConstraints>
+        <rowConstraints>
+            <RowConstraints vgrow="ALWAYS" />
+        </rowConstraints>
 
         <ScrollPane id="scrollPane" fx:id="contactInfoScrollPane" vbarPolicy="NEVER" hbarPolicy="AS_NEEDED"
-                    GridPane.columnIndex="0" prefWidth="150" fitToWidth="false" fitToHeight="true">
-            <VBox alignment="CENTER_LEFT" prefWidth="130" prefHeight="105">
+                    GridPane.columnIndex="0" fitToWidth="true" GridPane.vgrow="ALWAYS">
+            <VBox alignment="CENTER_LEFT">
                 <padding>
                     <Insets top="5" right="5" bottom="5" left="15"/>
                 </padding>
@@ -41,8 +45,8 @@
             </VBox>
         </ScrollPane>
 
-        <ScrollPane fx:id="tutInfosScrollPane" prefWidth="130" maxHeight="130" styleClass="tut-info-scroll"
-                    GridPane.columnIndex="1">
+        <ScrollPane fx:id="tutInfosScrollPane" prefWidth="130" fitToHeight="true" maxHeight="120"
+                    styleClass="tut-info-scroll" GridPane.columnIndex="1">
             <VBox>
                 <padding>
                     <Insets top="5" right="5" bottom="5" left="5"/>
