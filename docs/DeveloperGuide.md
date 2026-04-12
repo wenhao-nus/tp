@@ -304,7 +304,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-<ins>**Use case: UC05 - Search/Filter Contacts**<ins>
+<ins>**Use case: UC05 - Search/Filter Contacts**</ins>
 
 **Preconditions:** TA has at least one contact in their list.
 
@@ -334,7 +334,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-<ins>**Use case: UC06 - View A Contact**<ins>
+<ins>**Use case: UC06 - View A Contact**</ins>
 
 **Preconditions:** TA has at least one contact in their list.
 
@@ -359,7 +359,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-<ins>**Use case: UC07 - Enroll A Student**<ins>
+<ins>**Use case: UC07 - Enroll A Student**</ins>
 
 **Preconditions:** TA has at least one contact in their list.
 
@@ -390,7 +390,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-<ins>**Use case: UC08 - Unenroll A Student**<ins>
+<ins>**Use case: UC08 - Unenroll A Student**</ins>
 
 **Preconditions:** TA has at least one contact in their list.
 
@@ -421,7 +421,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-<ins>**Use case: UC09 - Mark Attendance**<ins>
+<ins>**Use case: UC09 - Mark Attendance**</ins>
 
 **Preconditions:** TA has at least one contact in their list.
 
@@ -452,7 +452,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-<ins>**Use case: UC10 - Unmark Attendance**<ins>
+<ins>**Use case: UC10 - Unmark Attendance**</ins>
 
 **Preconditions:** TA has at least one contact in their list.
 
