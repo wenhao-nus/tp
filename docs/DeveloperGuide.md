@@ -593,10 +593,10 @@ testers are expected to do more *exploratory* testing.
     - If the first person is enrolled in `CS2103T` but in different tutorial class, unenroll the person first using `unenroll 1 c/CS2103T` then followed by `enroll 1 c/CS2103T tut/T11`.
     - If not enrolled into any tutorials of `CS2103T`, enroll the first person using `enroll 1 c/CS2103T tut/T11`
 
-    2. Test case: `enroll 1 CS2103T T19`<br>
+    2. Test case: `enroll 1 c/CS2103T tut/T19`<br>
        Expected: The first person is not enrolled into `CS2103T T19`. Error details is shown in the status message indicating that the student is already enrolled in `CS2103T`.
 
-    3. Test case: `enroll 1 CS2109S T06`<br>
+    3. Test case: `enroll 1 c/CS2109S tut/T06`<br>
        Expected: The student is successfully enrolled in course `CS2109S` with tutorial `T06`. The status message shows the student details with the updated course and tutorial enrollment.
 
 ### Saving data
