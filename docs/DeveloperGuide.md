@@ -237,13 +237,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-- 1a. TAConnect detects invalid input.
-  - 1a1. TAConnect informs TA of invalid input and displays the correct format with an example.
+- 2a. TAConnect detects invalid input.
+  - 2a1. TAConnect informs TA of invalid input and displays the correct format with an example.
 
     Use case ends.
 
-- 2a. TAConnect detects duplicate contact (i.e. new contact to add has one or more of the same following fields as an existing contact: email, Telegram handle, phone number)
-  - 2a1. TAConnect informs TA that a contact with the same email, phone number, or Telegram handle already exists.
+- 2b. TAConnect detects duplicate contact (i.e. new contact to add has one or more of the same following fields as an existing contact: email, Telegram handle, phone number)
+  - 2b1. TAConnect informs TA that a contact with the same email, phone number, or Telegram handle already exists.
 
     Use case ends.
 
@@ -256,19 +256,20 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. TA requests to delete a specific contact.
-2. TAConnect deletes the contact, displays a success message, and shows the updated contact list.
+2. TAConnect validates the input.
+3. TAConnect deletes the contact, displays a success message, and shows the updated contact list.
 
    Use case ends.
 
 **Extensions**
 
-- 1a. TAConnect detects an invalid or out-of-range contact index.
-  - 1a1. TAConnect informs TA of the invalid index and displays the correct format with an example.
+- 2a. TAConnect detects an invalid or out-of-range contact index.
+  - 2a1. TAConnect informs TA of the invalid index and displays the correct format with an example.
 
     Use case ends.
 
-- 1b. TAConnect detects other invalid input.
-  - 1b1. TAConnect informs TA of the invalid input and displays the correct format with an example.
+- 2b. TAConnect detects other invalid input.
+  - 2b1. TAConnect informs TA of the invalid input and displays the correct format with an example.
 
     Use case ends.
 
