@@ -598,6 +598,17 @@ testers are expected to do more *exploratory* testing.
     3. Test case: `enroll 1 c/CS2109S tut/T06`<br>
        Expected: The student is successfully enrolled in course `CS2109S` with tutorial `T06`. The status message shows the student details with the updated course and tutorial enrollment.
 
+### Unenrolling a person
+
+1. Unenrolling a person from a course
+
+    1. Prerequisites:
+    - The first person in the contact list is enrolled in the course `CS2103T`.
+    - If not enrolled in `CS2103T`, enroll the first person using `enroll 1 c/CS2103T tut/T11`.
+
+    2. Test case: `unenroll 1 c/CS2103T`<br>
+       Expected: The first person is successfully unenrolled from the course `CS2103T`. The status message shows the student details with the updated course enrollment.
+
 ### Saving data
 
 1. Dealing with missing data files
