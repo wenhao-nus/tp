@@ -41,7 +41,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
 
-- At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
+- At app launch, it initialises the other components in the correct sequence, and connects them up with each other.
 - At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
 The bulk of the app's work is done by the following four components:
@@ -170,8 +170,8 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 * is a NUS computer science teaching assistant managing multiple tutorial classes
 * needs to manage students in each tutorial session efficiently
-* needs to organize and track contacts across distinct academic roles (students, professors, fellow TAs)
-* requires the ability to categorize and quickly retrieve contacts using specific fields (e.g., by tutorial group)
+* needs to organise and track contacts across distinct academic roles (students, professors, fellow TAs)
+* requires the ability to categorise and quickly retrieve contacts using specific fields (e.g., by tutorial group)
 * frequently handles incomplete contact profiles that need to be updated iteratively (e.g., adding Telegram handles later)
 * needs a reliable way to archive and export contact data at the end of the academic semester (e.g., a JSON file)
 * prefers a streamlined, role-specific tool over a general-purpose address book
@@ -181,7 +181,7 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 * is reasonably comfortable using CLI apps
 
 **Value proposition**:
-This product aims to streamline communication from TAs to their students, other TAs, teaching staff, and professors. It achieves this by organizing contacts into courses, tutorial groups and tags. It supports custom contact categories (e.g., Telegram handles), and more searching functionality (e.g., by groups and/or by email etc.). It also makes contacts storing more flexible by only making names and email addresses mandatory. 
+This product aims to streamline communication from TAs to their students, other TAs, teaching staff, and professors. It achieves this by organising contacts into courses, tutorial groups and tags. It supports custom contact categories (e.g., Telegram handles), and more searching functionality (e.g., by groups and/or by email etc.). It also makes contacts storing more flexible by only making names and email addresses mandatory. 
 
 ### User stories
 
@@ -503,7 +503,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### Glossary
 
 * **Teaching Assistant (TA)**: A member of the teaching team who supports a course by running tutorials/labs, facilitating discussions, answering student questions, and coordinating with professors, course admins, and other TAs.
-* **Tag**: A user-defined label attached to a contact to classify and organize them (e.g., student, prof, cs2103, tut01, projectgrpA). Tags enable quick filtering and searching across the contact list.
+* **Tag**: A user-defined label attached to a contact to classify and organise them (e.g., student, prof, cs2103, tut01, projectgrpA). Tags enable quick filtering and searching across the contact list.
 * **Course**: A structured module offered by the university with a unique course code (e.g. CS2101).
 * **Tutorial/Lab Group**: A specific class grouping of students with a tutorial/lab code (e.g. Tut10, Lab11) of a course assigned to a TA.
 * **Student**: A NUS Computer Science enrolled in a course supported by the TA.
