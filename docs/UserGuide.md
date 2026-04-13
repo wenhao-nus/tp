@@ -111,6 +111,7 @@ Format: `add n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [tg/TELEGRAM_HANDLE] [t
 - A person can have any number of tags (including 0). 
 Tags are case-insensitive and duplicate tags will be automatically filtered 
 (e.g., `t/friend t/Friend` will be treated as only one `friend` tag).<br>
+
 - Tags are sorted and displayed alphabetically, with numbers in tags in numerical order.
 </div>
 
@@ -133,7 +134,7 @@ Format: `delete INDEX`
 Examples:
 
 - `list` followed by `delete 2` deletes the 2nd person in the address book.
-- `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+- `find n/Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
 ### Listing all persons : `list`
 
@@ -181,8 +182,11 @@ Format: `unset INDEX FIELD_PREFIX`
 - `unset` cannot remove a student’s enrollment in a course or tutorial. Use `unenroll` for that purpose.
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tips:**<br>
+
 - If the field is already empty, the command does not change anything.<br>
+
 - Instead, The app will notify the user that the field is already empty, while still displaying the person’s details.
+
 </div>
 
 Examples:
@@ -246,9 +250,16 @@ Examples:
 - `attend 1 c/CS2103T w/1` marks the attendance of the 1st student for CS2103T in Week 1.
 - `attend 2 c/CS2101 w/10` marks the attendance of the 2nd student for CS2101 in Week 10.
 
-
 Screenshot below: The UI shows that the student’s attendance for Weeks 5 and 6 has been successfully marked.
 ![result for attending for week 5 and 6](images/AttendResult.png)
+
+<div markdown="block" class="alert alert-info">
+
+**:information_source: Disclaimer about attendance feature:**<br>
+
+Users are responsible for ensuring that attendance is recorded accurately based on the actual tutorial schedule. For example, tutorials may not be scheduled during certain weeks (e.g., Week 1 or recess week). In that case, the user can simply mark those week as attended.
+
+</div>
 
 ### Unmarking attendance : `unattend`
 
@@ -292,6 +303,7 @@ Format: `find [n/NAME]… [p/PHONE_NUMBER]… [e/EMAIL]… [a/ADDRESS]… [tg/TE
   - Multiple course codes (e.g., `c/CS2103T c/CS2101`) will match contacts in _either_ course (`OR` search).
   - Multiple tutorial groups (e.g., `tut/T01 tut/T02`) will match contacts in _either_ tutorial group (`OR` search).
   - Providing both will match contacts who are in (at least one of the courses) `AND` (at least one of the tutorial groups).
+- Adding '@' when finding by telegram handle is optional (e.g. `find tg/alexyeoh` behaves exactly the same as `find tg/@alexyeoh`).
 
 Examples:
 
@@ -341,11 +353,14 @@ TAConnect data are saved in the hard disk automatically after any command that c
 TAConnect data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**<br>
-If your changes to the data file make its format invalid or contains duplicate/corrupted person entries, 
+
+- If your changes to the data file make its format invalid or contains duplicate/corrupted person entries, 
 TAConnect will discard all data and start with an empty data file at the next run. 
 This will effectively clear the whole JSON file. 
 Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause TAConnect to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+
+- Furthermore, certain edits can cause TAConnect to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+
 </div>
 
 ## FAQ
@@ -354,7 +369,7 @@ Furthermore, certain edits can cause TAConnect to behave in unexpected ways (e.g
 **A**: Install the app on the other computer and overwrite the empty data file it creates with the file that contains the data of your previous TAConnect home folder.
 
 **Q**: Why are only the Name and Email fields mandatory for a contact?<br>
-**A**:A: TAConnect requires only Name and Email when adding a contact, leaving other fields (Phone number, Address, Telegram handle) optional. This keeps the process convenient as TAs can add a contact quickly even without having all their details on hand.
+**A**: TAConnect requires only Name and Email when adding a contact, leaving other fields (Phone number, Address, Telegram handle) optional. This keeps the process convenient as TAs can add a contact quickly even without having all their details on hand.
 Email is mandatory because every contact should have at least one way to be reached, and email is typically the most formal and reliable channel for a TA to communicate with a student.
 
 **Q**: What are considered duplicate contacts?<br>
