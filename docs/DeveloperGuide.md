@@ -598,6 +598,12 @@ testers are expected to do more *exploratory* testing.
     3. Test case: `enroll 1 c/CS2109S tut/T06`<br>
        Expected: The student is successfully enrolled in course `CS2109S` with tutorial `T06`. The status message shows the student details with the updated course and tutorial enrollment.
 
+### Getting help
+
+1. Finding the list of commands and the link to the user guide
+    1. Test case: Press the Help button then click Help in the dropdown, or press F1.<br>
+       Expected: A pop-up window appears displaying the list of all available commands and a link to the user guide at the bottom.
+
 ### Unenrolling a person
 
 1. Unenrolling a person from a course
