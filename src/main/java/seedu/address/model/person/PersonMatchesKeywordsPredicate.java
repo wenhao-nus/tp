@@ -61,8 +61,11 @@ public class PersonMatchesKeywordsPredicate implements Predicate<Person> {
         boolean tagMatches = tagNameKeywords.isEmpty() || tagNameKeywords.stream().anyMatch(person::tagMatches);
         boolean telegramMatches = telegramKeywords.isEmpty()
                 || telegramKeywords.stream().anyMatch(person::telegramMatches);
-        boolean tutorialMatches = tutorialCodeKeywords.isEmpty()
-                || tutorialCodeKeywords.stream().anyMatch(person::tutorialMatches);
+        boolean tutorialMatches = tutorialCodeKeywords.isEmpty() || courseCodeKeywords.isEmpty()
+                ? tutorialCodeKeywords.isEmpty() || tutorialCodeKeywords.stream().anyMatch(person::tutorialMatches)
+                : person.getTutInfos().stream().anyMatch(tutInfo ->
+                        courseCodeKeywords.stream().anyMatch(tutInfo.getCourseCode()::equalsIgnoreCase)
+                        && tutorialCodeKeywords.stream().anyMatch(tutInfo.getTutorialCode()::equalsIgnoreCase));
         boolean courseMatches = courseCodeKeywords.isEmpty()
                 || courseCodeKeywords.stream().anyMatch(person::courseMatches);
 

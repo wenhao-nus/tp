@@ -40,7 +40,8 @@ public class FindCommandParser implements Parser<FindCommand> {
         List<String> courseKeywords = argMultimap.getAllValues(PREFIX_COURSE);
         List<String> tutorialKeywords = argMultimap.getAllValues(PREFIX_TUTORIAL);
 
-        if (containsEmptyValue(nameKeywords) || containsEmptyValue(phoneKeywords) || containsEmptyValue(emailKeywords)
+        if (!argMultimap.getPreamble().isEmpty() || containsEmptyValue(nameKeywords)
+                || containsEmptyValue(phoneKeywords) || containsEmptyValue(emailKeywords)
                 || containsEmptyValue(addressKeywords) || containsEmptyValue(tagKeywords)
                 || containsEmptyValue(telegramKeywords) || containsEmptyValue(courseKeywords)
                 || containsEmptyValue(tutorialKeywords)) {
