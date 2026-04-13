@@ -106,7 +106,9 @@ Format: `add n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [tg/TELEGRAM_HANDLE] [t
 
 - You must provide both the person’s `NAME` and `EMAIL` when adding a new contact.
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tips:**<br>
+<div markdown="block" class="alert alert-primary">
+
+:bulb: **Tips:**<br>
 
 - A person can have any number of tags (including 0). Tags are case-insensitive and duplicate tags will be automatically filtered (e.g., `t/friend t/Friend` will be treated as only one `friend` tag).
 
@@ -155,7 +157,10 @@ Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [tg/TELEGRAM
 - Fields cannot be edited to empty values.
 - When editing tags, the existing tags of the person will be replaced. (i.e., new tags will overwrite existing ones, not be added to them).
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+<div markdown="block" class="alert alert-primary">
+
+:bulb: **Tip:**
+
 Fields cannot be edited to empty values and tags cannot be left empty. Please use the `unset` command instead.
 </div>
 
@@ -180,7 +185,10 @@ Format: `unset INDEX FIELD_PREFIX`
 - `unset INDEX t/` removes all existing tags from the person.
 - `unset` cannot remove a student’s enrollment in a course or tutorial. Use `unenroll` for that purpose.
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+<div markdown="block" class="alert alert-primary">
+
+:bulb: **Tip:**
+
 If the field is already empty, a message is shown indicating that the field is already missing, while the person’s full details are being displayed.
 </div>
 
@@ -209,7 +217,9 @@ Examples:
 - `enroll 1 c/CS2103T tut/T01` enrolls the 1st student into CS2103T tutorial group T01.
 
 
-<div markdown="span" class="alert alert-primary">:bulb: **Note:**<br>
+<div markdown="block" class="alert alert-primary">
+
+:bulb: **Note:**<br>
 
 - Remember not to include tut/TUTORIAL_GROUP in unenroll, attend, and unattend (since each student is associated with exactly one tutorial per course, the tutorial code is handled automatically).
 
@@ -348,7 +358,9 @@ TAConnect data are saved in the hard disk automatically after any command that c
 
 TAConnect data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
-<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**<br>
+<div markdown="block" class="alert alert-warning">
+
+:exclamation: **Caution:**<br>
 
 - If your changes to the data file make its format invalid or contains duplicate/corrupted person entries, 
 TAConnect will discard all data and start with an empty data file at the next run. 
