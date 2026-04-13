@@ -619,6 +619,53 @@ testers are expected to do more *exploratory* testing.
     3. Test case: `enroll 1 c/CS2109S tut/T06`<br>
        Expected: The student is successfully enrolled in course `CS2109S` with tutorial `T06`. The status message shows the student details with the updated course and tutorial enrollment.
 
+### Finding persons by attributes
+
+1. Finding by a single attribute (partial match & case-insensitive)
+
+    1. Prerequisites:
+        - The address book contains a person named "Alice Pauline" and another named "Alikhan".
+        - If not, add them using the `add` command.
+
+    2. Test case: `find n/ali`<br>
+       Expected: Both "Alice Pauline" and "Alikhan" are listed. Success message showing the number of persons listed is displayed.
+
+    3. Test case: `find n/NonExistentName`<br>
+       Expected: No persons are listed. Success message shows 0 persons listed.
+
+2. Finding by multiple different attributes (AND logic)
+
+    1. Prerequisites:
+        - "Alice" is enrolled in "CS2103T".
+        - "Bob" is enrolled in "CS2103T" but has the tag "friends".
+
+    2. Test case: `find n/alice c/cs2103t`<br>
+       Expected: Only "Alice" is listed.
+
+    3. Test case: `find c/cs2103t t/friends`<br>
+       Expected: Only "Bob" is listed. Persons in CS2103T without the "friends" tag are excluded.
+
+3. Finding with multiple values for the same attribute (OR logic)
+
+    1. Test case: `find c/CS2103T c/CS2109S`<br>
+       Expected: All persons who are enrolled in EITHER "CS2103T" OR "CS2109S" are listed.
+
+4. Validation for Course and Tutorial dependencies
+
+    1. Test case: `find c/CS2103T tut/T01`<br>
+       Expected: Persons enrolled in "T01" under course "CS2103T" are listed.
+
+    2. Test case: `find tut/T01`<br>
+       Expected: No changes are made to the displayed list. Error message indicating that a course code must be provided when searching by tutorial group is shown (e.g., "To search by tutorial group, you must also provide a course code...").
+
+5. Incorrect find commands
+
+    1. Test case: `find`<br>
+       Expected: No changes are made to the displayed list. Error message indicating invalid command format is shown.
+
+    2. Test case: `find some_random_text`<br>
+       Expected: No changes are made. Error message indicating invalid command format is shown because no valid prefixes (e.g., `n/`, `c/`) were provided.
+
 ### Getting help
 
 1. Finding the list of commands and the link to the user guide
