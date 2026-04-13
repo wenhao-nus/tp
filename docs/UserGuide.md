@@ -108,11 +108,10 @@ Format: `add n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [tg/TELEGRAM_HANDLE] [t
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tips:**<br>
 
-- A person can have any number of tags (including 0). 
-Tags are case-insensitive and duplicate tags will be automatically filtered 
-(e.g., `t/friend t/Friend` will be treated as only one `friend` tag).<br>
+- A person can have any number of tags (including 0). Tags are case-insensitive and duplicate tags will be automatically filtered (e.g., `t/friend t/Friend` will be treated as only one `friend` tag).
 
 - Tags are sorted and displayed alphabetically, with numbers in tags in numerical order.
+
 </div>
 
 Examples:
@@ -183,7 +182,7 @@ Format: `unset INDEX FIELD_PREFIX`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tips:**<br>
 
-- If the field is already empty, the command does not change anything.<br>
+- If the field is already empty, the command does not change anything.
 
 - Instead, The app will notify the user that the field is already empty, while still displaying the person’s details.
 
@@ -217,6 +216,7 @@ Examples:
 <div markdown="span" class="alert alert-primary">:bulb: **Note:**<br>
 
 - Remember not to include tut/TUTORIAL_GROUP in unenroll, attend, and unattend (since each student is associated with exactly one tutorial per course, the tutorial code is handled automatically).
+
 </div>
 
 ### Unenrolling a person : `unenroll`
