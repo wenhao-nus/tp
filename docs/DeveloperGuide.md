@@ -616,6 +616,39 @@ testers are expected to do more *exploratory* testing.
     2. Test case: `unenroll 1 c/CS2103T`<br>
        Expected: The first person is successfully unenrolled from the course `CS2103T`. The status message shows the student details with the updated course enrollment.
 
+### Unsetting a person's field
+
+1. Unsetting an optional field of a person
+
+    1. Prerequisites:
+       - The first person in the contact list has a phone number.
+       - If not, add one using `edit 1 p/98765432`.
+
+    2. Test case: `unset 1 p/`<br>
+       Expected: The phone number of the first person is removed. Success message showing the previous value is displayed.
+
+    3. Test case: `unset 1 p/` (again when phone is already missing)<br>
+       Expected: No changes are made. Status message indicates that the phone number is already missing.
+
+2. Unsetting a mandatory field or course/tutorial
+
+    1. Test case: `unset 1 n/`<br>
+       Expected: No changes are made. Error message indicating that the name is a mandatory field and cannot be unset is shown.
+
+    2. Test case: `unset 1 c/`<br>
+       Expected: No changes are made. Error message indicating that courses/tutorials cannot be removed using `unset` is shown.
+
+3. Incorrect unset commands
+
+    1. Test case: `unset 1`<br>
+       Expected: No changes are made. Error message indicating that exactly one field to unset must be provided is shown.
+
+    2. Test case: `unset 1 p/ a/`<br>
+       Expected: No changes are made. Error message indicating that only one field can be unset at a time is shown.
+
+    3. Test case: `unset 1 p/98765432`<br>
+       Expected: No changes are made. Error message indicating that `unset` only accepts a field prefix with no value is shown.
+
 ### Saving data
 
 1. Dealing with missing data files
