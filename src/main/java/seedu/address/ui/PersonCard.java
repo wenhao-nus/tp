@@ -8,7 +8,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -47,7 +46,7 @@ public class PersonCard extends UiPart<Region> {
     private VBox fieldsContainer;
 
     @FXML
-    private FlowPane tags;
+    private HBox tags;
 
     @FXML
     private ScrollPane tutInfosScrollPane;
@@ -83,8 +82,11 @@ public class PersonCard extends UiPart<Region> {
                                 new TutInfoField(tutInfo.getCourseCode(), tutInfo.getTutorialCode()).getRoot()));
 
         // Displays tags in natural alphanumeric order (case-insensitive, numbers sorted numerically)
-        person.getSortedTags().forEach(tag ->
-            tags.getChildren().add(new Label(tag.getTagName())));
+        person.getSortedTags().forEach(tag -> {
+            Label tagName = new Label(tag.getTagName());
+            tagName.setMinWidth(Region.USE_PREF_SIZE);
+            tags.getChildren().add(tagName);
+        });
     }
 
     /**
