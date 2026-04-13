@@ -9,9 +9,9 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Telegram {
 
-    public static final String MESSAGE_CONSTRAINTS = "Telegram handles must be 5-32 characters long, "
-            + "can only contain alphanumeric characters or underscores, "
-            + "and can optionally start with '@'.";
+    public static final String MESSAGE_CONSTRAINTS = "Telegram handles must be 5-32 characters long "
+            + "(excluding an optional '@' prefix) "
+            + "and can only contain alphanumeric characters or underscores.";
 
     public static final String VALIDATION_REGEX = "^@?[a-zA-Z0-9_]{5,32}$";
     public static final String TELEGRAM_PREFIX = "@";
