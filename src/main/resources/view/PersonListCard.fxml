@@ -11,8 +11,7 @@
 
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<HBox id="cardPane" fx:id="cardPane" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/17"
-      xmlns:fx="http://javafx.com/fxml/1">
+<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
     <GridPane HBox.hgrow="ALWAYS">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150"/>
@@ -23,7 +22,7 @@
         </rowConstraints>
 
         <ScrollPane id="scrollPane" fx:id="contactInfoScrollPane" vbarPolicy="NEVER" hbarPolicy="AS_NEEDED"
-                    GridPane.columnIndex="0" fitToWidth="true" fitToHeight="false" GridPane.vgrow="ALWAYS">
+                    GridPane.columnIndex="0" fitToWidth="true" GridPane.vgrow="ALWAYS">
             <VBox alignment="CENTER_LEFT">
                 <padding>
                     <Insets top="5" right="5" bottom="15" left="15"/>
